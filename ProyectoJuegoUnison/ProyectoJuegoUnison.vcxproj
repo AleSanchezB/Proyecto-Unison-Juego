@@ -147,15 +147,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Game2\Game2\DrawObjects.h" />
-    <ClInclude Include="..\..\Game2\Game2\PruebaIA.h" />
-    <ClInclude Include="..\..\Game2\Game2\MapaInicio.h" />
+    <ClCompile Include="InitMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DrawObjects.h" />
+    <ClInclude Include="IAMobs.h" />
+    <ClInclude Include="InitiMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

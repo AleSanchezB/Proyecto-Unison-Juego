@@ -3,7 +3,7 @@
 #include <allegro5/allegro_ttf.h>
 #include <iostream>
 #include <string.h>
-#include "InitMap.h"
+#include "InitiMap.h"
 #include "IAMobs.h"
 
 using namespace std;

@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InitMain.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Game2\Game2\PruebaIA.h">
+    <ClInclude Include="DrawObjects.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Game2\Game2\MapaInicio.h">
+    <ClInclude Include="IAMobs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Game2\Game2\DrawObjects.h">
+    <ClInclude Include="InitiMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
