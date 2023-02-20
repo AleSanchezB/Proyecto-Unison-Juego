@@ -7,4 +7,4 @@ Comandos para subir al repositorio git:
 git init (para iniciar el repositorio en la computadora solo se hace la primera vez)
 git add . (agrega todos los cambios hechos por ti)
 git commit -m "AQUI VA EL COMENTARIO" (pones los cambios que hiciste)
-git push 
+git push --set-upstream origin BRANCH (pones el nombre de tu branch)
