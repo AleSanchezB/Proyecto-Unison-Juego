@@ -80,12 +80,12 @@ void Mapa1::installAl()
 }
 void Mapa1::loadImg()
 {
-	font = al_load_font("ASSETS/fonts/Minecraft.ttf", 20, 0);
-	_player = al_load_bitmap("ASSETS/IdleTam/frame01.png");
-	FONDO = al_load_bitmap("ASSETS/fondos/fondo2.png");
-	ESCENA1 = al_load_bitmap("ASSETS/fondos/Escena1.png");
-	ESCENA2 = al_load_bitmap("ASSETS/fondos/Escena2.png");
-	OBJETO = al_load_bitmap("ASSETS/IdleTam/Wraith_03_Idle_001.png");
+	font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
+	_player = al_load_bitmap("assets/IdleTam/frame01.png");
+	FONDO = al_load_bitmap("assets/fondos/fondo2.png");
+	ESCENA1 = al_load_bitmap("assets/fondos/Escena1.png");
+	ESCENA2 = al_load_bitmap("assets/fondos/Escena2.png");
+	OBJETO = al_load_bitmap("assets/IdleTam/Wraith_03_Idle_001.png");
 	assert(_player != NULL);
 	assert(FONDO != NULL);
 }
