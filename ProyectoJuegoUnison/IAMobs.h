@@ -8,13 +8,20 @@ using namespace std;
 const int WIDTH = 900;
 const int HEIGHT = 700;
 ALLEGRO_EVENT event1;
+ALLEGRO_EVENT_QUEUE* evento;
+ALLEGRO_DISPLAY* options;
 
 void ia();
 void menuOptions();
+void destroyDisplay();
+void destroyDisplay()
+{
+    al_destroy_display(options);
+    al_destroy_event_queue(evento);
+}
 void menuOptions()
 {
-    ALLEGRO_EVENT_QUEUE* evento;
-    ALLEGRO_DISPLAY* options;
+    al_init();
     options = al_create_display(300, 200);
     al_set_window_title(options, "Ventana Opciones");
     evento = al_create_event_queue();
@@ -28,8 +35,8 @@ void menuOptions()
         {
             printf("demoneos\n");
             setVisibleMenuOptiones = false; 
-            al_destroy_display(options);
-            al_destroy_event_queue(evento);
+            destroyDisplay();
+  
         }
     }
    

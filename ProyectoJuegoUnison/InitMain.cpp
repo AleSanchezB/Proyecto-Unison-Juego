@@ -35,7 +35,7 @@ void destroy();
 
 void initVars()
 {
-    icon = al_load_bitmap("assets/IdleTam/frame01.png");
+    icon = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
     fontInit = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
     al_set_window_title(menu, "Ventana Inicio");
     queueE = al_create_event_queue();
@@ -62,7 +62,8 @@ int main(int argc, char** argv) {
     al_init();
     initMenu(); //crea la pantalla y registra los eventos    
     // Bucle del juego
-    while (run) {
+    while (run) 
+    {
         al_wait_for_event(queueE, &event);
         // Dibujar el menú
         drawOptions();
