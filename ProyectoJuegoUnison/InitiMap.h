@@ -194,9 +194,6 @@ void Mapa1::initRoom()
 		drawBackground(xJugador, yJugador);
 	}
 }
-void Mapa1::destroyAl() {
-
-}
 void Mapa1::drawBackground(int xJugador, int yJugador) {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENA2, PlayerX, PlayerY, 0);
@@ -204,5 +201,4 @@ void Mapa1::drawBackground(int xJugador, int yJugador) {
 	al_draw_bitmap(ESCENA1, PlayerX - 1280, PlayerY, 0);
 	drawPlayer.draw(xJugador, yJugador);
 	al_flip_display();
-}
 }
