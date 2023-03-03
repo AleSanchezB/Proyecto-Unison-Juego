@@ -83,8 +83,10 @@ void Mapa1::loadImg()
 	_player = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
 	FONDO = al_load_bitmap("assets/fondos/fondo2.png");
 	ESCENA1 = al_load_bitmap("assets/fondos/Escena1.png");
-	ESCENA2 = al_load_bitmap("asstes/fondos/Escena2.png");
+	ESCENA2 = al_load_bitmap("assets/fondos/Escena2.png");
 	assert(_player != NULL);
+	assert(ESCENA1 != NULL);
+	assert(ESCENA2 != NULL);
 	assert(FONDO != NULL);
 }
 //inicializa y define las variables;
@@ -196,8 +198,6 @@ void Mapa1::destroyAl() {
 
 }
 void Mapa1::drawBackground(int xJugador, int yJugador) {
-	
-	
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENA2, PlayerX, PlayerY, 0);
 	al_draw_bitmap(FONDO, PlayerX + 1280, PlayerY, 0);
