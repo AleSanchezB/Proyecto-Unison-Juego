@@ -86,6 +86,7 @@
     <Allegro_AddonColor>true</Allegro_AddonColor>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,12 +151,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InitMain.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="Cultivos.h" />
     <ClInclude Include="DrawObjects.h" />
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
+    <ClInclude Include="MainGame.h" />
+    <ClInclude Include="SubmenuOptions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InitMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

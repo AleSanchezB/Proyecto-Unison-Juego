@@ -20,7 +20,6 @@ private:
 	ALLEGRO_BITMAP* FONDO;
 	ALLEGRO_BITMAP* ESCENA1;
 	ALLEGRO_BITMAP* ESCENA2;
-	ALLEGRO_BITMAP* OBJETO;
 	ALLEGRO_DISPLAY* display;
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_FONT* font;
@@ -81,12 +80,13 @@ void Mapa1::installAl()
 void Mapa1::loadImg()
 {
 	font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
-	_player = al_load_bitmap("assets/IdleTam/frame01.png");
+	_player = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
 	FONDO = al_load_bitmap("assets/fondos/fondo2.png");
 	ESCENA1 = al_load_bitmap("assets/fondos/Escena1.png");
 	ESCENA2 = al_load_bitmap("assets/fondos/Escena2.png");
-	OBJETO = al_load_bitmap("assets/IdleTam/Wraith_03_Idle_001.png");
 	assert(_player != NULL);
+	assert(ESCENA1 != NULL);
+	assert(ESCENA2 != NULL);
 	assert(FONDO != NULL);
 }
 //inicializa y define las variables;
@@ -97,12 +97,9 @@ void Mapa1::init()
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
 	display = al_create_display(width, height);
 	al_set_window_title(display, "Juego version Beta");
-	//al_set_window_constraints(display,200,200, width,height);
 	
 	queue = al_create_event_queue();
 	_timer = al_create_timer(1.0 / 60);
-	//xJugador = al_get_display_width(display) / 2;
-	//yJugador = al_get_display_height(display) / 2;
 	al_start_timer(_timer);
 	al_register_event_source(queue, al_get_display_event_source(display));
 	al_register_event_source(queue, al_get_keyboard_event_source());
@@ -113,7 +110,6 @@ void Mapa1::init()
 void Mapa1::draw() {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	drawBackground(xJugador, yJugador);
-	al_draw_bitmap(OBJETO, PlayerX, PlayerY, 0); //generarlo en otra funcion y tambien cuando lo tome
 	al_draw_bitmap(_player, xJugador, yJugador, 0);
 	al_draw_textf(font, al_map_rgb(189, 39, 7), 10, 10, 0, "FPS: %d", fps);
 	al_draw_textf(font, al_map_rgb(189, 39, 7), 10, 30, 0, "x: %d", PlayerX);
@@ -202,18 +198,11 @@ void Mapa1::destroyAl() {
 
 }
 void Mapa1::drawBackground(int xJugador, int yJugador) {
-	
-	
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENA2, PlayerX, PlayerY, 0);
-	//al_draw_bitmap(FONDO, PlayerX, PlayerY + 720, 0);
-	//al_draw_bitmap(FONDO, PlayerX, PlayerY - 720, 0);
 	al_draw_bitmap(FONDO, PlayerX + 1280, PlayerY, 0);
 	al_draw_bitmap(ESCENA1, PlayerX - 1280, PlayerY, 0);
 	drawPlayer.draw(xJugador, yJugador);
 	al_flip_display();
-	//al_draw_bitmap(FONDO, PlayerX + 1280, PlayerY + 720, 0);
-	//al_draw_bitmap(FONDO, PlayerX - 1280, PlayerY - 720, 0);
-	//al_draw_bitmap(FONDO, PlayerX + 1280, PlayerY - 720, 0);
-	//al_draw_bitmap(FONDO, PlayerX - 1280, PlayerY + 720, 0);
+}
 }
