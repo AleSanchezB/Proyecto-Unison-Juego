@@ -25,7 +25,8 @@ private:
 
 SubMenuOptions::SubMenuOptions()
 {
-	al_init();
+	run = true;
+	i = 1;
 }
 
 SubMenuOptions::~SubMenuOptions()
@@ -39,8 +40,6 @@ void SubMenuOptions::draw_panel(Panel panel)
 void SubMenuOptions::setPanel()
 {
 	al_init_primitives_addon();
-	run = true;
-	i = 1;
 	Panel panel = {
 		panel.x = 100,
 		panel.y = 100,

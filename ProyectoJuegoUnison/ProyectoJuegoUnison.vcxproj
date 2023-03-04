@@ -151,12 +151,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cultivos.h" />
+    <ClInclude Include="controlesCultivos.h" />
     <ClInclude Include="DrawObjects.h" />
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="playerMovement.h" />
     <ClInclude Include="SubmenuOptions.h" />
   </ItemGroup>
   <ItemGroup>

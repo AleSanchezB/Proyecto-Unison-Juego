@@ -5,12 +5,11 @@
 #include <allegro5/allegro_ttf.h>
 #include <windows.h>
 #include "DrawObjects.h"
-#include "playerMovement.h"
+#include "controlesCultivos.h"
 #include <string>
 
 using namespace std;
 
-class Mapa1;
 
 class Mapa1
 {
@@ -29,7 +28,7 @@ private:
 	ALLEGRO_FONT* font;
 	ALLEGRO_TIMER* _timer;
 	DrawObjects drawPlayer;
-	PlayerMovement playerMovement;
+	ControlarCultivos controlsCultivos;
 
 	//CONSTANTES
 	const float speedPlayer = 2;
@@ -39,8 +38,9 @@ private:
 	//VARIABLES
 	int xJugador = 152;
 	int yJugador = 217;
-	int xCoordsFondos = 1280, PlayerY = 0;
+	int xCoordsFondos = 1280;
 	bool running;
+	int mouseX,mouseY;
 
 	//VARIABLES FPS
 	int fps = 0;
@@ -53,7 +53,7 @@ private:
 	void loadImg();
 	void move(ALLEGRO_KEYBOARD_STATE keystate);
 	void drawBackground();
-	//void move(ALLEGRO_KEYBOARD_STATE keystate);
+	//void move(ALLEGRO_KEYBOARD_STATE keysta);
 };
 Mapa1::Mapa1()
 {
@@ -133,9 +133,9 @@ void Mapa1::initRoom()
 }
 void Mapa1::drawBackground() {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
-	al_draw_bitmap(ESCENA2, xCoordsFondos, PlayerY, 0);
-	al_draw_bitmap(ESCENA3, xCoordsFondos + 1280, PlayerY, 0);
-	al_draw_bitmap(ESCENA1, xCoordsFondos - 1280, PlayerY, 0);
+	al_draw_bitmap(ESCENA2, xCoordsFondos, 0, 0);
+	al_draw_bitmap(ESCENA3, xCoordsFondos + 1280, 0, 0);
+	al_draw_bitmap(ESCENA1, xCoordsFondos - 1280, 0, 0);
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
@@ -146,24 +146,30 @@ void Mapa1::drawBackground() {
 void Mapa1::move(ALLEGRO_KEYBOARD_STATE keystate)
 {
 	al_get_keyboard_state(&keystate);
-
-	//colision con los marcos
-	if (yJugador <= 0) yJugador = 1;
-	else if (yJugador >= 620) yJugador = 619;
-	else if (xJugador <= 0) xJugador = 1;
-	else if (xJugador >= 1205) xJugador = 1204;
-
-	if (xCoordsFondos <= 1279.5 && xCoordsFondos >= -1279.5)
+	if (al_key_down(&keystate, ALLEGRO_KEY_F))
 	{
-		if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
-		if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
-		if (al_key_down(&keystate, ALLEGRO_KEY_D)) xCoordsFondos -= speedPlayer;
-		if (al_key_down(&keystate, ALLEGRO_KEY_A)) xCoordsFondos += speedPlayer;
-		xJugador = 640;
-
+		//obtengo las coords del puntero del mouse
+		controlsCultivos.plantarCultivo(keystate, queue);
 	}
-	else
+	else 
 	{
+		//colision con los marcos
+		if (yJugador <= 0) yJugador = 1;
+		else if (yJugador >= 620) yJugador = 619;
+		else if (xJugador <= 0) xJugador = 1;
+		else if (xJugador >= 1205) xJugador = 1204;
+
+		if (xCoordsFondos <= 1279.5 && xCoordsFondos >= -1279.5)
+		{
+			if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
+			if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
+			if (al_key_down(&keystate, ALLEGRO_KEY_D)) xCoordsFondos -= speedPlayer;
+			if (al_key_down(&keystate, ALLEGRO_KEY_A)) xCoordsFondos += speedPlayer;
+			xJugador = 640;
+		}
+		else
+	{
+		//Seteo las coordenadas del fondo para que quede en |1280|
 		if (xCoordsFondos > 1280) xCoordsFondos -= speedPlayer - 1;
 		else if (xCoordsFondos < -1280) xCoordsFondos += speedPlayer - 1;
 
@@ -184,5 +190,6 @@ void Mapa1::move(ALLEGRO_KEYBOARD_STATE keystate)
 
 			if (xJugador < 640) xCoordsFondos = -1279;
 		}
+	}
 	}
 }
