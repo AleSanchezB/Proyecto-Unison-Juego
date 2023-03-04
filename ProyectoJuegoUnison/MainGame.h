@@ -14,20 +14,18 @@ class MainGame : public SubMenuOptions
 public:
     MainGame();
     ~MainGame();
-    ALLEGRO_DISPLAY* menu;
+    ALLEGRO_DISPLAY* firstDisplay;
 
 private:
     //DECLARACION DE VARIABLES ALLEGRO
-    ALLEGRO_BITMAP* icon = NULL;
+    ALLEGRO_BITMAP* iconDisplay = NULL;
     ALLEGRO_EVENT_QUEUE* queue;
-    ALLEGRO_EVENT_QUEUE* aux;
-    ALLEGRO_FONT* fontInit;
-    ALLEGRO_KEYBOARD_STATE keystate2;
+    ALLEGRO_FONT* fontMenu;
     ALLEGRO_EVENT event;
     Panel panelOptions;
     //VARIABLES
-    bool run;
-    int x, y;
+    bool running;
+    int mouseX, mouseY;
 
     //CONSTANTES
     const int W = 800, H = 600;
@@ -36,7 +34,6 @@ private:
     void initMenu();
     void drawOptions();
     void initVars();
-    void destroy();
     void gameRun();
 
 };
@@ -44,36 +41,43 @@ private:
 MainGame::MainGame()
 {
     al_init();
+    al_install_keyboard();
+    al_install_mouse();
+    al_init_image_addon();
+    al_init_font_addon();
+    al_init_ttf_addon();
     initMenu();
     gameRun();
 }
 
 MainGame::~MainGame()
 {
-
+    al_destroy_display(firstDisplay);
+    al_destroy_font(fontMenu);
+    al_destroy_event_queue(queue);
+    al_uninstall_keyboard();
+    al_uninstall_mouse();
 }
 
 void MainGame::initVars()
 {
-    icon = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
-    fontInit = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
-    al_set_window_title(menu, "Ventana Inicio");
+    iconDisplay = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
+    fontMenu = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
+    al_set_window_title(firstDisplay, "Ventana Inicio");
     queue = al_create_event_queue();
-    run = true;
+    running = true;
 }
 
 void MainGame::initMenu() {
-    menu = al_create_display(W, H);
-    al_install_keyboard();
-    al_install_mouse();
-    al_init_image_addon();
-    al_init_font_addon();
-    al_init_ttf_addon();
-    initVars(); //inicializa las variables
+    firstDisplay = al_create_display(W, H);
+
+    //inicializa las variables
+    initVars();
     queue = al_create_event_queue();
-    al_set_display_icon(menu, icon);
+    al_set_display_icon(firstDisplay, iconDisplay);
+
     // Registrar del display como fuente de eventos
-    al_register_event_source(queue, al_get_display_event_source(menu));
+    al_register_event_source(queue, al_get_display_event_source(firstDisplay));
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
 }
@@ -81,32 +85,30 @@ void MainGame::initMenu() {
 void MainGame::gameRun()
 {
     // Bucle del juego
-    while (run)
+    while (running)
     {
         al_wait_for_event(queue, &event);
         // Dibujar el menú
         drawOptions();
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
-            run = false;
-            destroy();
+            running = false;
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
         {
             if (event.mouse.button == 1)
             {
                 //obtengo las coords del puntero del mouse
-                x = event.mouse.x;
-                y = event.mouse.y;
+                mouseX = event.mouse.x;
+                mouseY = event.mouse.y;
 
-                if (x <= W / 2 + 30 && x >= W / 2 - 40 && y >= H / 2 - 35 && y <= H / 2 - 15)
+                if (mouseX <= W / 2 + 30 && mouseX >= W / 2 - 40 && mouseY >= H / 2 - 35 && mouseY <= H / 2 - 15)
                 {
                     printf("Jugar");
-                    run = false;
-                    destroy();
+                    running = false;
                     Mapa1 mapa1 = Mapa1();
                 }
-                else if (x <= W / 2 + 30 && x >= W / 2 - 40 && y >= H / 2 && y <= H / 2 + 30)
+                else if (mouseX <= W / 2 + 30 && mouseX >= W / 2 - 40 && mouseY >= H / 2 && mouseY <= H / 2 + 30)
                 {
                     printf("Opciones");
                     //destroy();
@@ -115,27 +117,19 @@ void MainGame::gameRun()
                     //MainGame initGameRun = MainGame();
 
                 }
-                else if (x <= W / 2 + 30 && x >= W / 2 - 40 && y >= H / 2 + 35 && y <= H / 2 + 55)
+                else if (mouseX <= W / 2 + 30 && mouseX >= W / 2 - 40 && mouseY >= H / 2 + 35 && mouseY <= H / 2 + 55)
                 {
                     printf("Salir");
-                    run = false;
-                    destroy();
+                    running = false;
                 }
             }
         }
     }
 }
-void MainGame::destroy() {
-    al_destroy_display(menu);
-    al_destroy_font(fontInit);
-    al_destroy_event_queue(queue);
-    al_uninstall_keyboard();
-    al_uninstall_mouse();
-}
 void MainGame::drawOptions() {
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    al_draw_text(fontInit, al_map_rgb(255, 255, 255), W / 2, H / 2 - 32, ALLEGRO_ALIGN_CENTER, "Jugar");
-    al_draw_text(fontInit, al_map_rgb(255, 255, 255), W / 2, H / 2, ALLEGRO_ALIGN_CENTER, "Opciones");
-    al_draw_text(fontInit, al_map_rgb(255, 255, 255), W / 2, H / 2 + 32, ALLEGRO_ALIGN_CENTER, "Salir");
+    al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2 - 32, ALLEGRO_ALIGN_CENTER, "Jugar");
+    al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2, ALLEGRO_ALIGN_CENTER, "Opciones");
+    al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2 + 32, ALLEGRO_ALIGN_CENTER, "Salir");
     al_flip_display();
 }
