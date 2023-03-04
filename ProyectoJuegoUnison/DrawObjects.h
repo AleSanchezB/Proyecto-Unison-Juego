@@ -19,7 +19,7 @@ DrawObjects::DrawObjects()
 {
 	al_init();
 	al_init_image_addon();
-	player = al_load_bitmap("ASSETS/IdleTam/frame01.png");
+	player = al_load_bitmap("assets/IdleTam/frame01.png");
 }
 
 DrawObjects::~DrawObjects()
@@ -32,5 +32,5 @@ void DrawObjects::draw(int xJugador, int yJugador) {
 void DrawObjects::initImg() {
 	al_init();
 	al_init_image_addon();
-	player = al_load_bitmap("ASSETS/IdleTam/frame01.png");
+	player = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
 }

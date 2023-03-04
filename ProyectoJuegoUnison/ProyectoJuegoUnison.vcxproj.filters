@@ -15,6 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="InitMain.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -23,12 +24,34 @@
     <ClInclude Include="DrawObjects.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+=======
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+>>>>>>> main
     <ClInclude Include="IAMobs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="InitiMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="SubmenuOptions.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawObjects.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="controlesCultivos.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InitMain.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
