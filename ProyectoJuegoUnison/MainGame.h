@@ -14,15 +14,15 @@ class MainGame : public SubMenuOptions
 public:
     MainGame();
     ~MainGame();
-    ALLEGRO_DISPLAY* firstDisplay;
-
 private:
     //DECLARACION DE VARIABLES ALLEGRO
+    ALLEGRO_DISPLAY* firstDisplay;
     ALLEGRO_BITMAP* iconDisplay = NULL;
     ALLEGRO_EVENT_QUEUE* queue;
     ALLEGRO_FONT* fontMenu;
     ALLEGRO_EVENT event;
     Panel panelOptions;
+
     //VARIABLES
     bool running;
     int mouseX, mouseY;
@@ -35,6 +35,7 @@ private:
     void drawOptions();
     void initVars();
     void gameRun();
+    void alDestroy();
 
 };
 
@@ -52,11 +53,6 @@ MainGame::MainGame()
 
 MainGame::~MainGame()
 {
-    al_destroy_display(firstDisplay);
-    al_destroy_font(fontMenu);
-    al_destroy_event_queue(queue);
-    al_uninstall_keyboard();
-    al_uninstall_mouse();
 }
 
 void MainGame::initVars()
@@ -93,6 +89,7 @@ void MainGame::gameRun()
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
             running = false;
+            alDestroy();
         }
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
         {
@@ -106,21 +103,19 @@ void MainGame::gameRun()
                 {
                     printf("Jugar");
                     running = false;
+                    alDestroy();
                     Mapa1 mapa1 = Mapa1();
                 }
                 else if (mouseX <= W / 2 + 30 && mouseX >= W / 2 - 40 && mouseY >= H / 2 && mouseY <= H / 2 + 30)
                 {
                     printf("Opciones");
-                    //destroy();
-                    //menuOptions();
                     setPanel();
-                    //MainGame initGameRun = MainGame();
-
                 }
                 else if (mouseX <= W / 2 + 30 && mouseX >= W / 2 - 40 && mouseY >= H / 2 + 35 && mouseY <= H / 2 + 55)
                 {
                     printf("Salir");
                     running = false;
+                    alDestroy();
                 }
             }
         }
@@ -132,4 +127,13 @@ void MainGame::drawOptions() {
     al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2, ALLEGRO_ALIGN_CENTER, "Opciones");
     al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2 + 32, ALLEGRO_ALIGN_CENTER, "Salir");
     al_flip_display();
+}
+
+void MainGame::alDestroy()
+{
+    al_destroy_display(firstDisplay);
+    al_destroy_font(fontMenu);
+    al_destroy_event_queue(queue);
+    al_uninstall_keyboard();
+    al_uninstall_mouse();
 }
