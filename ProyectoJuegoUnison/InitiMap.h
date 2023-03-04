@@ -149,3 +149,4 @@ void Mapa1::drawBackground(int xJugador, int yJugador, int PlayerX, int PlayerY)
 	drawPlayer.draw(xJugador, yJugador);
 	al_flip_display();
 }
+}

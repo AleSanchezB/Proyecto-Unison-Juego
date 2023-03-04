@@ -19,6 +19,7 @@ DrawObjects::DrawObjects()
 {
 	al_init();
 	al_init_image_addon();
+	player = al_load_bitmap("assets/IdleTam/frame01.png");
 }
 
 DrawObjects::~DrawObjects()
