@@ -156,6 +156,7 @@
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="playerMovement.h" />
     <ClInclude Include="SubmenuOptions.h" />
   </ItemGroup>
   <ItemGroup>

@@ -29,19 +29,14 @@ void menuOptions()
     bool setVisibleMenuOptiones = true;
     while (setVisibleMenuOptiones)
     {
-        al_wait_for_event(evento, &event1);
-        printf("hola\n");
+        al_wait_for_event(evento, &event1);;
         if (event1.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
-            printf("demoneos\n");
-            setVisibleMenuOptiones = false; 
+            setVisibleMenuOptiones = false;
             destroyDisplay();
-  
+
         }
     }
-   
-
-
 }
 void ia() {
     ALLEGRO_DISPLAY* display = NULL;
