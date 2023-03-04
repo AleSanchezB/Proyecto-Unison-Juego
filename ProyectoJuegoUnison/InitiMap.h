@@ -141,12 +141,11 @@ void Mapa1::initRoom()
 		
 	}
 }
-void Mapa1::drawBackground(int xJugador, int yJugador, int PlayerX, int PlayerY) {
+void Mapa1::drawBackground(int xJugador, int yJugador) {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENA2, PlayerX, PlayerY, 0);
 	al_draw_bitmap(ESCENA3, PlayerX + 1280, PlayerY, 0);
 	al_draw_bitmap(ESCENA1, PlayerX - 1280, PlayerY, 0);
 	drawPlayer.draw(xJugador, yJugador);
 	al_flip_display();
-}
 }
