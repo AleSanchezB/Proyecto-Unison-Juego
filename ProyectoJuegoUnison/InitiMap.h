@@ -7,6 +7,7 @@
 #include "DrawObjects.h"
 #include "controlesCultivos.h"
 #include <string>
+#include <chrono>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ private:
 	ALLEGRO_BITMAP* ESCENA3;
 	ALLEGRO_BITMAP* ESCENA1;
 	ALLEGRO_BITMAP* ESCENA2;
+	ALLEGRO_BITMAP* ESTATS;
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_FONT* font;
@@ -36,8 +38,8 @@ private:
 	const int height = 720;
 
 	//VARIABLES
-	int xJugador = 152;
-	int yJugador = 217;
+	int xJugador = 773;
+	int yJugador = 306;
 	int xCoordsFondos = 1280;
 	bool running;
 	int mouseX,mouseY;
@@ -46,7 +48,7 @@ private:
 	int fps = 0;
 	int frame_count = 0;
 	double frame_time = 0;
-
+	const int target_fps = 60;
 	//funciones
 	void init();
 	void initRoom();
@@ -77,8 +79,9 @@ void Mapa1::loadImg()
 {
 	font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 	playerBitmapImg = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
+	ESTATS = al_load_bitmap("assets/fondos/OPCIONES.png");
 	ESCENA3 = al_load_bitmap("assets/fondos/fondo2.png");
-	ESCENA1 = al_load_bitmap("assets/fondos/Escena1.png");
+	ESCENA1 = al_load_bitmap("assets/fondos/Escena 1.png");
 	ESCENA2 = al_load_bitmap("assets/fondos/Escena2.png");
 	assert(playerBitmapImg != NULL);
 	assert(ESCENA1 != NULL);
@@ -105,30 +108,35 @@ void Mapa1::init()
 void Mapa1::initRoom()
 {
 	drawPlayer.initImg();
+	double last_render_time = al_get_time();
 	while (running)
 	{
-		drawBackground();
 		ALLEGRO_EVENT event;
 		al_wait_for_event(queue, &event);
+		al_wait_for_event_timed(queue, &event, 0.01);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
-
+		drawBackground();
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
 			running = false;
 		}
-
-		if (event.type == ALLEGRO_EVENT_TIMER)
+		else if (event.type == ALLEGRO_EVENT_TIMER) 
+		{				
+			move(keystate);
+			last_render_time = al_get_time();
+		}
+		frame_count++;
+		double current_time = al_get_time();
+		if (current_time - last_render_time >= 1.0 / al_get_timer_speed(_timer)) 
 		{
-			frame_count++;
-			frame_time += al_get_timer_speed(_timer);
-			if (frame_time >= 1.0) {
-				fps = frame_count;
+				last_render_time = current_time;
+				fps = al_get_timer_speed(_timer);;
 				frame_count = 0;
 				frame_time = 0;
-			}
+			
 		}
-		move(keystate);
+		
 	}
 }
 void Mapa1::drawBackground() {
@@ -136,10 +144,12 @@ void Mapa1::drawBackground() {
 	al_draw_bitmap(ESCENA2, xCoordsFondos, 0, 0);
 	al_draw_bitmap(ESCENA3, xCoordsFondos + 1280, 0, 0);
 	al_draw_bitmap(ESCENA1, xCoordsFondos - 1280, 0, 0);
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
-	al_draw_textf(font, al_map_rgb(189, 39, 7), 10, 90, 0, "FPS: %d", fps);
+	al_draw_bitmap(ESTATS, 18, 10, 0);
+	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
+	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
+	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
+	//al_draw_textf(font, al_map_rgb(189, 39, 7), 10, 90, 0, "FPS: %d", fps);
+	al_draw_textf(font, al_map_rgb(255, 255, 255), 1030, 33, 0, "999999999");
 	drawPlayer.draw(xJugador, yJugador);
 	al_flip_display();
 }
@@ -162,34 +172,35 @@ void Mapa1::move(ALLEGRO_KEYBOARD_STATE keystate)
 		if (xCoordsFondos <= 1279.5 && xCoordsFondos >= -1279.5)
 		{
 			if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_D)) xCoordsFondos -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_A)) xCoordsFondos += speedPlayer;
+			else if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
+			else if (al_key_down(&keystate, ALLEGRO_KEY_D)) xCoordsFondos -= speedPlayer;
+			else if (al_key_down(&keystate, ALLEGRO_KEY_A)) xCoordsFondos += speedPlayer;
 			xJugador = 640;
 		}
 		else
-	{
-		//Seteo las coordenadas del fondo para que quede en |1280|
-		if (xCoordsFondos > 1280) xCoordsFondos -= speedPlayer - 1;
-		else if (xCoordsFondos < -1280) xCoordsFondos += speedPlayer - 1;
-
-		if (xJugador <= 640 && xJugador >= 0 && xCoordsFondos > 1279)
 		{
-			if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_D)) xJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_A)) xJugador -= speedPlayer;
+			//Seteo las coordenadas del fondo para que quede en |1280|
+			if (xCoordsFondos > 1280) xCoordsFondos -= speedPlayer - 1;
+			else if (xCoordsFondos < -1280) xCoordsFondos += speedPlayer - 1;
 
-			if (xJugador > 640) xCoordsFondos = 1279;
-		}
-		else if (xJugador >= 640 && xJugador <= 1280 && xCoordsFondos < -1279) {
-			if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_D)) xJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_A)) xJugador -= speedPlayer;
+			if (xJugador <= 640 && xJugador >= 0 && xCoordsFondos > 1279)
+			{
+				if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
+				else if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
+				else if (al_key_down(&keystate, ALLEGRO_KEY_D)) xJugador += speedPlayer;
+				else if (al_key_down(&keystate, ALLEGRO_KEY_A)) xJugador -= speedPlayer;
 
-			if (xJugador < 640) xCoordsFondos = -1279;
+				if (xJugador > 640) xCoordsFondos = 1279;
+			}
+			else if (xJugador >= 640 && xJugador <= 1280 && xCoordsFondos < -1279) 
+			{
+				if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
+				else if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
+				else if (al_key_down(&keystate, ALLEGRO_KEY_D)) xJugador += speedPlayer;
+				else if (al_key_down(&keystate, ALLEGRO_KEY_A)) xJugador -= speedPlayer;
+
+				if (xJugador < 640) xCoordsFondos = -1279;
+			}
 		}
-	}
 	}
 }
