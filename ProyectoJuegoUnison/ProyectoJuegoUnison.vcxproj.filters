@@ -15,20 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <ClCompile Include="InitMain.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DrawObjects.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-=======
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
->>>>>>> main
     <ClInclude Include="IAMobs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
