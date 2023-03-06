@@ -1,6 +1,5 @@
-#include <allegro5/allegro.h>	
+#include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
-#include <iostream>
 
 using namespace std;
 
@@ -26,7 +25,8 @@ private:
 
 SubMenuOptions::SubMenuOptions()
 {
-	
+	run = true;
+	i = 1;
 }
 
 SubMenuOptions::~SubMenuOptions()
@@ -39,10 +39,7 @@ void SubMenuOptions::draw_panel(Panel panel)
 }
 void SubMenuOptions::setPanel()
 {
-	al_init();
 	al_init_primitives_addon();
-	run = true;
-	i = 1;
 	Panel panel = {
 		panel.x = 100,
 		panel.y = 100,
