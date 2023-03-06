@@ -6,6 +6,8 @@
 #include <windows.h>
 #include "DrawObjects.h"
 #include "playerMovement.h"
+#ifndef InitMap
+#define InitMap
 
 using namespace std;
 
@@ -52,6 +54,8 @@ private:
 	void loadImg();
 	//void move(ALLEGRO_KEYBOARD_STATE keystate);
 };
+
+#endif
 Mapa1::Mapa1()
 {
 	al_init_image_addon();
@@ -148,5 +152,4 @@ void Mapa1::drawBackground(int xJugador, int yJugador, int PlayerX, int PlayerY)
 	al_draw_bitmap(ESCENA1, PlayerX - 1280, PlayerY, 0);
 	drawPlayer.draw(xJugador, yJugador);
 	al_flip_display();
-}
 }

@@ -1,5 +1,9 @@
 #include <allegro5/allegro.h>
 #include "Cultivos.h"
+#ifndef DEFS_H
+#define DEFS_H
+
+using namespace std;
 
 class PlayerMovement
 {
@@ -11,15 +15,16 @@ public:
 	int yJugador = 217;
 	int PlayerX = 1280;
 	int PlayerY = 0;
-
 private:
 	float speedPlayer = 2;
 	Cultivos cultivos;
-	Mapa1 mapa1;
+	Mapa1 mapa;
 };
-
+#endif
 PlayerMovement::PlayerMovement()
 {
+	mapa = Mapa1();
+	al_init();
 }
 
 PlayerMovement::~PlayerMovement()
@@ -69,5 +74,4 @@ void PlayerMovement::move(ALLEGRO_KEYBOARD_STATE keystate)
 			if (xJugador < 640) PlayerX = -1279;
 		}
 	}
-	mapa1.drawBackground(xJugador, yJugador, PlayerX, PlayerY);
 }
