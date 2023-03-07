@@ -80,10 +80,10 @@ MainGame::~MainGame()
 void MainGame::initVars()
 {
     iconDisplay = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
-    fondos[0] = al_load_bitmap("assets/fondos/SIN PRESIONAR.png");
-    fondos[1] = al_load_bitmap("assets/fondos/CUANDO PRESIONA JUGAR.png");
-    fondos[2] = al_load_bitmap("assets/fondos/CUANDO PRESIONA OPCIONES.png");
-    fondos[3] = al_load_bitmap("assets/fondos/CUANDO PRESIONA SALIR.png");
+    fondos[0] = al_load_bitmap("assets/fondos/imgLogin/SIN PRESIONAR.png");
+    fondos[1] = al_load_bitmap("assets/fondos/imgLogin/CUANDO PRESIONA JUGAR.png");
+    fondos[2] = al_load_bitmap("assets/fondos/imgLogin/CUANDO PRESIONA OPCIONES.png");
+    fondos[3] = al_load_bitmap("assets/fondos/imgLogin/CUANDO PRESIONA SALIR.png");
     fontMenu = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
     sample = al_load_sample("assets/Musica/Musica.ogg");
     songInstance = al_create_sample_instance(sample);
