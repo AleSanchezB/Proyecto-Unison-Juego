@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="controlesCultivos.h" />
     <ClInclude Include="DrawObjects.h" />
+    <ClInclude Include="GuardarDatos.h" />
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />

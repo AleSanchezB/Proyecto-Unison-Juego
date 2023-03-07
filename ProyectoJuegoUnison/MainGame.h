@@ -10,7 +10,6 @@
 #include <allegro5/allegro_acodec.h>
 #include <Windows.h>
 
-
 using namespace std;
 
 
@@ -42,6 +41,7 @@ private:
     int sliderHeight = 20;
     int sliderValue = 50;
     float gain = 0.5;
+
 
     //CONSTANTES
     const int W = 800, H = 600;
@@ -167,7 +167,8 @@ void MainGame::gameRun()
                 {
                     printf("Opciones");
                     //setPanel();
-                    drawRec();
+                    //drawRec();
+                   // GuardarDatos();
                 }
                 else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 423 && event.mouse.y <= 478)
                 {

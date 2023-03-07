@@ -8,15 +8,16 @@
 #include "controlesCultivos.h"
 #include <string>
 #include <chrono>
+#include "GuardarDatos.h"
 
 using namespace std;
-
 
 class Mapa1
 {
 public:
 	Mapa1();
 	~Mapa1();
+	void setMonedas(int monedas);
 
 private:
 	//VARIABLES ALLEGRO
@@ -43,6 +44,7 @@ private:
 	int xCoordsFondos = 1280;
 	bool running;
 	int mouseX,mouseY;
+	int Monedas;
 
 	//VARIABLES FPS
 	int fps = 0;
@@ -55,11 +57,15 @@ private:
 	void loadImg();
 	void move(ALLEGRO_KEYBOARD_STATE keystate);
 	void drawBackground(int i);
+	int getMonedas();
 	//void move(ALLEGRO_KEYBOARD_STATE keysta);
+	DatosJuego datosJuego;
 };
 
 Mapa1::Mapa1()
 {
+	ObtenerDatos();
+	al_init();
 	al_init_image_addon();
 	al_install_keyboard();
 	al_init_font_addon();
@@ -69,7 +75,7 @@ Mapa1::Mapa1()
 }
 Mapa1::~Mapa1()
 {
-	al_init();
+	
 	al_destroy_bitmap(playerBitmapImg);
 	al_destroy_display(displayGame);
 	al_destroy_timer(_timer);
@@ -150,7 +156,7 @@ void Mapa1::drawBackground(int i) {
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
 	//al_draw_textf(font, al_map_rgb(189, 39, 7), 10, 90, 0, "FPS: %d", fps);
-	al_draw_textf(font, al_map_rgb(255, 255, 255), 1030, 33, 0, "999999999");
+	al_draw_text(font, al_map_rgb(255, 255, 255), 1030, 33, 0, (to_string(datosJuego.dinero).c_str()));
 	drawPlayer.draw(xJugador, yJugador);
 	al_flip_display();
 }
@@ -203,4 +209,14 @@ void Mapa1::move(ALLEGRO_KEYBOARD_STATE keystate)
 			}
 		}
 	}
+}
+
+void Mapa1::setMonedas(int monedas)
+{
+	this->Monedas = monedas;
+}
+
+int Mapa1::getMonedas()
+{
+	return Monedas;
 }
