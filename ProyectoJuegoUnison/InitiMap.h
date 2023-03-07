@@ -104,7 +104,6 @@ void Mapa1::init()
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
 	displayGame = al_create_display(width, height);
 	al_set_window_title(displayGame, "Juego version Beta");
-	
 	queue = al_create_event_queue();
 	_timer = al_create_timer(1.0 / 120);
 	al_start_timer(_timer);
