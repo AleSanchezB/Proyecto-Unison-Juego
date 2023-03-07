@@ -53,7 +53,6 @@ private:
     void gameRun();
     void alDestroy();
     void setVolMusic(float volumen);
-    void updateVolume(ALLEGRO_SAMPLE_INSTANCE* instance, int mouseX, int mouseY);
     void drawRec();
 };
 
@@ -166,9 +165,7 @@ void MainGame::gameRun()
                 else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
                 {
                     printf("Opciones");
-                    //setPanel();
-                    //drawRec();
-                   // GuardarDatos();
+                    drawRec();   
                 }
                 else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 423 && event.mouse.y <= 478)
                 {
@@ -183,9 +180,6 @@ void MainGame::gameRun()
 void MainGame::drawOptions(int i) {
     al_clear_to_color(al_map_rgb(0, 0, 0));
     al_draw_bitmap(fondos[i],0,0,NULL);
-    //al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2 - 32, ALLEGRO_ALIGN_CENTER, "Jugar");
-    //al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2, ALLEGRO_ALIGN_CENTER, "Opciones");
-    //al_draw_text(fontMenu, al_map_rgb(255, 255, 255), W / 2, H / 2 + 32, ALLEGRO_ALIGN_CENTER, "Salir");
     al_flip_display();
 }
 
@@ -204,13 +198,6 @@ void MainGame::setVolMusic(float volumen)
     al_set_sample_instance_gain(songInstance, volumen);
 }
 
-void MainGame::updateVolume(ALLEGRO_SAMPLE_INSTANCE* instance, int mouseX, int mouseY) {
-    if (mouseX >= sliderX && mouseX <= sliderX + sliderWidth &&
-        mouseY >= sliderY && mouseY <= sliderY + 20) {
-        float gain = (float)(mouseX - sliderX) / sliderWidth;
-        al_set_sample_instance_gain(instance, gain);
-    }
-}
 void MainGame::drawRec()
 {
     bool run = true;
