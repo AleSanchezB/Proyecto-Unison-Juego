@@ -100,7 +100,6 @@ void Mapa1::loadImg()
 void Mapa1::init()
 {
 	running = true;
-
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
 	displayGame = al_create_display(width, height);
 	al_set_window_title(displayGame, "Juego version Beta");
