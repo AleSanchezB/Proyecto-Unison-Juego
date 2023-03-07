@@ -1,14 +1,43 @@
-#pragma once
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <math.h>
 #include <string.h>
+
 using namespace std;
 
 const int WIDTH = 900;
 const int HEIGHT = 700;
+ALLEGRO_EVENT event1;
+ALLEGRO_EVENT_QUEUE* evento;
+ALLEGRO_DISPLAY* options;
 
 void ia();
+void menuOptions();
+void destroyDisplay();
+void destroyDisplay()
+{
+    al_destroy_display(options);
+    al_destroy_event_queue(evento);
+}
+void menuOptions()
+{
+    al_init();
+    options = al_create_display(300, 200);
+    al_set_window_title(options, "Ventana Opciones");
+    evento = al_create_event_queue();
+    al_register_event_source(evento, al_get_display_event_source(options));
+    bool setVisibleMenuOptiones = true;
+    while (setVisibleMenuOptiones)
+    {
+        al_wait_for_event(evento, &event1);;
+        if (event1.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+        {
+            setVisibleMenuOptiones = false;
+            destroyDisplay();
+
+        }
+    }
+}
 void ia() {
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
