@@ -29,24 +29,26 @@ private:
 	ALLEGRO_TIMER* _timer;
 	DrawObjects drawPlayer;
 	ControlarCultivos controlsCultivos;
-
+	ALLEGRO_BITMAP* player;
 	//CONSTANTES
-	const float speedPlayer = 2;
 	const int width = 1280;
 	const int height = 720;
 
 	//VARIABLES
-	int xJugador = 152;
-	int yJugador = 217;
+	float speedPlayer = 2;
+	int xJugador = 640;
+	int yJugador = 400;
 	int xCoordsFondos = 1280;
-	bool running;
+	bool running,active=false;
 	int mouseX,mouseY;
-
+	int direccion = 0, SpritePosX = 0,SpritePosY=0,corriendo=0;
+	int PlayRefresh = 0;
+	//DIRECCIONES
+	enum {DOWNW,RIGHTW,UPW,LEFTW};
 	//VARIABLES FPS
 	int fps = 0;
 	int frame_count = 0;
 	double frame_time = 0;
-
 	//funciones
 	void init();
 	void initRoom();
@@ -54,6 +56,7 @@ private:
 	void move(ALLEGRO_KEYBOARD_STATE keystate);
 	void drawBackground();
 	//void move(ALLEGRO_KEYBOARD_STATE keysta);
+
 };
 Mapa1::Mapa1()
 {
@@ -80,6 +83,7 @@ void Mapa1::loadImg()
 	ESCENA3 = al_load_bitmap("assets/fondos/fondo2.png");
 	ESCENA1 = al_load_bitmap("assets/fondos/Escena1.png");
 	ESCENA2 = al_load_bitmap("assets/fondos/Escena2.png");
+	player = al_load_bitmap("assets/IdleTam/Sprites Players/characters/Walk_run Player.png");
 	assert(playerBitmapImg != NULL);
 	assert(ESCENA1 != NULL);
 	assert(ESCENA2 != NULL);
@@ -95,7 +99,7 @@ void Mapa1::init()
 	al_set_window_title(displayGame, "Juego version Beta");
 	
 	queue = al_create_event_queue();
-	_timer = al_create_timer(1.0 / 120);
+	_timer = al_create_timer(1.0 / 60);
 	al_start_timer(_timer);
 	al_register_event_source(queue, al_get_display_event_source(displayGame));
 	al_register_event_source(queue, al_get_keyboard_event_source());
@@ -120,17 +124,11 @@ void Mapa1::initRoom()
 
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
-			frame_count++;
-			frame_time += al_get_timer_speed(_timer);
-			if (frame_time >= 1.0) {
-				fps = frame_count;
-				frame_count = 0;
-				frame_time = 0;
-			}
-		}
 		move(keystate);
+		}
 	}
 }
+
 void Mapa1::drawBackground() {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENA2, xCoordsFondos, 0, 0);
@@ -140,12 +138,15 @@ void Mapa1::drawBackground() {
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
 	al_draw_textf(font, al_map_rgb(189, 39, 7), 10, 90, 0, "FPS: %d", fps);
-	drawPlayer.draw(xJugador, yJugador);
+		drawPlayer.Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, xJugador, yJugador);
 	al_flip_display();
 }
 void Mapa1::move(ALLEGRO_KEYBOARD_STATE keystate)
 {
 	al_get_keyboard_state(&keystate);
+	ALLEGRO_EVENT events;
+	al_wait_for_event(queue, &events);
+	
 	if (al_key_down(&keystate, ALLEGRO_KEY_F))
 	{
 		//obtengo las coords del puntero del mouse
@@ -153,43 +154,39 @@ void Mapa1::move(ALLEGRO_KEYBOARD_STATE keystate)
 	}
 	else 
 	{
-		//colision con los marcos
-		if (yJugador <= 0) yJugador = 1;
-		else if (yJugador >= 620) yJugador = 619;
-		else if (xJugador <= 0) xJugador = 1;
-		else if (xJugador >= 1205) xJugador = 1204;
-
-		if (xCoordsFondos <= 1279.5 && xCoordsFondos >= -1279.5)
-		{
-			if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_D)) xCoordsFondos -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_A)) xCoordsFondos += speedPlayer;
-			xJugador = 640;
+		active = true;
+		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
+			speedPlayer = 4;
+			corriendo = 4;
 		}
-		else
-	{
-		//Seteo las coordenadas del fondo para que quede en |1280|
-		if (xCoordsFondos > 1280) xCoordsFondos -= speedPlayer - 1;
-		else if (xCoordsFondos < -1280) xCoordsFondos += speedPlayer - 1;
-
-		if (xJugador <= 640 && xJugador >= 0 && xCoordsFondos > 1279)
-		{
-			if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_D)) xJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_A)) xJugador -= speedPlayer;
-
-			if (xJugador > 640) xCoordsFondos = 1279;
+		else {
+			speedPlayer = 2;
+			corriendo = 0;
 		}
-		else if (xJugador >= 640 && xJugador <= 1280 && xCoordsFondos < -1279) {
-			if (al_key_down(&keystate, ALLEGRO_KEY_W)) yJugador -= speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_S)) yJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_D)) xJugador += speedPlayer;
-			if (al_key_down(&keystate, ALLEGRO_KEY_A)) xJugador -= speedPlayer;
-
-			if (xJugador < 640) xCoordsFondos = -1279;
+		if (al_key_down(&keystate, ALLEGRO_KEY_W)) {
+			yJugador -= speedPlayer;
+			direccion=UPW+corriendo;
 		}
-	}
+		else if (al_key_down(&keystate, ALLEGRO_KEY_S)) {
+			yJugador += speedPlayer;
+			direccion=DOWNW+corriendo;
+		}
+		else if (al_key_down(&keystate, ALLEGRO_KEY_D)) {
+			xJugador += speedPlayer;
+			direccion=RIGHTW+corriendo;
+		}
+		else if (al_key_down(&keystate, ALLEGRO_KEY_A)) {
+			xJugador -= speedPlayer;
+			direccion = LEFTW+corriendo;
+		}
+		else active = false;
+		PlayRefresh++;
+		if (PlayRefresh == 6) {
+			if (SpritePosX >= 165) SpritePosX = 0;
+			if (active) SpritePosX += 33;
+			else SpritePosX = 0;
+			SpritePosY = direccion;
+			PlayRefresh = 0;
+		}
 	}
 }
