@@ -78,7 +78,6 @@ Mapa1::Mapa1()
 }
 Mapa1::~Mapa1()
 {
-	
 	al_destroy_bitmap(player);
 	al_destroy_display(displayGame);
 	al_destroy_timer(_timer);
