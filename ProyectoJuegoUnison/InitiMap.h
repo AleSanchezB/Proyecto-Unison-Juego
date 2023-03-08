@@ -23,6 +23,7 @@ private:
 	//VARIABLES ALLEGRO
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
+	ALLEGRO_BITMAP* ESCENAS[3];
 	ALLEGRO_TIMER* _timer;
 	DrawObjects drawPlayer;
 	ControlarCultivos controlsCultivos;
@@ -77,7 +78,7 @@ Mapa1::~Mapa1()
 void Mapa1::loadImg()
 {
 	//font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
-	//ESCENA1 = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA1.png");
+	ESCENAS[0] = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA1.png");
 	//ESCENA2 = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA2.png");
 }
 //inicializa y define las variables;
@@ -116,7 +117,7 @@ void Mapa1::initRoom()
 		}
 		if (event.type == ALLEGRO_EVENT_MOUSE_AXES && (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)) {
 			//if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)
-				drawPlayer.DrawBackgrounds(1);
+				drawPlayer.DrawBackgrounds(0);
 				//DibujarGradualmente();
 		}
 		else //drawBackground(0);

@@ -16,17 +16,17 @@ public:
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 private:
 	ALLEGRO_BITMAP* player;
-	ALLEGRO_BITMAP* ESCENAS[3];
-	ALLEGRO_BITMAP* ESTATS[3];
+	ALLEGRO_BITMAP* ESCENAS[5];
+	ALLEGRO_BITMAP* OPCIONES[3];
 	ALLEGRO_FONT* font;
 	enum { DOWNW, RIGHTW, UPW, LEFTW };
 	float speedPlayer = 2;
 	bool active = false;
-	int direccion = 0, SpritePosX = 0, SpritePosY = 0, corriendo = 0;
+	float direccion = 0, SpritePosX = 0, SpritePosY = 0, corriendo = 0;
 	int PlayRefresh = 0;
-	int xJugador = 640;
-	int yJugador = 400;
-	int xCoordsFondos = 1280;
+	float xJugador = 640;
+	float yJugador = 400;
+	float xCoordsFondos = 1280;
 };
 
 DrawObjects::DrawObjects()
@@ -35,6 +35,17 @@ DrawObjects::DrawObjects()
 
 DrawObjects::~DrawObjects()
 {
+	al_destroy_bitmap(player);
+	for (int i = 0; i < 2; i++)
+	{
+		string rutaFondos = "assets/fondos/EscenasInicio/ESCENA" + to_string(i) + ".png";
+		string rutaIconos = "assets/fondos/Objetos/OPCIONES" + to_string(i) + ".png";
+		al_destroy_bitmap(ESCENAS[i]);
+		//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
+		cout << endl << rutaFondos << endl << rutaIconos << endl;
+		assert(ESCENAS[i] != NULL);
+		//assert(OPCIONES[i] != NULL);
+	}
 }
 
 void DrawObjects::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug) {
@@ -48,20 +59,23 @@ void DrawObjects::initImg() {
 	font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 	player = al_load_bitmap("assets/IdleTam/Sprites Players/characters/Walk_run Player.png");
 	string rutaFondos, rutaIconos;
-	for (int i = 1; i <= 2; i++)
+	for (int i = 0; i < 2; i++)
 	{
-		rutaFondos = "assets/fondos/EscenasInicio/ESCENA" + to_string(i) + ".png";
+		rutaFondos = "assets/fondos/EscenasInicio/ESCENA0" + to_string(i) + ".png";
 		rutaIconos = "assets/fondos/Objetos/OPCIONES" + to_string(i) + ".png";
 		ESCENAS[i] = al_load_bitmap(rutaFondos.c_str());
-		ESTATS[i] = al_load_bitmap("assets/fondos/Objetos/OPCIONES.png");
+		//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
+		cout << endl << rutaFondos << endl << rutaIconos << endl;
+		assert(ESCENAS[i] != NULL);
+		//assert(OPCIONES[i] != NULL);
 	}
 }
-void DrawObjects::DrawBackgrounds(int i)
+void DrawObjects::DrawBackgrounds(int l)
 {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
-	al_draw_bitmap(ESCENAS[2], xCoordsFondos, 0, 0);
-	al_draw_bitmap(ESCENAS[1], xCoordsFondos - 1280, 0, 0);
-	al_draw_bitmap(ESTATS[i], 18, 10, 0);
+	al_draw_bitmap(ESCENAS[1], xCoordsFondos, 0, 0);
+	al_draw_bitmap(ESCENAS[0], xCoordsFondos - 1280, 0, 0);
+	//al_draw_bitmap(ESTATS[1], 18, 10, 0);
 	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
 	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
 	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
