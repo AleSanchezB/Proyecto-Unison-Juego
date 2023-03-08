@@ -21,14 +21,8 @@ public:
 
 private:
 	//VARIABLES ALLEGRO
-	ALLEGRO_BITMAP* player;
-	ALLEGRO_BITMAP* ESCENA3;
-	ALLEGRO_BITMAP* ESCENA1;
-	ALLEGRO_BITMAP* ESCENA2;
-	ALLEGRO_BITMAP* ESTATS[3];
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
-	ALLEGRO_FONT* font;
 	ALLEGRO_TIMER* _timer;
 	DrawObjects drawPlayer;
 	ControlarCultivos controlsCultivos;
@@ -38,28 +32,24 @@ private:
 	const int height = 720;
 
 	//VARIABLES
-	float speedPlayer = 2;
-	int xJugador = 640;
-	int yJugador = 400;
-	int xCoordsFondos = 1280;
-	bool running, active = false;
+	bool running;
 	int mouseX, mouseY;
-	int direccion = 0, SpritePosX = 0, SpritePosY = 0, corriendo = 0;
-	int PlayRefresh = 0;
 	int Monedas;
+
+	float alpha = 1.0;
+	float x = 0;
+	float y = 0;
+	float scale = 1.0;
 
 	//funciones
 	void init();
 	void initRoom();
 	void loadImg();
-	void move(ALLEGRO_KEYBOARD_STATE keystate);
-	void drawBackground(int i);
 	int getMonedas();
 	DatosJuego datosJuego;
-
-	//DIRECCIONES
-	enum { DOWNW, RIGHTW, UPW, LEFTW };
+	void DibujarGradualmente();
 	//VARIABLES FPS
+
 	int fps = 0;
 	int frame_count = 0;
 	double frame_time = 0;
@@ -78,23 +68,17 @@ Mapa1::Mapa1()
 }
 Mapa1::~Mapa1()
 {
-	al_destroy_bitmap(player);
+	//al_destroy_bitmap(player);
 	al_destroy_display(displayGame);
 	al_destroy_timer(_timer);
 	al_uninstall_keyboard();
-	al_destroy_font(font);
+	//al_destroy_font(font);
 }
 void Mapa1::loadImg()
 {
-	font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
-	ESTATS[0] = al_load_bitmap("assets/fondos/Objetos/OPCIONES.png");
-	ESTATS[1] = al_load_bitmap("assets/fondos/Objetos/CUANDO PRESIONA CONFI.png");
-	ESCENA1 = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA1.png");
-	ESCENA2 = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA2.png");
-	player = al_load_bitmap("assets/IdleTam/Sprites Players/characters/Walk_run Player.png");
-	assert(player != NULL);
-	assert(ESCENA1 != NULL);
-	assert(ESCENA2 != NULL);
+	//font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
+	//ESCENA1 = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA1.png");
+	//ESCENA2 = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA2.png");
 }
 //inicializa y define las variables;
 void Mapa1::init()
@@ -128,73 +112,15 @@ void Mapa1::initRoom()
 
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
-			move(keystate);
+			drawPlayer.move(keystate, queue);
 		}
-		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) drawBackground(1);
+		if (event.type == ALLEGRO_EVENT_MOUSE_AXES && (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)) {
+			//if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)
+				drawPlayer.DrawBackgrounds(1);
+				//DibujarGradualmente();
 		}
-		else drawBackground(0);
-	}
-}
-void Mapa1::drawBackground(int i) {
-	al_clear_to_color(al_map_rgb_f(254, 254, 254));
-	al_draw_bitmap(ESCENA2, xCoordsFondos, 0, 0);
-	al_draw_bitmap(ESCENA1, xCoordsFondos - 1280, 0, 0);
-	al_draw_bitmap(ESTATS[i], 18, 10, 0);
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 1030, 33, 0, (to_string(datosJuego.dinero).c_str()));
-	drawPlayer.Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, xJugador, yJugador);
-	al_flip_display();
-}
-void Mapa1::move(ALLEGRO_KEYBOARD_STATE keystate)
-{
-	al_get_keyboard_state(&keystate);
-	ALLEGRO_EVENT events;
-	al_wait_for_event(queue, &events);
-
-	if (al_key_down(&keystate, ALLEGRO_KEY_F))
-	{
-		//obtengo las coords del puntero del mouse
-		controlsCultivos.plantarCultivo(keystate, queue);
-	}
-	else
-	{
-		active = true;
-		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
-			speedPlayer = 4;
-			corriendo = 4;
-		}
-		else {
-			speedPlayer = 2;
-			corriendo = 0;
-		}
-		if (al_key_down(&keystate, ALLEGRO_KEY_W)) {
-			yJugador -= speedPlayer;
-			direccion = UPW + corriendo;
-		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_S)) {
-			yJugador += speedPlayer;
-			direccion = DOWNW + corriendo;
-		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_D)) {
-			xJugador += speedPlayer;
-			direccion = RIGHTW + corriendo;
-		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_A)) {
-			xJugador -= speedPlayer;
-			direccion = LEFTW + corriendo;
-		}
-		else active = false;
-		PlayRefresh++;
-		if (PlayRefresh == 6) {
-			if (SpritePosX >= 165) SpritePosX = 0;
-			if (active) SpritePosX += 33;
-			else SpritePosX = 0;
-			SpritePosY = direccion;
-			PlayRefresh = 0;
-		}
+		else //drawBackground(0);
+			drawPlayer.DrawBackgrounds(0);
 	}
 }
 
@@ -206,4 +132,24 @@ void Mapa1::setMonedas(int monedas)
 int Mapa1::getMonedas()
 {
 	return Monedas;
+}
+
+void Mapa1::DibujarGradualmente()
+{
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	//al_draw_tinted_bitmap(ESCENA1, al_map_rgba_f(1.0, 1.0, 1.0, alpha), 0, 0, 0);
+	al_draw_rectangle(0, 0, 1280, 720, al_map_rgba_f(0, 0, 0, 0), NULL);
+	//al_draw_tinted_bitmap(ESCENA2, al_map_rgba_f(1.0, 1.0, 1.0, 1.0 - alpha), 0, 0, 0);
+
+	// Cambiar gradualmente el nivel de opacidad de las imágenes
+	alpha -= 0.01;
+	if (alpha <= 0) {
+		alpha = 1.0;
+		//ALLEGRO_BITMAP* temp = ESCENA1;
+		//ESCENA1 = ESCENA2;
+		//ESCENA2 = temp;
+	}
+
+	// Actualizar la pantalla
+	al_flip_display();
 }
