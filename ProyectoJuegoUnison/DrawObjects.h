@@ -2,6 +2,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro.h>
 #include <string>
+#include "GuardarDatos.h"
 
 using namespace std;
 
@@ -14,11 +15,14 @@ public:
 	void initImg();
 	void DrawBackgrounds(int i);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
+	void drawOptions(int i, int Monedas);
+	void drawPlayerAnimation();
 private:
 	ALLEGRO_BITMAP* player;
 	ALLEGRO_BITMAP* ESCENAS[5];
 	ALLEGRO_BITMAP* OPCIONES[3];
 	ALLEGRO_FONT* font;
+	DatosUsuario datosUsuario;
 	enum { DOWNW, RIGHTW, UPW, LEFTW };
 	float speedPlayer = 2;
 	bool active = false;
@@ -27,6 +31,7 @@ private:
 	float xJugador = 640;
 	float yJugador = 400;
 	float xCoordsFondos = 1280;
+	int Monedas;
 };
 
 DrawObjects::DrawObjects()
@@ -62,26 +67,31 @@ void DrawObjects::initImg() {
 	for (int i = 0; i < 2; i++)
 	{
 		rutaFondos = "assets/fondos/EscenasInicio/ESCENA0" + to_string(i) + ".png";
-		rutaIconos = "assets/fondos/Objetos/OPCIONES" + to_string(i) + ".png";
+		rutaIconos = "assets/fondos/Objetos/OPCIONES0" + to_string(i) + ".png";
 		ESCENAS[i] = al_load_bitmap(rutaFondos.c_str());
-		//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
+		OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
 		cout << endl << rutaFondos << endl << rutaIconos << endl;
 		assert(ESCENAS[i] != NULL);
 		//assert(OPCIONES[i] != NULL);
 	}
+	datosUsuario.ObtenerDatos();
+	Monedas = datosUsuario.getMonedas();
 }
 void DrawObjects::DrawBackgrounds(int l)
 {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENAS[1], xCoordsFondos, 0, 0);
 	al_draw_bitmap(ESCENAS[0], xCoordsFondos - 1280, 0, 0);
-	//al_draw_bitmap(ESTATS[1], 18, 10, 0);
-	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
-	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
-	//al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, ALLEGRO_ALIGN_LEFT, ("xFondo: " + to_string(xCoordsFondos)).c_str());
-	//al_draw_text(font, al_map_rgb(255, 255, 255), 1030, 33, 0, (to_string(datosJuego.dinero).c_str()));
-	Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, xJugador, yJugador);
+}
+void DrawObjects::drawOptions(int i, int Monedas)
+{
+	al_draw_bitmap(OPCIONES[i], 18, 10, 0);
+	al_draw_text(font, al_map_rgb(255, 255, 255), 1030, 33, 0, (to_string(this->Monedas).c_str()));
 	al_flip_display();
+}
+void DrawObjects::drawPlayerAnimation()
+{
+	Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, xJugador, yJugador);
 }
 
 void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)

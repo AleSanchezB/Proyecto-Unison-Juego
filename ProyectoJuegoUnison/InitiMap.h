@@ -8,7 +8,6 @@
 #include "controlesCultivos.h"
 #include <string>
 #include <chrono>
-#include "GuardarDatos.h"
 
 using namespace std;
 
@@ -25,6 +24,7 @@ private:
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_BITMAP* ESCENAS[3];
 	ALLEGRO_TIMER* _timer;
+	ALLEGRO_EVENT event;
 	DrawObjects drawPlayer;
 	ControlarCultivos controlsCultivos;
 
@@ -36,6 +36,7 @@ private:
 	bool running;
 	int mouseX, mouseY;
 	int Monedas;
+	int i;
 
 	float alpha = 1.0;
 	float x = 0;
@@ -45,12 +46,10 @@ private:
 	//funciones
 	void init();
 	void initRoom();
-	void loadImg();
 	int getMonedas();
-	DatosJuego datosJuego;
 	void DibujarGradualmente();
-	//VARIABLES FPS
 
+	//VARIABLES FPS
 	int fps = 0;
 	int frame_count = 0;
 	double frame_time = 0;
@@ -58,9 +57,9 @@ private:
 
 Mapa1::Mapa1()
 {
-	ObtenerDatos();
 	al_init();
 	al_init_image_addon();
+	al_install_mouse();
 	al_install_keyboard();
 	al_init_font_addon();
 	al_init_ttf_addon();
@@ -69,39 +68,39 @@ Mapa1::Mapa1()
 }
 Mapa1::~Mapa1()
 {
-	//al_destroy_bitmap(player);
 	al_destroy_display(displayGame);
 	al_destroy_timer(_timer);
 	al_uninstall_keyboard();
-	//al_destroy_font(font);
 }
-void Mapa1::loadImg()
-{
-	//font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
-	ESCENAS[0] = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA1.png");
-	//ESCENA2 = al_load_bitmap("assets/fondos/EscenasInicio/ESCENA2.png");
-}
+
 //inicializa y define las variables;
 void Mapa1::init()
 {
 	running = true;
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
+
 	displayGame = al_create_display(width, height);
 	al_set_window_title(displayGame, "Juego version Beta");
+
+	//cola de eventos
 	queue = al_create_event_queue();
+
+	//Timer e incio del timer
 	_timer = al_create_timer(1.0 / 120);
 	al_start_timer(_timer);
+
+	//Registro de eventos
 	al_register_event_source(queue, al_get_display_event_source(displayGame));
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(_timer));
-	loadImg();
+	al_register_event_source(queue, al_get_mouse_event_source());
+
 }
 void Mapa1::initRoom()
 {
 	drawPlayer.initImg();
 	while (running)
 	{
-		ALLEGRO_EVENT event;
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
@@ -110,18 +109,18 @@ void Mapa1::initRoom()
 		{
 			running = false;
 		}
-
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			drawPlayer.move(keystate, queue);
 		}
-		if (event.type == ALLEGRO_EVENT_MOUSE_AXES && (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)) {
-			//if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)
-				drawPlayer.DrawBackgrounds(0);
-				//DibujarGradualmente();
+		drawPlayer.DrawBackgrounds(1);
+
+		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
+			else i = 0;
 		}
-		else //drawBackground(0);
-			drawPlayer.DrawBackgrounds(0);
+		drawPlayer.drawPlayerAnimation();
+		drawPlayer.drawOptions(i, Monedas);
 	}
 }
 
