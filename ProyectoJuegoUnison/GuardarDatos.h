@@ -4,24 +4,38 @@
 
 using namespace std;
 
+class DatosUsuario
+{
+public:
+    DatosUsuario();
+    ~DatosUsuario();
+    //set and getters
+    void setMonedas(int monedas);
+    int getMonedas();
+    void ObtenerDatos();
+
+private:
     struct DatosJuego {
-        int dinero;
+        int Monedas;
         int cantidadObjetos;
     };
     void Guardardatos();
-    void ObtenerDatos();
     DatosJuego datosJuego;
+};
 
-void Guardardatos() 
+DatosUsuario::DatosUsuario()
 {
-    // Creamos una instancia de la estructura DatosJuego con algunos datos
-    datosJuego.dinero = 900;
-    datosJuego.cantidadObjetos = 5;
+}
 
+DatosUsuario::~DatosUsuario()
+{
+}
+void DatosUsuario::Guardardatos()
+{
     // Guardamos los datos en un archivo de texto llamado "datos.txt"
     ofstream archivo("datos.txt");
     if (archivo.is_open()) {
-        archivo << datosJuego.dinero << endl;
+        archivo << datosJuego.Monedas << endl;
         archivo << datosJuego.cantidadObjetos << endl;
         archivo.close();
     }
@@ -29,11 +43,11 @@ void Guardardatos()
         cout << "No se pudo abrir el archivo para escribir los datos." << endl;
     }
     // Imprimimos los datos cargados desde el archivo
-    cout << "Dinero: " << datosJuego.dinero << endl;
+    cout << "Dinero: " << datosJuego.Monedas << endl;
     cout << "Cantidad de objetos: " << datosJuego.cantidadObjetos << endl;
 }
 
-void ObtenerDatos()
+void DatosUsuario::ObtenerDatos()
 {
     // Cargamos los datos desde el archivo de texto
     ifstream archivoCarga("datos.txt");
@@ -41,8 +55,9 @@ void ObtenerDatos()
     {
         string linea;
         getline(archivoCarga, linea);
-        datosJuego.dinero = stoi(linea);
-        //setMonedas(datosJuego.dinero);
+        datosJuego.Monedas = stoi(linea);
+        cout << "Monedas: " << datosJuego.Monedas<<endl;
+        cout << "Monedas 2: " << getMonedas() << endl;
         getline(archivoCarga, linea);
         datosJuego.cantidadObjetos = stoi(linea);
         archivoCarga.close();
@@ -51,4 +66,14 @@ void ObtenerDatos()
     {
         cout << "No se pudo abrir el archivo para cargar los datos." << endl;
     }
+}
+
+void DatosUsuario::setMonedas(int Monedas)
+{
+    datosJuego.Monedas = Monedas;
+}
+
+int DatosUsuario::getMonedas()
+{
+    return datosJuego.Monedas;
 }

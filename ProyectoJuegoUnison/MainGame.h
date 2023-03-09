@@ -22,7 +22,7 @@ private:
     //DECLARACION DE VARIABLES ALLEGRO
     ALLEGRO_DISPLAY* firstDisplay;
     ALLEGRO_BITMAP* iconDisplay = NULL;
-    ALLEGRO_BITMAP* fondos[4];
+    ALLEGRO_BITMAP* fondos[5];
     ALLEGRO_EVENT_QUEUE* queue;
     ALLEGRO_FONT* fontMenu;
     ALLEGRO_EVENT event;
@@ -30,6 +30,10 @@ private:
     ALLEGRO_VOICE* voice;
     ALLEGRO_SAMPLE_INSTANCE* songInstance;
     ALLEGRO_SAMPLE* sample;
+    ALLEGRO_SAMPLE_INSTANCE* efectClickInstance;
+    ALLEGRO_SAMPLE* efectClick;
+    ALLEGRO_SAMPLE_ID idClickEffect;
+
     Panel panelOptions;
     //VARIABLES
     bool running;
@@ -54,6 +58,7 @@ private:
     void alDestroy();
     void setVolMusic(float volumen);
     void drawRec();
+    void click();
 };
 
 MainGame::MainGame()
@@ -79,16 +84,25 @@ MainGame::~MainGame()
 void MainGame::initVars()
 {
     iconDisplay = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
-    fondos[0] = al_load_bitmap("assets/fondos/imgLogin/SIN PRESIONAR.png");
-    fondos[1] = al_load_bitmap("assets/fondos/imgLogin/CUANDO PRESIONA JUGAR.png");
-    fondos[2] = al_load_bitmap("assets/fondos/imgLogin/CUANDO PRESIONA OPCIONES.png");
-    fondos[3] = al_load_bitmap("assets/fondos/imgLogin/CUANDO PRESIONA SALIR.png");
+    for (int i = 0; i <= 3; i++)
+    {
+        string ruta = "assets/fondos/imgLogin/Banner0" + to_string(i) + ".png";
+        fondos[i] = al_load_bitmap(ruta.c_str());
+    }
     fontMenu = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
     sample = al_load_sample("assets/Musica/Musica.ogg");
-    songInstance = al_create_sample_instance(sample);
+    songInstance= al_create_sample_instance(sample);
+
+    efectClick = al_load_sample("assets/Effects Sounds/Menu_Selection_Click.wav");
+    efectClickInstance = al_create_sample_instance(efectClick);
+
     al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
     al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
-    al_set_window_title(firstDisplay, "Ventana Inicio");
+
+    al_set_sample_instance_playmode(efectClickInstance, ALLEGRO_PLAYMODE_ONCE);
+    al_attach_sample_instance_to_mixer(efectClickInstance, al_get_default_mixer());
+
+    al_set_window_title(firstDisplay, "Agromania");
     queue = al_create_event_queue();
     running = true;
 }
@@ -109,22 +123,30 @@ void MainGame::initMenu() {
 
 void MainGame::gameRun()
 {
-    al_play_sample_instance(songInstance);
     float volume = 0.5;
     int i = 0;
-    al_set_sample_instance_gain(songInstance, volume);
+    bool contClicks = false;
+    //al_play_sample_instance(songInstance);
+    //al_set_sample_instance_gain(songInstance, volume);
+
+
     // Bucle del juego
     while (running)
     {
         al_wait_for_event(queue, &event);
         // Dibujar el menú
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+        {
+            running = false;
+            alDestroy();
+        }
         if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-            if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294) 
+            if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294)
             {
                 i = 1;
                 drawOptions(i);
             }
-            else if(event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
+            else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
             {
                 i = 2;
                 drawOptions(i);
@@ -140,38 +162,41 @@ void MainGame::gameRun()
                 drawOptions(i);
             }
         }
-
-        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-        {
-            running = false;
-            alDestroy();
-        }
-       
-        else if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
         {
             if (event.mouse.button == 1)
             {
-                //obtengo las coords del puntero del mouse
-                mouseX = event.mouse.x;
-                mouseY = event.mouse.y;
+                contClicks = true;
+                if (contClicks) {
+                    contClicks = false;
+                    //obtengo las coords del puntero del mouse
+                    mouseX = event.mouse.x;
+                    mouseY = event.mouse.y;
 
-                if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294)
-                {
-                    printf("Jugar");
-                    running = false;
-                    alDestroy();
-                    Mapa1 mapa1 = Mapa1();
+                    if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294)
+                    {
+                        running = false;
+                        click();
+                        alDestroy();
+                        Mapa1 mapa1 = Mapa1();
+                    }
+                    else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
+                    {
+                        click();
+                        drawRec();
+                    }
+                    else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 423 && event.mouse.y <= 478)
+                    {
+                        click();
+                        running = false;
+                        alDestroy();
+                    }
+                    else click();
                 }
-                else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
+                else
                 {
-                    printf("Opciones");
-                    drawRec();   
-                }
-                else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 423 && event.mouse.y <= 478)
-                {
-                    printf("Salir");
-                    running = false;
-                    alDestroy();
+                    al_stop_sample(&idClickEffect);
+                    contClicks = true;
                 }
             }
         }
@@ -196,6 +221,12 @@ void MainGame::alDestroy()
 void MainGame::setVolMusic(float volumen)
 {
     al_set_sample_instance_gain(songInstance, volumen);
+}
+void MainGame::click()
+{
+    al_play_sample(efectClick, 1.0, 0.0, 0.10, ALLEGRO_PLAYMODE_ONCE, &idClickEffect);
+    Sleep(1000);
+    al_stop_sample(&idClickEffect);
 }
 
 void MainGame::drawRec()
