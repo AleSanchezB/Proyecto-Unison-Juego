@@ -113,7 +113,7 @@ void Mapa1::initRoom()
 		{
 			drawPlayer.move(keystate, queue);
 		}
-		drawPlayer.DrawBackgrounds(1);
+		drawPlayer.DrawBackgrounds();
 
 		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;

@@ -1,5 +1,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_font.h>
 #include <string>
 #include "GuardarDatos.h"
 
@@ -12,7 +14,7 @@ public:
 	~DrawObjects();
 	void Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug);
 	void initImg();
-	void DrawBackgrounds(int i);
+	void DrawBackgrounds();
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void drawOptions(int i, int Monedas);
 	void drawPlayerAnimation();
@@ -72,7 +74,7 @@ private:
 	};
 
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
-
+	int escena = 0;
 };
 
 DrawObjects::DrawObjects()
@@ -118,7 +120,7 @@ void DrawObjects::initImg() {
 	datosUsuario.ObtenerDatos();
 	Monedas = datosUsuario.getMonedas();
 }
-void DrawObjects::DrawBackgrounds(int l)
+void DrawObjects::DrawBackgrounds()
 {
 	int moniotpixancho = 30;
 	int monitopixalto = 20;
@@ -181,6 +183,9 @@ void DrawObjects::DrawBackgrounds(int l)
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + to_string(xMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMder][xMder])).c_str());
+
+	al_clear_to_color(al_map_rgb_f(254, 254, 254));
+	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
 
 }
 void DrawObjects::drawOptions(int i, int Monedas)
@@ -245,6 +250,18 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			PlayRefresh = 0;
 		}
 
+		if (xJugador > 1280 && yJugador >= 260 && yJugador <= 330 && escena == 0) {
+			xJugador = 2;
+			yJugador = 298;
+			escena = 1;
+		}
+		else if (xJugador < -38 && yJugador >= 246 && yJugador <= 332 && escena == 1)
+		{
+			xJugador = 1242;
+			yJugador = 300;
+			escena = 0;
+		}
 
+		cout << "x: " << xJugador << endl << "y: " << yJugador << endl;
 	}
 }
