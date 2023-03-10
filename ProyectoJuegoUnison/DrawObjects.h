@@ -13,7 +13,7 @@ public:
 	~DrawObjects();
 	void Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug);
 	void initImg();
-	void DrawBackgrounds(int i);
+	void DrawBackgrounds();
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void drawOptions(int i, int Monedas);
 	void drawPlayerAnimation();
@@ -32,6 +32,7 @@ private:
 	float yJugador = 400;
 	float xCoordsFondos = 1280;
 	int Monedas;
+	int escena = 0;
 };
 
 DrawObjects::DrawObjects()
@@ -77,11 +78,10 @@ void DrawObjects::initImg() {
 	datosUsuario.ObtenerDatos();
 	Monedas = datosUsuario.getMonedas();
 }
-void DrawObjects::DrawBackgrounds(int l)
+void DrawObjects::DrawBackgrounds()
 {
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
-	al_draw_bitmap(ESCENAS[1], xCoordsFondos, 0, 0);
-	al_draw_bitmap(ESCENAS[0], xCoordsFondos - 1280, 0, 0);
+	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
 }
 void DrawObjects::drawOptions(int i, int Monedas)
 {
@@ -141,5 +141,18 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			SpritePosY = direccion;
 			PlayRefresh = 0;
 		}
+		if (xJugador > 1280 && yJugador >= 260 && yJugador <= 330 && escena == 0) {
+			xJugador = 2;
+			yJugador = 298;
+			escena = 1;
+		}
+		else if (xJugador < -38 && yJugador >= 246 && yJugador <= 332 && escena == 1)
+		{
+			xJugador = 1242;
+			yJugador = 300;
+			escena = 0;
+		}
+
+		cout << "x: " << xJugador << endl << "y: " << yJugador << endl;
 	}
 }

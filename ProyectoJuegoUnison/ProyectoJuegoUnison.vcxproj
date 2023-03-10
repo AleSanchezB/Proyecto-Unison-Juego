@@ -159,7 +159,7 @@
     <ClInclude Include="SubmenuOptions.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InitMain.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
