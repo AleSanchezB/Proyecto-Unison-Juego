@@ -1,10 +1,9 @@
-#pragma once
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_font.h>
 #include <string>
 #include "GuardarDatos.h"
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
 
 using namespace std;
 
@@ -37,9 +36,9 @@ private:
 
 	//DIMESION DE LA MATRIZ MASCARA
 	const int dimxmask = 50;
-	const int dimymask = 30;
+	const int dimymask = 50;
 	//MATRIZ DEL MAPA MASCARA
-	char maskmap[40][50] = {
+	char maskmap[50][50] = {
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			"x                                         x",
 			"x                                         x",
@@ -74,6 +73,7 @@ private:
 			"x                                         x",
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 	};
+
 	int escena = 0;
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
 
@@ -184,7 +184,6 @@ void DrawObjects::DrawBackgrounds()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + to_string(xMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMder][xMder])).c_str());
-
 }
 void DrawObjects::drawOptions(int i, int Monedas)
 {
@@ -247,6 +246,7 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			SpritePosY = direccion;
 			PlayRefresh = 0;
 		}
+
 		if (xJugador > 1280 && yJugador >= 260 && yJugador <= 330 && escena == 0) {
 			xJugador = 2;
 			yJugador = 298;
