@@ -45,6 +45,7 @@ private:
     int sliderHeight = 20;
     int sliderValue = 50;
     float gain = 0.5;
+    int contClicks = 0;
 
 
     //CONSTANTES
@@ -90,12 +91,14 @@ void MainGame::initVars()
         fondos[i] = al_load_bitmap(ruta.c_str());
     }
     fontMenu = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
+    //Carga la musica
     sample = al_load_sample("assets/Musica/Musica.ogg");
     songInstance= al_create_sample_instance(sample);
-
+ 
     efectClick = al_load_sample("assets/Effects Sounds/Menu_Selection_Click.wav");
     efectClickInstance = al_create_sample_instance(efectClick);
 
+    //Seteo la musica en loop
     al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
     al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
 
@@ -125,9 +128,9 @@ void MainGame::gameRun()
 {
     float volume = 0.5;
     int i = 0;
-    bool contClicks = false;
-    //al_play_sample_instance(songInstance);
-    //al_set_sample_instance_gain(songInstance, volume);
+    //Inicia la musica en loop
+    al_play_sample_instance(songInstance);
+    al_set_sample_instance_gain(songInstance, volume);
 
 
     // Bucle del juego
@@ -166,37 +169,31 @@ void MainGame::gameRun()
         {
             if (event.mouse.button == 1)
             {
-                contClicks = true;
-                if (contClicks) {
-                    contClicks = false;
+                contClicks++;
+                cout << contClicks << endl;
+                if (contClicks > 1) {
+                    contClicks = 0;
+                    al_stop_sample(&idClickEffect);
+                }else{
+                    click();
                     //obtengo las coords del puntero del mouse
                     mouseX = event.mouse.x;
                     mouseY = event.mouse.y;
-
                     if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294)
                     {
                         running = false;
-                        click();
                         alDestroy();
                         Mapa1 mapa1 = Mapa1();
                     }
                     else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
                     {
-                        click();
                         drawRec();
                     }
                     else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 423 && event.mouse.y <= 478)
                     {
-                        click();
                         running = false;
                         alDestroy();
                     }
-                    else click();
-                }
-                else
-                {
-                    al_stop_sample(&idClickEffect);
-                    contClicks = true;
                 }
             }
         }
@@ -224,7 +221,7 @@ void MainGame::setVolMusic(float volumen)
 }
 void MainGame::click()
 {
-    al_play_sample(efectClick, 1.0, 0.0, 0.10, ALLEGRO_PLAYMODE_ONCE, &idClickEffect);
+    al_play_sample(efectClick, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, &idClickEffect);
     Sleep(1000);
     al_stop_sample(&idClickEffect);
 }
