@@ -3,6 +3,8 @@
 #include <allegro5/allegro.h>
 #include <string>
 #include "GuardarDatos.h"
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 using namespace std;
 
@@ -28,11 +30,53 @@ private:
 	bool active = false;
 	float direccion = 0, SpritePosX = 0, SpritePosY = 0, corriendo = 0;
 	int PlayRefresh = 0;
-	float xJugador = 640;
-	float yJugador = 400;
+	float xJugador = 40;
+	float yJugador = 40;
 	float xCoordsFondos = 1280;
 	int Monedas;
+
+	//DIMESION DE LA MATRIZ MASCARA
+	const int dimxmask = 50;
+	const int dimymask = 30;
+	//MATRIZ DEL MAPA MASCARA
+	char maskmap[40][50] = {
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"x                                         x",
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+	};
 	int escena = 0;
+	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
+
 };
 
 DrawObjects::DrawObjects()
@@ -80,8 +124,67 @@ void DrawObjects::initImg() {
 }
 void DrawObjects::DrawBackgrounds()
 {
-	al_clear_to_color(al_map_rgb_f(254, 254, 254));
+	int moniotpixancho = 30;
+	int monitopixalto = 20;
+	xMask = (xJugador / moniotpixancho);
+	if (xMask < 0) xMask = 0;
+	if (xMask > dimxmask) xMask = dimxmask;
+	yMask = (yJugador / monitopixalto) + 2;
+	if (yMask < 0) yMask = 0;
+	if (yMask > dimymask) yMask = dimymask;
+
+	xMup = xMask;
+	if (xMup < 0) xMup = 0;
+	if (xMup > dimxmask) xMup = dimxmask;
+	yMup = yMask - 1;
+	if (yMup < 0) yMup = 0;
+	if (yMup > dimymask) yMup = dimymask;
+
+	xMdown = xMask;
+	if (xMdown < 0) xMdown = 0;
+	if (xMdown > dimxmask) xMdown = dimxmask;
+	yMdown = yMask + 1;
+	if (yMdown < 0) yMdown = 0;
+	if (yMdown > dimymask) yMdown = dimymask;
+
+	xMizq = xMask - 1;
+	if (xMizq < 0) xMizq = 0;
+	if (xMizq > dimxmask) xMizq = dimxmask;
+	yMizq = yMask;
+	if (yMizq < 0) yMizq = 0;
+	if (yMizq > dimymask) yMizq = dimymask;
+
+	xMder = (xJugador / moniotpixancho) + 1;
+	if (xMder < 0) xMder = 0;
+	if (xMder > dimxmask) xMder = dimxmask;
+	yMder = yMask;
+	if (yMder < 0) yMder = 0;
+	if (yMder > dimymask) yMder = dimymask;
+
 	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
+
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 70, ALLEGRO_ALIGN_LEFT, ("xMask: " + to_string(xMask)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 70, ALLEGRO_ALIGN_LEFT, ("yMask: " + to_string(yMask)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 70, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMask][xMask])).c_str());
+
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 90, ALLEGRO_ALIGN_LEFT, ("xMup: " + to_string(xMup)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 90, ALLEGRO_ALIGN_LEFT, ("yMup: " + to_string(yMup)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 90, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMup][xMup])).c_str());
+
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 110, ALLEGRO_ALIGN_LEFT, ("xMdown: " + to_string(xMdown)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 110, ALLEGRO_ALIGN_LEFT, ("yMdown: " + to_string(yMdown)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 110, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMdown][xMdown])).c_str());
+
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 130, ALLEGRO_ALIGN_LEFT, ("xMizq: " + to_string(xMizq)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 130, ALLEGRO_ALIGN_LEFT, ("yMizq: " + to_string(yMizq)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 130, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMizq][xMizq])).c_str());
+
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + to_string(xMder)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + to_string(yMder)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMder][xMder])).c_str());
+
 }
 void DrawObjects::drawOptions(int i, int Monedas)
 {
@@ -107,6 +210,9 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 	}
 	else
 	{
+		// colision con el mapa de mascara
+
+		//ACAAAAAAAAAAAAA LAURAAAAAAAAA
 		active = true;
 		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
 			speedPlayer = 4;
@@ -116,19 +222,19 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			speedPlayer = 2;
 			corriendo = 0;
 		}
-		if (al_key_down(&keystate, ALLEGRO_KEY_W)) {
+		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') {
 			yJugador -= speedPlayer;
 			direccion = UPW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_S)) {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x') {
 			yJugador += speedPlayer;
 			direccion = DOWNW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_D)) {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x') {
 			xJugador += speedPlayer;
 			direccion = RIGHTW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_A)) {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x') {
 			xJugador -= speedPlayer;
 			direccion = LEFTW + corriendo;
 		}
