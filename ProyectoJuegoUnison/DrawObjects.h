@@ -159,8 +159,9 @@ void DrawObjects::DrawBackgrounds()
 	if (yMder < 0) yMder = 0;
 	if (yMder > dimymask) yMder = dimymask;
 
-	al_draw_bitmap(ESCENAS[1], xCoordsFondos, 0, 0);
-	al_draw_bitmap(ESCENAS[0], xCoordsFondos - 1280, 0, 0);
+	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
+
+	
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
 
@@ -185,7 +186,7 @@ void DrawObjects::DrawBackgrounds()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMder][xMder])).c_str());
 
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
-	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
+	
 
 }
 void DrawObjects::drawOptions(int i, int Monedas)
