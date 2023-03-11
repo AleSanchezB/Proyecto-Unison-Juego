@@ -29,8 +29,8 @@ private:
 	bool active = false;
 	float direccion = 0, SpritePosX = 0, SpritePosY = 0, corriendo = 0;
 	int PlayRefresh = 0;
-	float xJugador = 40;
-	float yJugador = 40;
+	float xJugador = 640;
+	float yJugador = 400;
 	float xCoordsFondos = 1280;
 	int Monedas;
 
@@ -39,39 +39,44 @@ private:
 	const int dimymask = 50;
 	//MATRIZ DEL MAPA MASCARA
 	char maskmap[50][50] = {
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"x                                         x",
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		//            10        20        30        40 
+		//   1234567890123456789012345678901234567890123
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //1
+			"xxxxxxxxxxxx                              x", //2
+			"xxxxxxxxxxxx                              x", //3
+			"xxxxxxxxxxxx                              x", //4
+			"xxxxxxxxxxxx                              x", //5
+			"xxxxxxxxxxxx                              x", //6
+			"xxxxxxxxxxxx                              x", //7
+			"xxxxxxxxxxxx                              x", //8
+			"xxxxxxxxxxxx                              x", //9
+			"xxxxxxxxxxxx                              x", //10
+			"xxxxxxxxxxxx                              x", //11
+			"xxxxxxxxxxxx                              x", //12
+			"xxxxxxxxxxxx                              x", //13
+			"xxxxxxxxxxxx                              x", //14
+			"xxxxxxxxxxxx                              x", //15
+			"xxxxxxxxxxxx                               ", //16
+			"xxxxxxxxxxxx                               ", //17
+			"xxxxxxxxxx                                 ", //18
+			"xxxxxxxxxx                                x", //19
+			"xxxxxxxxxx                                x", //20
+			"xxxxxxxxxx      x                         x", //21
+			"x                   xx                    x", //22
+			"x                                         x", //23
+			"x                                         x", //24
+			"x                                         x", //25
+			"x                                         x", //26
+			"x                                         x", //27
+			"x                                         x", //28
+			"x                                         x", //29
+			"x                                         x", //30
+			"x                                         x", //31
+			"x                                         x", //32
+			"x                                         x", //33
+			"x                                         x", //34
+			"x                                         x", //35
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //36
 	};
 
 	int escena = 0;
@@ -161,7 +166,9 @@ void DrawObjects::DrawBackgrounds()
 	if (yMder < 0) yMder = 0;
 	if (yMder > dimymask) yMder = dimymask;
 
+	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
+
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + to_string(xJugador)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + to_string(yJugador)).c_str());
 
@@ -184,6 +191,8 @@ void DrawObjects::DrawBackgrounds()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + to_string(xMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMder][xMder])).c_str());
+	
+
 }
 void DrawObjects::drawOptions(int i, int Monedas)
 {
