@@ -29,54 +29,95 @@ private:
 	bool active = false;
 	float direccion = 0, SpritePosX = 0, SpritePosY = 0, corriendo = 0;
 	int PlayRefresh = 0;
-	float xJugador = 640;
-	float yJugador = 400;
+	float xJugador = 624;
+	float yJugador = 310;
 	float xCoordsFondos = 1280;
 	int Monedas;
 
 	//DIMESION DE LA MATRIZ MASCARA
-	const int dimxmask = 50;
-	const int dimymask = 50;
+	const int dimxmask = 150;
+	const int dimymask = 150;
 	//MATRIZ DEL MAPA MASCARA
-	char maskmap[50][50] = {
+	char maskmap[150][150] = {
 		//            10        20        30        40 
-		//   1234567890123456789012345678901234567890123
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //1
-			"xxxxxxxxxxxx                              x", //2
-			"xxxxxxxxxxxx                              x", //3
-			"xxxxxxxxxxxx                              x", //4
-			"xxxxxxxxxxxx                              x", //5
-			"xxxxxxxxxxxx                              x", //6
-			"xxxxxxxxxxxx                              x", //7
-			"xxxxxxxxxxxx                              x", //8
-			"xxxxxxxxxxxx                              x", //9
-			"xxxxxxxxxxxx                              x", //10
-			"xxxxxxxxxxxx                              x", //11
-			"xxxxxxxxxxxx                              x", //12
-			"xxxxxxxxxxxx                              x", //13
-			"xxxxxxxxxxxx                              x", //14
-			"xxxxxxxxxxxx                              x", //15
-			"xxxxxxxxxxxx                               ", //16
-			"xxxxxxxxxxxx                               ", //17
-			"xxxxxxxxxx                                 ", //18
-			"xxxxxxxxxx                                x", //19
-			"xxxxxxxxxx                                x", //20
-			"xxxxxxxxxx      x                         x", //21
-			"x                   xx                    x", //22
-			"x                                         x", //23
-			"x                                         x", //24
-			"x                                         x", //25
-			"x                                         x", //26
-			"x                                         x", //27
-			"x                                         x", //28
-			"x                                         x", //29
-			"x                                         x", //30
-			"x                                         x", //31
-			"x                                         x", //32
-			"x                                         x", //33
-			"x                                         x", //34
-			"x                                         x", //35
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //36
+		// 
+		// 
+		// 
+		// 
+		// 
+		//             10        20        30        40        50        60        70       80        90       100        110      120
+		//   012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //1
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //2
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //3
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //4
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //5
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //6
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //7
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //8
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //9
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //10
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //11
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //12
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //13
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //14
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //15
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //16
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //17
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //18
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //19
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //20
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //21
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //22
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //23
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //24
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //25
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //26
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //27
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //28
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                       x", //29
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                      x", //30
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                          x", //31
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                             x", //32
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //33
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //34
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //35
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //36
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //37
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //38
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //39
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                             xxxxxxxx                                                         x", //40
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                             xxxxxxxx                                                         x", //41
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //42
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //43
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //44
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //45
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //46
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //47
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                              x", //48
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //49
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //50
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //51
+			"xxxxxxxxxxxxxxxxxxxxxxxx   x                                                                                                 x", //52
+			"xxxxxxxxxxxxxxxxxxxxxxxx   x                                                                                                 x", //53
+			"xxxxxxxxxxxxxxxxxxxxxxxx   x                                                                                                 x", //54
+			"xxxxxxxxxxxxxxxxxxxxxxxx   x                                                                                                 x", //55
+			"xxxxxxxxxxxxxxxxxxxxxxxx   x                                                                                                 x", //56
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //57
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //58
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //59
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //60
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //61
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //62
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //63
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //64
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //65
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //66
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //67
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //68
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //69
+			"xxxxxxxxxxxxxxxxxxxxxxxx                                                                                                     x", //70
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //71
 	};
 
 	int escena = 0;
@@ -129,12 +170,14 @@ void DrawObjects::initImg() {
 }
 void DrawObjects::DrawBackgrounds()
 {
-	int moniotpixancho = 30;
-	int monitopixalto = 20;
+	int moniotpixancho = 10;
+	int monitopixalto = 10;
 	xMask = (xJugador / moniotpixancho);
+
 	if (xMask < 0) xMask = 0;
 	if (xMask > dimxmask) xMask = dimxmask;
-	yMask = (yJugador / monitopixalto) + 2;
+	yMask = (yJugador / monitopixalto)+2;
+	
 	if (yMask < 0) yMask = 0;
 	if (yMask > dimymask) yMask = dimymask;
 
