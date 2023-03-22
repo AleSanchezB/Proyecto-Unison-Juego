@@ -4,10 +4,12 @@
 #include <allegro5/allegro_font.h>
 #include <string>
 #include "GuardarDatos.h"
+#include "controlesCultivos.h"
+#include "TipoCultivos.h"
 
 using namespace std;
 
-class DrawObjects
+class DrawObjects : public CultivoUno
 {
 public:
 	DrawObjects();
@@ -42,25 +44,25 @@ private:
 		//            10        20        30        40 
 		//   1234567890123456789012345678901234567890123
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //1
-			"xxxxxxxxxxxx                              x", //2
-			"xxxxxxxxxxxx                              x", //3
-			"xxxxxxxxxxxx                              x", //4
-			"xxxxxxxxxxxx                              x", //5
-			"xxxxxxxxxxxx                              x", //6
-			"xxxxxxxxxxxx                              x", //7
-			"xxxxxxxxxxxx                              x", //8
-			"xxxxxxxxxxxx                              x", //9
-			"xxxxxxxxxxxx                              x", //10
-			"xxxxxxxxxxxx                              x", //11
-			"xxxxxxxxxxxx                              x", //12
-			"xxxxxxxxxxxx                              x", //13
-			"xxxxxxxxxxxx                              x", //14
-			"xxxxxxxxxxxx                              x", //15
-			"xxxxxxxxxxxx                               ", //16
-			"xxxxxxxxxxxx                               ", //17
-			"xxxxxxxxxx                                 ", //18
-			"xxxxxxxxxx                                x", //19
-			"xxxxxxxxxx                                x", //20
+			"           x                              x", //2
+			"           x                              x", //3
+			"           x                              x", //4
+			"           x                              x", //5
+			"           x                              x", //6
+			"           x                              x", //7
+			"           x                              x", //8
+			"           x                              x", //9
+			"           x                              x", //10
+			"           x                              x", //11
+			"           x                              x", //12
+			"           x                              x", //13
+			"           x                              x", //14
+			"           x                              x", //15
+			"           x                               ", //16
+			"         xxx                               ", //17
+			"         x                                 ", //18
+			"         x                                 ", //19
+			"         x                                 ", //20
 			"xxxxxxxxxx      x                         x", //21
 			"x                   xx                    x", //22
 			"x                                         x", //23
@@ -82,6 +84,7 @@ private:
 	int escena = 0;
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
 
+	ControlarCultivos controlesCultivos;
 };
 
 DrawObjects::DrawObjects()
@@ -96,10 +99,8 @@ DrawObjects::~DrawObjects()
 		string rutaFondos = "assets/fondos/EscenasInicio/ESCENA" + to_string(i) + ".png";
 		string rutaIconos = "assets/fondos/Objetos/OPCIONES" + to_string(i) + ".png";
 		al_destroy_bitmap(ESCENAS[i]);
-		//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
 		cout << endl << rutaFondos << endl << rutaIconos << endl;
 		assert(ESCENAS[i] != NULL);
-		//assert(OPCIONES[i] != NULL);
 	}
 }
 
@@ -192,6 +193,7 @@ void DrawObjects::DrawBackgrounds()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + to_string(maskmap[yMder][xMder])).c_str());
 	
+	al_draw_bitmap(uno.imagen, uno.xPosition, uno.yPosition, 0);
 
 }
 void DrawObjects::drawOptions(int i, int Monedas)
@@ -213,8 +215,7 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 
 	if (al_key_down(&keystate, ALLEGRO_KEY_F))
 	{
-		//obtengo las coords del puntero del mouse
-		//controlsCultivos.plantarCultivo(keystate, queue);
+		controlesCultivos.plantarCultivo(keystate, queue);
 	}
 	else
 	{
@@ -255,19 +256,16 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			SpritePosY = direccion;
 			PlayRefresh = 0;
 		}
-
-		if (xJugador > 1280 && yJugador >= 260 && yJugador <= 330 && escena == 0) {
+		//cambio de mapa
+		if (xJugador > 1280 && yJugador >= 260 && yJugador <= 330 && escena == 0) 
+		{
 			xJugador = 2;
-			yJugador = 298;
 			escena = 1;
 		}
 		else if (xJugador < -38 && yJugador >= 246 && yJugador <= 332 && escena == 1)
 		{
 			xJugador = 1242;
-			yJugador = 300;
 			escena = 0;
 		}
-
-		cout << "x: " << xJugador << endl << "y: " << yJugador << endl;
 	}
 }
