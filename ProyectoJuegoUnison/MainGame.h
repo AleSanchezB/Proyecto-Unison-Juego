@@ -131,7 +131,7 @@ void MainGame::gameRun()
     //Inicia la musica en loop
     al_play_sample_instance(songInstance);
     al_set_sample_instance_gain(songInstance, volume);
-
+    drawOptions(0);
 
     // Bucle del juego
     while (running)
@@ -169,31 +169,24 @@ void MainGame::gameRun()
         {
             if (event.mouse.button == 1)
             {
-                contClicks++;
-                cout << contClicks << endl;
-                if (contClicks > 1) {
-                    contClicks = 0;
-                    al_stop_sample(&idClickEffect);
-                }else{
-                    click();
-                    //obtengo las coords del puntero del mouse
-                    mouseX = event.mouse.x;
-                    mouseY = event.mouse.y;
-                    if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294)
-                    {
-                        running = false;
-                        alDestroy();
-                        Mapa1 mapa1 = Mapa1();
-                    }
-                    else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
-                    {
-                        drawRec();
-                    }
-                    else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 423 && event.mouse.y <= 478)
-                    {
-                        running = false;
-                        alDestroy();
-                    }
+                click();
+                //obtengo las coords del puntero del mouse
+                mouseX = event.mouse.x;
+                mouseY = event.mouse.y;
+                if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294)
+                {
+                    running = false;
+                    alDestroy();
+                    Mapa1 mapa1 = Mapa1();
+                }
+                else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
+                {
+                    drawRec();
+                }
+                else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 423 && event.mouse.y <= 478)
+                {
+                    running = false;
+                    alDestroy();
                 }
             }
         }
@@ -204,7 +197,6 @@ void MainGame::drawOptions(int i) {
     al_draw_bitmap(fondos[i],0,0,NULL);
     al_flip_display();
 }
-
 void MainGame::alDestroy()
 {
     al_destroy_display(firstDisplay);
@@ -221,11 +213,9 @@ void MainGame::setVolMusic(float volumen)
 }
 void MainGame::click()
 {
-    al_play_sample(efectClick, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, &idClickEffect);
-    Sleep(1000);
     al_stop_sample(&idClickEffect);
+    al_play_sample(efectClick, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, &idClickEffect);
 }
-
 void MainGame::drawRec()
 {
     bool run = true;
