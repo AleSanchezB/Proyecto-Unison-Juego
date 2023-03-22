@@ -44,26 +44,26 @@ private:
 		//            10        20        30        40 
 		//   1234567890123456789012345678901234567890123
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //1
-			"                                          x", //2
-			"                                          x", //3
-			"                                          x", //4
-			"                                          x", //5
-			"                                          x", //6
-			"                                          x", //7
-			"                                          x", //8
-			"                                          x", //9
-			"                                          x", //10
-			"                                          x", //11
-			"                                          x", //12
-			"                                          x", //13
-			"                                          x", //14
-			"                                          x", //15
-			"                                           ", //16
-			"                                           ", //17
-			"                                           ", //18
-			"                                           ", //19
-			"                                           ", //20
-			"                x                         x", //21
+			"           x                              x", //2
+			"           x                              x", //3
+			"           x                              x", //4
+			"           x                              x", //5
+			"           x                              x", //6
+			"           x                              x", //7
+			"           x                              x", //8
+			"           x                              x", //9
+			"           x                              x", //10
+			"           x                              x", //11
+			"           x                              x", //12
+			"           x                              x", //13
+			"           x                              x", //14
+			"           x                              x", //15
+			"           x                               ", //16
+			"         xxx                               ", //17
+			"         x                                 ", //18
+			"         x                                 ", //19
+			"         x                                 ", //20
+			"xxxxxxxxxx      x                         x", //21
 			"x                   xx                    x", //22
 			"x                                         x", //23
 			"x                                         x", //24
@@ -99,10 +99,8 @@ DrawObjects::~DrawObjects()
 		string rutaFondos = "assets/fondos/EscenasInicio/ESCENA" + to_string(i) + ".png";
 		string rutaIconos = "assets/fondos/Objetos/OPCIONES" + to_string(i) + ".png";
 		al_destroy_bitmap(ESCENAS[i]);
-		//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
 		cout << endl << rutaFondos << endl << rutaIconos << endl;
 		assert(ESCENAS[i] != NULL);
-		//assert(OPCIONES[i] != NULL);
 	}
 }
 
