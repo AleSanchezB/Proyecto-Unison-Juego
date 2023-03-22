@@ -3,6 +3,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_primitives.h>
 #include <windows.h>
 #include "DrawObjects.h"
 #include "controlesCultivos.h"
@@ -26,7 +27,6 @@ private:
 	ALLEGRO_TIMER* _timer;
 	ALLEGRO_EVENT event;
 	DrawObjects drawPlayer;
-	ControlarCultivos controlsCultivos;
 
 	//CONSTANTES
 	const int width = 1280;
@@ -63,6 +63,7 @@ Mapa1::Mapa1()
 	al_install_keyboard();
 	al_init_font_addon();
 	al_init_ttf_addon();
+	al_init_primitives_addon();
 	init();
 	initRoom();
 }
@@ -108,17 +109,15 @@ void Mapa1::initRoom()
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
 			running = false;
-		}
-		if (event.type == ALLEGRO_EVENT_TIMER)
+		}else if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			drawPlayer.move(keystate, queue);
 		}
-		drawPlayer.DrawBackgrounds();
-
-		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
 		}
+		drawPlayer.DrawBackgrounds();
 		drawPlayer.drawPlayerAnimation();
 		drawPlayer.drawOptions(i, Monedas);
 	}

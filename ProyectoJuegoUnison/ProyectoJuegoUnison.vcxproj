@@ -157,9 +157,12 @@
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="SubmenuOptions.h" />
+    <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ControlesCultivos.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
