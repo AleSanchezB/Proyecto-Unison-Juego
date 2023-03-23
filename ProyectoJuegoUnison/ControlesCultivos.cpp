@@ -1,4 +1,3 @@
-
 #include "controlesCultivos.h"
 #include <iostream>
 
@@ -20,7 +19,7 @@ void ControlarCultivos::plantarCultivo(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_
 
         if (current_time - last_time_pressed >= COOLDOWN_TIME)
         {
-            // aquí va el código para la acción a realizar al presionar la tecla
+            // aquï¿½ va el cï¿½digo para la acciï¿½n a realizar al presionar la tecla
             std::cout << "Tecla presionada!" << std::endl;
             last_time_pressed = current_time;
             cultivos++;

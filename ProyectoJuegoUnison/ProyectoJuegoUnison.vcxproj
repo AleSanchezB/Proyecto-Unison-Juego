@@ -161,7 +161,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControlesCultivos.cpp" />
+    <ClCompile Include="DrawObjects.cpp" />
+    <ClCompile Include="GuardarDatos.cpp" />
+    <ClCompile Include="InitMap.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="SubmenuOptions.cpp" />
     <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>
   <ItemGroup>
