@@ -1,11 +1,13 @@
-#include <allegro5/allegro_image.h>
+#ifndef DRAW_H
+#define DRAW_H
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
 #include <string>
 #include "GuardarDatos.h"
-
-using namespace std;
+#include "controlesCultivos.h"
+#include "TipoCultivos.h"
 
 class DrawObjects
 {
@@ -39,7 +41,6 @@ private:
 	const int dimymask = 150;
 	//MATRIZ DEL MAPA MASCARA
 	char maskmap[150][150] = {
-		//            10        20        30        40 
 		// 
 		// 
 		// 
@@ -123,11 +124,9 @@ private:
 	int escena = 0;
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
 
+	ControlarCultivos controlesCultivos;
 };
 
-DrawObjects::DrawObjects()
-{
-}
 
 DrawObjects::~DrawObjects()
 {
@@ -314,3 +313,4 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 		cout << "x: " << xJugador << endl << "y: " << yJugador << endl;
 	}
 }
+#endif // !1
