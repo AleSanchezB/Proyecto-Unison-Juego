@@ -8,6 +8,7 @@
 #include "GuardarDatos.h"
 #include "controlesCultivos.h"
 #include "TipoCultivos.h"
+#include"sonidos.h"
 
 DrawObjects::DrawObjects()
 {
@@ -34,6 +35,7 @@ void DrawObjects::initImg() {
 	al_init_image_addon();
 	al_init_font_addon();
 	al_init_ttf_addon();
+	al_install_audio();
 	font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 	player = al_load_bitmap("assets/IdleTam/Sprites Players/characters/Walk_run Player.png");
 	std::string rutaFondos, rutaIconos;
@@ -92,6 +94,7 @@ void DrawObjects::DrawBackgrounds()
 	al_clear_to_color(al_map_rgb_f(254, 254, 254));
 	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
 
+
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(xJugador)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(yJugador)).c_str());
 
@@ -126,7 +129,7 @@ void DrawObjects::drawOptions(int i, int Monedas)
 }
 void DrawObjects::drawPlayerAnimation()
 {
-	Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, xJugador, yJugador);
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, xJugador, yJugador);
 }
 
 void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
@@ -145,6 +148,7 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 
 		//ACAAAAAAAAAAAAA LAURAAAAAAAAA
 		active = true;
+		//CHECAR SI ESTA CORRIENDO
 		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
 			speedPlayer = 4;
 			corriendo = 4;
@@ -153,13 +157,14 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			speedPlayer = 2;
 			corriendo = 0;
 		}
+		//MOVIMIENTOS DEL JUGADOR
 		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') {
 			yJugador -= speedPlayer;
 			direccion = UPW + corriendo;
 		}
 		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x') {
 			yJugador += speedPlayer;
-			direccion = DOWNW + corriendo;
+			direccion = DOWNW + corriendo;	
 		}
 		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x') {
 			xJugador += speedPlayer;
@@ -170,13 +175,15 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			direccion = LEFTW + corriendo;
 		}
 		else active = false;
+		//ANIMACION DE MOVIMIENTOS 
 		PlayRefresh++;
-		if (PlayRefresh == 6) {
-			if (SpritePosX >= 165) SpritePosX = 0;
-			if (active) SpritePosX += 33;
+		if (PlayRefresh == 10) {
+			if (SpritePosX >= 200) SpritePosX = 0;
+			if (active) SpritePosX += 40;
 			else SpritePosX = 0;
 			SpritePosY = direccion;
 			PlayRefresh = 0;
+			
 		}
 		//cambio de mapa
 		if (xJugador > 1280 && yJugador >= 260 && yJugador <= 330 && escena == 0)

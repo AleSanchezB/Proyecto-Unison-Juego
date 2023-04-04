@@ -8,6 +8,7 @@
 #include "GuardarDatos.h"
 #include "controlesCultivos.h"
 #include "TipoCultivos.h"
+#include <allegro5/allegro_audio.h>
 
 class DrawObjects
 {
@@ -30,7 +31,7 @@ private:
 	float speedPlayer = 2;
 	bool active = false;
 	float direccion = 0, SpritePosX = 0, SpritePosY = 0, corriendo = 0;
-	int PlayRefresh = 0;
+	int PlayRefresh = 0,AudRepeat=0;
 	float xJugador = 640;
 	float yJugador = 400;
 	float xCoordsFondos = 1280;

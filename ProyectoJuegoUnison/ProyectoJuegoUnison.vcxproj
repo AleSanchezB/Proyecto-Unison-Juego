@@ -156,6 +156,7 @@
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="sonidos.h" />
     <ClInclude Include="SubmenuOptions.h" />
     <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
@@ -166,6 +167,7 @@
     <ClCompile Include="InitMap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="sonidos.cpp" />
     <ClCompile Include="SubmenuOptions.cpp" />
     <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h>
 #include <windows.h>
 #include "DrawObjects.h"
 #include "controlesCultivos.h"
@@ -26,6 +27,8 @@ private:
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_BITMAP* ESCENAS[3];
+	ALLEGRO_SAMPLE* A_actual;
+	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 	ALLEGRO_TIMER* _timer;
 	ALLEGRO_EVENT event;
 	DrawObjects drawPlayer;
@@ -50,7 +53,7 @@ private:
 	void initRoom();
 	int getMonedas();
 	void DibujarGradualmente();
-
+	void ColocarMusica();
 	//VARIABLES FPS
 	int fps = 0;
 	int frame_count = 0;
