@@ -1,16 +1,6 @@
 #include "InitiMap.h"
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
-#include <allegro5/allegro_primitives.h>
-#include <windows.h>
-#include "DrawObjects.h"
-#include "controlesCultivos.h"
-#include <string>
-#include <chrono>
 
-Mapa1::Mapa1()
+GameRun::GameRun()
 {
 	al_init();
 	al_init_image_addon();
@@ -19,20 +9,8 @@ Mapa1::Mapa1()
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_init_primitives_addon();
-	init();
-	initRoom();
-}
-Mapa1::~Mapa1()
-{
-	al_destroy_display(displayGame);
-	al_destroy_timer(_timer);
-	al_uninstall_keyboard();
-}
-
-//inicializa y define las variables;
-void Mapa1::init()
-{
 	running = true;
+
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
 
 	displayGame = al_create_display(width, height);
@@ -51,45 +29,41 @@ void Mapa1::init()
 	al_register_event_source(queue, al_get_timer_event_source(_timer));
 	al_register_event_source(queue, al_get_mouse_event_source());
 
+	initGame();
 }
-void Mapa1::initRoom()
+GameRun::~GameRun()
 {
-	drawPlayer.initImg();
+	al_destroy_display(displayGame);
+	al_destroy_timer(_timer);
+	al_uninstall_keyboard();
+}
+
+void GameRun::initGame()
+{
+	Player* player = new Player("assets/IdleTam/Sprites Players/characters/Walk_run Player.png");
+	DrawObjects* drawPlayer = new DrawObjects();
+	cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
 	{
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
 
-		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
+		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
 		{
-			running = false;
-		}
-		else if (event.type == ALLEGRO_EVENT_TIMER)
-		{
-			drawPlayer.move(keystate, queue);
-		}
-		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
 		}
-		drawPlayer.DrawBackgrounds();
-		drawPlayer.drawPlayerAnimation();
-		drawPlayer.drawOptions(i, Monedas);
+		al_clear_to_color(al_map_rgb_f(254, 254, 254));
+		drawPlayer->DrawBackgrounds(player->getEscena());
+		player->action(keystate, queue);
+		drawPlayer->drawOptions(i, 900);
+		al_flip_display();
 	}
 }
 
-void Mapa1::setMonedas(int monedas)
-{
-	this->Monedas = monedas;
-}
-
-int Mapa1::getMonedas()
-{
-	return Monedas;
-}
-
-void Mapa1::DibujarGradualmente()
+void GameRun::DibujarGradualmente()
 {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	//al_draw_tinted_bitmap(ESCENA1, al_map_rgba_f(1.0, 1.0, 1.0, alpha), 0, 0, 0);

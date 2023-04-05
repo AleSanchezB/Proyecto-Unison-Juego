@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -156,6 +156,9 @@
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Mochila.h" />
+    <ClInclude Include="Objeto.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SubmenuOptions.h" />
     <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
@@ -166,6 +169,9 @@
     <ClCompile Include="InitMap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Mochila.cpp" />
+    <ClCompile Include="Objeto.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SubmenuOptions.cpp" />
     <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>

@@ -121,7 +121,7 @@ void MainGame::gameRun()
                 {
                     running = false;
                     alDestroy();
-                    Mapa1 mapa1 = Mapa1();
+                    GameRun mapa1 = GameRun();
                 }
                 else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
                 {
