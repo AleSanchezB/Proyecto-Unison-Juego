@@ -40,7 +40,7 @@ GameRun::~GameRun()
 
 void GameRun::initGame()
 {
-	Player* player = new Player("assets/IdleTam/Sprites Players/characters/Walk_run Player.png");
+	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player.png");
 	DrawObjects* drawPlayer = new DrawObjects();
 	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
@@ -89,14 +89,4 @@ void GameRun::DibujarGradualmente()
 
 	// Actualizar la pantalla
 	al_flip_display();
-}
-
-void Mapa1::ColocarMusica() {
-	//MUSICA DE AMBIENTE
-	A_actual = al_load_sample("assets/Effects Sounds/sonidos naturales 2/Ambient/AmbientNatureOutside.wav");
-	ambientacion = al_create_sample_instance(A_actual);
-	al_set_sample_instance_playmode(ambientacion, ALLEGRO_PLAYMODE_LOOP);
-	al_attach_sample_instance_to_mixer(ambientacion, al_get_default_mixer());
-	al_play_sample_instance(ambientacion);
-	al_set_sample_instance_gain(ambientacion, 0.4);
 }

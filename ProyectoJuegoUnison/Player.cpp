@@ -119,39 +119,43 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			corriendo = 0;
 		}
 		colisiones();
-		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c') {
+		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c') 
+		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 			MapaCasa = true;
 		}
-
-		if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o') {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o') 
+		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 			MapaV2 = true;
 		}
-
-
-		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') 
+		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x') {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x') 
+		{
 			this->y += speedPlayer;
 			direccion = DOWNW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x') {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x') 
+		{
 			this->x += speedPlayer;
 			direccion = RIGHTW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x') {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x') 
+		{
 			this->x -= speedPlayer;
 			direccion = LEFTW + corriendo;
 		}
 		else active = false;
 		//ANIMACION DE MOVIMIENTOS 
 		PlayRefresh++;
-		if (PlayRefresh == 10) {
+		if (PlayRefresh == 10) 
+		{
 			if (SpritePosX >= 200) SpritePosX = 0;
 			if (active) SpritePosX += 40;
 			else SpritePosX = 0;
@@ -173,7 +177,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	if (MapaV2) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia de mapa aqui V2*****")); }
 	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA")); }
 
-	Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, this->x, this->y);
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
 void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)
 {
