@@ -6,6 +6,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h>
 #include <windows.h>
 #include <string>
 #include <chrono>
@@ -17,7 +18,6 @@
 #include "DrawObjects.h"
 #include "controlesCultivos.h"
 
-std::list<Cultivo*>cultivos;
 class GameRun
 {
 public:
@@ -31,6 +31,10 @@ private:
 	ALLEGRO_BITMAP* ESCENAS[3];
 	ALLEGRO_TIMER* _timer;
 	ALLEGRO_EVENT event;
+
+
+	ALLEGRO_SAMPLE* A_actual;
+	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 
 	//CONSTANTES
 	const int width = 1280;
@@ -47,5 +51,6 @@ private:
 	//funciones
 	void initGame();
 	void DibujarGradualmente();
+	void ColocarMusica();
 };
 #endif // !1

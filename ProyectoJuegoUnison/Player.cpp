@@ -15,6 +15,10 @@ Player::Player(std::string ruta)
 	this->x = 624;
 	this->y = 310;
 	this->escena = 0;
+	this->MapaV2 = false;
+	this->MapaCasa = false;
+	this->AudRepeat = 0;
+	this->font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 }
 Player::~Player()
 {
@@ -24,7 +28,7 @@ void Player::action(ALLEGRO_KEYBOARD_STATE keystate,ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
 	move(keystate,queue);
-	Animate(SpritePosX, SpritePosY*50, 33.0f, 51.0f, this->x, this->y);
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
 void Player::colisiones()
 {
@@ -105,6 +109,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 
 		//ACAAAAAAAAAAAAA LAURAAAAAAAAA
 		active = true;
+		//CHECAR SI ESTA CORRIENDO
 		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
 			speedPlayer = 4;
 			corriendo = 4;
@@ -113,28 +118,42 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			speedPlayer = 2;
 			corriendo = 0;
 		}
-		//colisiones();
-		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != false) {
+		colisiones();
+		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c') {
+			this->y -= speedPlayer;
+			direccion = UPW + corriendo;
+			MapaCasa = true;
+		}
+
+		if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o') {
+			this->y -= speedPlayer;
+			direccion = UPW + corriendo;
+			MapaV2 = true;
+		}
+
+
+		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') {
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != false) {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x') {
 			this->y += speedPlayer;
 			direccion = DOWNW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != false) {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x') {
 			this->x += speedPlayer;
 			direccion = RIGHTW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != false) {
+		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x') {
 			this->x -= speedPlayer;
 			direccion = LEFTW + corriendo;
 		}
 		else active = false;
+		//ANIMACION DE MOVIMIENTOS 
 		PlayRefresh++;
-		if (PlayRefresh == 6) {
-			if (SpritePosX >= 165) SpritePosX = 0;
-			if (active) SpritePosX += 33;
+		if (PlayRefresh == 10) {
+			if (SpritePosX >= 200) SpritePosX = 0;
+			if (active) SpritePosX += 40;
 			else SpritePosX = 0;
 			SpritePosY = direccion;
 			PlayRefresh = 0;
@@ -151,6 +170,9 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			setEscena(0);
 		}
 	}
+	if (MapaV2) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia de mapa aqui V2*****")); }
+	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA")); }
+
 	Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, this->x, this->y);
 }
 void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)

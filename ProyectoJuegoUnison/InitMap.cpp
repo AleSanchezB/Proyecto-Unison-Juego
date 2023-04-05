@@ -28,7 +28,7 @@ GameRun::GameRun()
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(_timer));
 	al_register_event_source(queue, al_get_mouse_event_source());
-
+	ColocarMusica();
 	initGame();
 }
 GameRun::~GameRun()
@@ -42,7 +42,7 @@ void GameRun::initGame()
 {
 	Player* player = new Player("assets/IdleTam/Sprites Players/characters/Walk_run Player.png");
 	DrawObjects* drawPlayer = new DrawObjects();
-	cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
+	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
 	{
 		al_wait_for_event(queue, &event);
@@ -62,7 +62,15 @@ void GameRun::initGame()
 		al_flip_display();
 	}
 }
-
+void GameRun::ColocarMusica() {
+	//MUSICA DE AMBIENTE
+	A_actual = al_load_sample("assets/Effects Sounds/sonidos naturales 2/Ambient/AmbientNatureOutside.wav");
+	ambientacion = al_create_sample_instance(A_actual);
+	al_set_sample_instance_playmode(ambientacion, ALLEGRO_PLAYMODE_LOOP);
+	al_attach_sample_instance_to_mixer(ambientacion, al_get_default_mixer());
+	al_play_sample_instance(ambientacion);
+	al_set_sample_instance_gain(ambientacion, 0.4);
+}
 void GameRun::DibujarGradualmente()
 {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
