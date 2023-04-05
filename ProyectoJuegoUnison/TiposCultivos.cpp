@@ -1,15 +1,18 @@
 #include "TipoCultivos.h"
-#include <allegro5/allegro.h>
-#include <allegro5/bitmap.h>
 
-CultivoUno::CultivoUno()
+Cultivo::Cultivo(std::string ruta, int x, int y, int tipo) : Objeto(ruta)
 {
-		uno.xPosition = 10;
-		uno.yPosition = 10;
-		uno.imagen = al_load_bitmap("assets/Basic Plants.png");
-		assert(uno.imagen != NULL);
+	this->sprite = al_load_bitmap(ruta.c_str());
+	this->x = x;
+	this->y = y;
+	
 }
 
-CultivoUno::~CultivoUno()
+Cultivo::~Cultivo()
 {
+}
+
+void Cultivo::action()
+{
+	al_draw_bitmap(this->sprite, this->x, this->y, 0);
 }

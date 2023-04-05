@@ -1,6 +1,8 @@
 #ifndef GUARDARDATOS_H
 #define GUARDARDATOS_H
 
+#include <iostream>
+
 class DatosUsuario
 {
 public:

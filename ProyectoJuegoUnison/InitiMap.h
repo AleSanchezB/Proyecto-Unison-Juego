@@ -6,20 +6,23 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h>
 #include <windows.h>
-#include "DrawObjects.h"
-#include "controlesCultivos.h"
 #include <string>
 #include <chrono>
+#include <list>
 
-using namespace std;
+#include "Objeto.h"
+#include "Player.h"
+#include "TipoCultivos.h"
+#include "DrawObjects.h"
+#include "controlesCultivos.h"
 
-class Mapa1
+class GameRun
 {
 public:
-	Mapa1();
-	~Mapa1();
-	void setMonedas(int monedas);
+	GameRun();
+	~GameRun();
 
 private:
 	//VARIABLES ALLEGRO
@@ -28,7 +31,10 @@ private:
 	ALLEGRO_BITMAP* ESCENAS[3];
 	ALLEGRO_TIMER* _timer;
 	ALLEGRO_EVENT event;
-	DrawObjects drawPlayer;
+
+
+	ALLEGRO_SAMPLE* A_actual;
+	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 
 	//CONSTANTES
 	const int width = 1280;
@@ -37,23 +43,14 @@ private:
 	//VARIABLES
 	bool running;
 	int mouseX, mouseY;
-	int Monedas;
 	int i;
 
 	float alpha = 1.0;
-	float x = 0;
-	float y = 0;
 	float scale = 1.0;
 
 	//funciones
-	void init();
-	void initRoom();
-	int getMonedas();
+	void initGame();
 	void DibujarGradualmente();
-
-	//VARIABLES FPS
-	int fps = 0;
-	int frame_count = 0;
-	double frame_time = 0;
+	void ColocarMusica();
 };
 #endif // !1

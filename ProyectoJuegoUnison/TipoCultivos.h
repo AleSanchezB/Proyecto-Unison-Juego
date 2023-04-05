@@ -1,19 +1,13 @@
 #ifndef CULTIVOSUNO_H
 #define CULTIVOSUNO_H
-#include <allegro5/bitmap.h>
+#include "Objeto.h"
+#include <string>
 
-class CultivoUno
+class Cultivo : public Objeto
 {
-private:
-	struct TipoUnoCultivo
-	{
-		int xPosition;
-		int yPosition;
-		ALLEGRO_BITMAP* imagen;
-	};
 public:
-	CultivoUno();
-	~CultivoUno();
-	TipoUnoCultivo uno;
+	Cultivo(std::string ruta, int x, int y, int tipo);
+	~Cultivo();
+	void action();
 };
 #endif // !1
