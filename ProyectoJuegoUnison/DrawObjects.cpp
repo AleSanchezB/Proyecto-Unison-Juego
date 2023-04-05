@@ -52,8 +52,8 @@ void DrawObjects::initImg() {
 }
 void DrawObjects::DrawBackgrounds()
 {
-	int moniotpixancho = 30;
-	int monitopixalto = 20;
+	int moniotpixancho = 10;
+	int monitopixalto = 10;
 	xMask = (xJugador / moniotpixancho);
 	if (xMask < 0) xMask = 0;
 	if (xMask > dimxmask) xMask = dimxmask;
@@ -115,6 +115,9 @@ void DrawObjects::DrawBackgrounds()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
 
+	if (MapaV2) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia de mapa aqui V2*****")); }
+	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA")); }
+
 	//al_draw_bitmap(uno.imagen, uno.xPosition, uno.yPosition, 0);
 
 }
@@ -129,11 +132,16 @@ void DrawObjects::drawPlayerAnimation()
 	Animate(SpritePosX, SpritePosY * 50, 33.0f, 51.0f, xJugador, yJugador);
 }
 
+
+
+
 void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
 	ALLEGRO_EVENT events;
 	al_wait_for_event(queue, &events);
+
+	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("DRAW OBJECTS"));
 
 	if (al_key_down(&keystate, ALLEGRO_KEY_F))
 	{
@@ -143,7 +151,7 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 	{
 		// colision con el mapa de mascara
 
-		//ACAAAAAAAAAAAAA LAURAAAAAAAAA
+
 		active = true;
 		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
 			speedPlayer = 4;
@@ -153,6 +161,20 @@ void DrawObjects::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* que
 			speedPlayer = 2;
 			corriendo = 0;
 		}
+
+		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c') {
+			yJugador -= speedPlayer;
+			direccion = UPW + corriendo;
+			MapaCasa = true;
+		}
+
+		if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o') {
+			yJugador -= speedPlayer;
+			direccion = UPW + corriendo;
+			MapaV2 = true;
+		}
+
+
 		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') {
 			yJugador -= speedPlayer;
 			direccion = UPW + corriendo;
