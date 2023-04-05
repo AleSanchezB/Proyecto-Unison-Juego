@@ -172,6 +172,7 @@
     <ClCompile Include="Mochila.cpp" />
     <ClCompile Include="Objeto.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="sonidos.cpp" />
     <ClCompile Include="SubmenuOptions.cpp" />
     <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>

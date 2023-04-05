@@ -29,6 +29,8 @@ private:
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_BITMAP* ESCENAS[3];
+	ALLEGRO_SAMPLE* A_actual;
+	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 	ALLEGRO_TIMER* _timer;
 	ALLEGRO_EVENT event;
 
