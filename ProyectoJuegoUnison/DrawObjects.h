@@ -40,6 +40,7 @@ private:
 	float yJugador = 310;
 	float xCoordsFondos = 1280;
 	int Monedas;
+	
 
 	//DIMESION DE LA MATRIZ MASCARA
 	const int dimxmask = 150;
