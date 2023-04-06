@@ -69,8 +69,8 @@ void Player::colisiones()
 	if (yMder < 0) yMder = 0;
 	if (yMder > dimymask) yMder = dimymask;
 
-	/*al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(xJugador)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(yJugador)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(this->x)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(this->y)).c_str());
 
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 70, ALLEGRO_ALIGN_LEFT, ("xMask: " + std::to_string(xMask)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 70, ALLEGRO_ALIGN_LEFT, ("yMask: " + std::to_string(yMask)).c_str());
@@ -90,7 +90,7 @@ void Player::colisiones()
 
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + std::to_string(xMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());*/
+	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
 }
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
@@ -107,7 +107,6 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		// colision con el mapa de mascara
 
-		//ACAAAAAAAAAAAAA LAURAAAAAAAAA
 		active = true;
 		//CHECAR SI ESTA CORRIENDO
 		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
@@ -119,6 +118,48 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			corriendo = 0;
 		}
 		colisiones();
+
+
+		if (getEscena() == 0) {
+			memcpy(maskmap, maskmap1, sizeof(maskmap));
+		}
+		else {
+			memcpy(maskmap, maskmap2, sizeof(maskmap));
+		}
+
+
+		if (maskmap[yMizq][xMizq] == '1') {
+			MatrizCultivos[0][1] = true;
+		}
+		if (maskmap[yMizq][xMizq] == '2')
+		{
+			MatrizCultivos[0][2] = true;
+		}
+		if (maskmap[yMizq][xMizq] == '3')
+		{
+			MatrizCultivos[0][3] = true;
+		}
+		if (maskmap[yMizq][xMizq] == '4')
+		{
+			MatrizCultivos[0][4] = true;
+		}
+		if (maskmap[yMizq][xMizq] == '5')
+		{
+			MatrizCultivos[1][1] = true;
+		}
+		if (maskmap[yMizq][xMizq] == '6')
+		{
+			MatrizCultivos[1][2] = true;
+		}
+		if (maskmap[yMizq][xMizq] == '7')
+		{
+			MatrizCultivos[1][3] = true;
+		}
+		if (maskmap[yMizq][xMizq] == '8')
+		{
+			MatrizCultivos[1][4] = true;
+		}
+
 		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c') 
 		{
 			this->y -= speedPlayer;
@@ -130,6 +171,8 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 			MapaV2 = true;
+			this->x = 2;
+			setEscena(1);
 		}
 		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') 
 		{
@@ -165,8 +208,8 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		//cambio de mapa
 		if (this->x > 1280 && this->y >= 260 && this->y <= 330 && escena == 0)
 		{
-			this->x = 2;
-			setEscena(1);
+			/*this->x = 2;
+			setEscena(1);*/
 		}
 		else if (this->x < -38 && this->y >= 246 && this->y <= 332 && escena == 1)
 		{
@@ -174,8 +217,18 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			setEscena(0);
 		}
 	}
-	if (MapaV2) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia de mapa aqui V2*****")); }
-	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA")); }
+
+	
+	
+	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}
+	if (MatrizCultivos[0][1]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 30, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][1]"));}
+	if (MatrizCultivos[0][2]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 50, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][2]"));}
+	if (MatrizCultivos[0][3]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 70, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][3]"));}
+	if (MatrizCultivos[0][4]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 90, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][4]"));}
+	if (MatrizCultivos[1][1]){ al_draw_text(font, al_map_rgb(255, 255, 255), 500, 110, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][1]"));}
+	if (MatrizCultivos[1][2]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 130, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][2]"));}
+	if (MatrizCultivos[1][3]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 150, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][3]"));}
+	if (MatrizCultivos[1][4]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 170, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][4]"));}
 
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
