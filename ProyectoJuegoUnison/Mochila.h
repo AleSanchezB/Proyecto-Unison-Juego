@@ -2,6 +2,7 @@
 #ifndef MOCHILA_H
 #define MOCHILA_H
 #include <list>
+#include <allegro5/allegro_font.h>
 #include "TipoCultivos.h"
 
 class Mochila
@@ -23,11 +24,17 @@ public:
 	std::list<Cultivo*>cantTomates;
 	std::list<Cultivo*>cantCalabazas;
 	std::list<Cultivo*>cantZanahorias;
-	void action();
+	void action(ALLEGRO_FONT* font);
 private:
 	int cantidadObjetos;
 	int cantidadTomates;
 	int cantidadCalabaza;
 	int cantidadZanahoria;
+
+	ALLEGRO_BITMAP* barraHerramientas;
+	ALLEGRO_BITMAP* seleccionHerramienta;
+	ALLEGRO_BITMAP* tom;
+	ALLEGRO_BITMAP* cal;
+	ALLEGRO_BITMAP* zana;
 };
 #endif // !MOCHILA_H
