@@ -1,9 +1,9 @@
 #include "Player.h"
+//esta matriz nos permite saber cual hoyo de siembra está disponible
 Objeto* matrizCultivos[4][2];
 Player::Player(std::string ruta)
 {
-	al_init();
-	al_install_keyboard();
+	//creo el personaje
 	this->sprite = al_load_bitmap(ruta.c_str());
 	this->speedPlayer = 2;
 	this->active = false;
@@ -20,6 +20,10 @@ Player::Player(std::string ruta)
 	this->AudRepeat = 0;
 	this->font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 
+	//creo una mochila incial con 3 cultivos 1 de cada 1
+	mochila = new Mochila(3, 1, 1, 1);
+
+	//relleno la matriz de cultivos como NULL para verificar posteriormente si está disponible
 	for (int i = 0; i < filasCultivos; i++)
 	{
 		for (int j = 0; j < colCultivos; j++) matrizCultivos[i][j] = NULL;
@@ -31,12 +35,14 @@ Player::~Player()
 }
 void Player::action(ALLEGRO_KEYBOARD_STATE keystate,ALLEGRO_EVENT_QUEUE* queue)
 {
+	//mando a mover al personaje y a animarlo
 	al_get_keyboard_state(&keystate);
 	move(keystate,queue);
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
 void Player::colisiones()
 {
+	//verifico las colisiones con el mapa
 	int moniotpixancho = 10;
 	int monitopixalto = 10;
 	xMask = (this->x / moniotpixancho);
@@ -101,18 +107,15 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
 	ALLEGRO_EVENT events;
+	al_get_mouse_state(&estadoMouse);
 	al_wait_for_event(queue, &events);
 
-	//for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
-	//{
-	//	Cultivo* other = *it;
-	//	other->x = 898;
-	//	other->y = 542;
-	//}
-
+	//Verifico si se presiono la tecla f
 	if (al_key_down(&keystate, ALLEGRO_KEY_F) && getEscena() == 1)
 	{
+		//verifico el coudldown 
 		if (al_current_time() - last_f_press > 2) {
+			//recorro la matriz para verificar si está lleno, despues se cambiará
 			for (int i = 0; i < filasCultivos; i++)
 			{
 				for (int j = 0; j < colCultivos; j++)
@@ -123,17 +126,40 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 					}
 					else
 					{
-						Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1);
-						cultivos.push_back(cultivo);
-						matrizCultivos[i][j] = cultivo;
-						std::cout << "i: " << i << " j: " << j << std::endl;
-						i = filasCultivos;
-						j = colCultivos;
-						break;
+						//verifico si la mochila está vacia y creo un cultivo que despues se cambiará
+						if (verificacionMochila())
+						{
+							std::cout << "no se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
+							mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+							std::cout << "se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
+							Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1);
+							cultivos.push_back(cultivo);
+							matrizCultivos[i][j] = cultivo;
+							std::cout << "i: " << i << " j: " << j << std::endl;
+							i = filasCultivos;
+							j = colCultivos;
+							break;
+						}
 					}
 			}
 			last_f_press = al_current_time();
 		}
+	}
+	//muestra la mochila (falta interfaz)
+	else if (al_key_down(&keystate, ALLEGRO_KEY_C))
+	{
+		mochila->action();
+	}
+	//esto sirve para el scroll del mouse, a lo mejor se usa
+	else if (estadoMouse.z > 0)
+	{
+		std::cout << "se movió el scroll hacia arriba" << std::endl;
+		estadoMouse.z = 0;
+	}
+	else if (estadoMouse.z < 0)
+	{
+		std::cout << "se movió el scroll hacia abajo" << std::endl;
+		estadoMouse.z = 0;
 	}
 	else
 	{
@@ -162,23 +188,24 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 			setEscena(1);
+			this->x = 2;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != false)
+		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != false)
+		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x')
 		{
 			this->y += speedPlayer;
 			direccion = DOWNW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != false)
+		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x')
 		{
 			this->x += speedPlayer;
 			direccion = RIGHTW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != false)
+		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x')
 		{
 			this->x -= speedPlayer;
 			direccion = LEFTW + corriendo;
@@ -215,6 +242,7 @@ void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, floa
 {
 	al_draw_bitmap_region(this->sprite, SpritePosX, SpritePosY, movimientoX, movimientoY, xCoordsFondos, yJug, NULL);
 }
+//obtengo la escena en la que estoy
 void Player::setEscena(int escena)
 {
 	this->escena = escena;
@@ -222,4 +250,9 @@ void Player::setEscena(int escena)
 int Player::getEscena()
 {
 	return this->escena;
+}
+bool Player::verificacionMochila()
+{
+	if (mochila->getcantidadObjetos() > 0) return true;
+	return false;
 }

@@ -11,9 +11,10 @@
 #include <string>
 #include <iostream>
 #include <list>
-#include "TipoCultivos.h"
 
+#include "Mochila.h"
 #include "Objeto.h"
+#include "TipoCultivos.h"
 
 //std::list<Objeto*> objectos;
 
@@ -139,7 +140,9 @@ private:
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
-
+	bool verificacionMochila();
+	Mochila* mochila;
+	ALLEGRO_MOUSE_STATE estadoMouse;
 };
 extern Objeto *matrizCultivos[4][2];
 #endif // !PLAYER_H
