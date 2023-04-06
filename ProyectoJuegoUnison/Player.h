@@ -6,9 +6,12 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_audio.h>
+#include <allegro5/timer.h>
+
 #include <string>
 #include <iostream>
 #include <list>
+#include "TipoCultivos.h"
 
 #include "Objeto.h"
 
@@ -35,13 +38,20 @@ private:
 	int y;
 	int escena;
 
-
 	bool MapaV2;
 	bool MapaCasa;
+
+
+	bool f_pressed = false;
+	double last_f_press = 0.0;
+	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
 
 	//DIMESION DE LA MATRIZ MASCARA
 	const int dimxmask = 150;
 	const int dimymask = 150;
+
+	const int filasCultivos = 4;
+	const int colCultivos = 2;
 	//MATRIZ DEL MAPA MASCARA
 	char maskmap[150][150] = {
 		// 
@@ -125,11 +135,12 @@ private:
 	};
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
 
-
+	int vectormatriz[3];
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
 
 };
+extern Objeto *matrizCultivos[4][2];
 #endif // !PLAYER_H
 

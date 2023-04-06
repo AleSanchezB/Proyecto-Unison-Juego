@@ -1,5 +1,5 @@
 #include "Player.h"
-
+Objeto* matrizCultivos[4][2];
 Player::Player(std::string ruta)
 {
 	al_init();
@@ -19,6 +19,11 @@ Player::Player(std::string ruta)
 	this->MapaCasa = false;
 	this->AudRepeat = 0;
 	this->font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
+
+	for (int i = 0; i < filasCultivos; i++)
+	{
+		for (int j = 0; j < colCultivos; j++) matrizCultivos[i][j] = NULL;
+	}
 }
 Player::~Player()
 {
@@ -69,9 +74,9 @@ void Player::colisiones()
 	if (yMder < 0) yMder = 0;
 	if (yMder > dimymask) yMder = dimymask;
 
-	/*al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(xJugador)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(yJugador)).c_str());
-
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(this->x)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(this->y)).c_str());
+/*
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 70, ALLEGRO_ALIGN_LEFT, ("xMask: " + std::to_string(xMask)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 70, ALLEGRO_ALIGN_LEFT, ("yMask: " + std::to_string(yMask)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 70, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMask][xMask])).c_str());
@@ -98,10 +103,37 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	ALLEGRO_EVENT events;
 	al_wait_for_event(queue, &events);
 
-	if (al_key_down(&keystate, ALLEGRO_KEY_F))
-	{
-		//controlesCultivos.plantarCultivo(keystate, queue);
+	//for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
+	//{
+	//	Cultivo* other = *it;
+	//	other->x = 898;
+	//	other->y = 542;
+	//}
 
+	if (al_key_down(&keystate, ALLEGRO_KEY_F) && getEscena() == 1)
+	{
+		if (al_current_time() - last_f_press > 2) {
+			for (int i = 0; i < filasCultivos; i++)
+			{
+				for (int j = 0; j < colCultivos; j++)
+					if (matrizCultivos[i][j] != NULL)
+					{
+						std::cout << "Está lleno o está ocupado" << std::endl;
+						std::cout << "i: " << i << " j: " << j << std::endl;
+					}
+					else
+					{
+						Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1);
+						cultivos.push_back(cultivo);
+						matrizCultivos[i][j] = cultivo;
+						std::cout << "i: " << i << " j: " << j << std::endl;
+						i = filasCultivos;
+						j = colCultivos;
+						break;
+					}
+			}
+			last_f_press = al_current_time();
+		}
 	}
 	else
 	{
@@ -119,7 +151,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			corriendo = 0;
 		}
 		colisiones();
-		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c') 
+		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0) 
 		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
@@ -129,24 +161,24 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
-			MapaV2 = true;
+			setEscena(1);
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x') 
+		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != false)
 		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x') 
+		else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != false)
 		{
 			this->y += speedPlayer;
 			direccion = DOWNW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x') 
+		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != false)
 		{
 			this->x += speedPlayer;
 			direccion = RIGHTW + corriendo;
 		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x') 
+		else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != false)
 		{
 			this->x -= speedPlayer;
 			direccion = LEFTW + corriendo;
