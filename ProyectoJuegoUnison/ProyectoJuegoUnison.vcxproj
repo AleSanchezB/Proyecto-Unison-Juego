@@ -150,7 +150,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="controlesCultivos.h" />
     <ClInclude Include="DrawObjects.h" />
     <ClInclude Include="GuardarDatos.h" />
     <ClInclude Include="IAMobs.h" />
@@ -163,7 +162,6 @@
     <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ControlesCultivos.cpp" />
     <ClCompile Include="DrawObjects.cpp" />
     <ClCompile Include="GuardarDatos.cpp" />
     <ClCompile Include="InitMap.cpp" />

@@ -20,21 +20,21 @@ GameRun::GameRun()
 	queue = al_create_event_queue();
 
 	//Timer e incio del timer
-	_timer = al_create_timer(1.0 / 120);
-	al_start_timer(_timer);
+	timer = al_create_timer(1.0 / FPS);
 
 	//Registro de eventos
 	al_register_event_source(queue, al_get_display_event_source(displayGame));
 	al_register_event_source(queue, al_get_keyboard_event_source());
-	al_register_event_source(queue, al_get_timer_event_source(_timer));
+	al_register_event_source(queue, al_get_timer_event_source(timer));
 	al_register_event_source(queue, al_get_mouse_event_source());
 	ColocarMusica();
+	al_start_timer(timer);
 	initGame();
 }
 GameRun::~GameRun()
 {
 	al_destroy_display(displayGame);
-	al_destroy_timer(_timer);
+	al_destroy_timer(timer);
 	al_uninstall_keyboard();
 }
 
@@ -55,11 +55,19 @@ void GameRun::initGame()
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
 		}
-		al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		drawPlayer->DrawBackgrounds(player->getEscena());
-		player->action(keystate, queue);
-		drawPlayer->drawOptions(i, 900);
-		al_flip_display();
+		if (event.type == ALLEGRO_EVENT_TIMER)
+		{
+			player->action(keystate, queue);
+			draw = true;
+		}
+		if (draw)
+		{
+			draw = false;
+			drawPlayer->drawOptions(i, 900);
+			al_flip_display();
+			al_clear_to_color(al_map_rgb_f(254, 254, 254));
+		}
 	}
 }
 void GameRun::ColocarMusica() {
