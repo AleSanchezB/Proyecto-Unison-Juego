@@ -1,25 +1,33 @@
 #pragma once
 #ifndef MOCHILA_H
 #define MOCHILA_H
+#include <list>
+#include "TipoCultivos.h"
 
 class Mochila
 {
 public:
-	Mochila();
+	/*template<typename Tomate, typename Calabaza, typename Zanahoria>
+	Mochila(int cantidadObjetos, Tomate cantTomates, Calabaza cantCalabaza, Zanahoria cantZanahoria);*/
+	Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza, int cantidadZanahoria);
 	~Mochila();
 	void setcantidadObjetos(int cantidadObjetos);
-	void setcantidadCultivos1(int cantidadObjetos);
-	void setcantidadCultivos2(int cantidadObjetos);
-	void setcantidadCultivos3(int cantidadObjetos);
+	void setcantidadTomates(int cantidadTomates);
+	void setcantidadCalabaza(int cantidadCalabaza);
+	void setcantidadZanahoria(int cantidadZanahoria);
 
 	int getcantidadObjetos();
-	int getcantidadCultivos1();
-	int getcantidadCultivos2();
-	int getcantidadCultivos3();
+	int getcantidadTomates();
+	int getcantidadCalabaza();
+	int getcantidadZanahoria();
+	std::list<Cultivo*>cantTomates;
+	std::list<Cultivo*>cantCalabazas;
+	std::list<Cultivo*>cantZanahorias;
+	void action();
 private:
 	int cantidadObjetos;
-	int cantidadCultivos1;
-	int cantidadCultivos2;
-	int cantidadCultivos3;
+	int cantidadTomates;
+	int cantidadCalabaza;
+	int cantidadZanahoria;
 };
 #endif // !MOCHILA_H

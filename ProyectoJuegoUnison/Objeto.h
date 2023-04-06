@@ -6,6 +6,7 @@
 #include <allegro5/allegro_image.h>
 #include <string>
 
+//Esta clase unicamente la utilizo para usarla como clase padre
 class Objeto
 {
 public:

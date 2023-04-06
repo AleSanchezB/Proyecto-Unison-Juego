@@ -7,7 +7,6 @@
 #include <string>
 #include <iostream>
 #include "GuardarDatos.h"
-#include "controlesCultivos.h"
 #include "TipoCultivos.h"
 
 class DrawObjects
