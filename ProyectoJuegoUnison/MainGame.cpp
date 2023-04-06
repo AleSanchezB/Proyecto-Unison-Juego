@@ -28,7 +28,7 @@ MainGame::~MainGame()
 
 void MainGame::initVars()
 {
-    iconDisplay = al_load_bitmap("assets/Sprites Players/NO SE USARA/PNG/IdleTam/frame01.png");
+    iconDisplay = al_load_bitmap("assets/Player/frame01.png");
     for (int i = 0; i <= 3; i++)
     {
         string ruta = "assets/fondos/imgLogin/Banner0" + to_string(i) + ".png";
@@ -121,7 +121,7 @@ void MainGame::gameRun()
                 {
                     running = false;
                     alDestroy();
-                    Mapa1 mapa1 = Mapa1();
+                    GameRun mapa1 = GameRun();
                 }
                 else if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 332 && event.mouse.y <= 387)
                 {
