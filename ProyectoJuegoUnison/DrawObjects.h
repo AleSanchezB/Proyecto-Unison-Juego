@@ -26,6 +26,6 @@ private:
 
 	float xCoordsFondos = 1280;
 	int Monedas;
-	ControlarCultivos controlesCultivos;
+	Cultivo* cultivosCargados;
 };
 #endif // !1
