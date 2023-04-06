@@ -81,20 +81,20 @@ void GameRun::ColocarMusica() {
 }
 void GameRun::DibujarGradualmente()
 {
-	al_clear_to_color(al_map_rgb(0, 0, 0));
-	//al_draw_tinted_bitmap(ESCENA1, al_map_rgba_f(1.0, 1.0, 1.0, alpha), 0, 0, 0);
-	al_draw_rectangle(0, 0, 1280, 720, al_map_rgba_f(0, 0, 0, 0), NULL);
-	//al_draw_tinted_bitmap(ESCENA2, al_map_rgba_f(1.0, 1.0, 1.0, 1.0 - alpha), 0, 0, 0);
+	////al_clear_to_color(al_map_rgb(0, 0, 0));
+	////al_draw_tinted_bitmap(ESCENA1, al_map_rgba_f(1.0, 1.0, 1.0, alpha), 0, 0, 0);
+	//al_draw_rectangle(0, 0, 1280, 720, al_map_rgba_f(0, 0, 0, 0), NULL);
+	////al_draw_tinted_bitmap(ESCENA2, al_map_rgba_f(1.0, 1.0, 1.0, 1.0 - alpha), 0, 0, 0);
 
-	// Cambiar gradualmente el nivel de opacidad de las imágenes
-	alpha -= 0.01;
-	if (alpha <= 0) {
-		alpha = 1.0;
-		//ALLEGRO_BITMAP* temp = ESCENA1;
-		//ESCENA1 = ESCENA2;
-		//ESCENA2 = temp;
-	}
+	//// Cambiar gradualmente el nivel de opacidad de las imágenes
+	//alpha -= 0.01;
+	//if (alpha <= 0) {
+	//	alpha = 1.0;
+	//	//ALLEGRO_BITMAP* temp = ESCENA1;
+	//	//ESCENA1 = ESCENA2;
+	//	//ESCENA2 = temp;
+	//}
 
-	// Actualizar la pantalla
-	al_flip_display();
+	//// Actualizar la pantalla
+	//al_flip_display();
 }

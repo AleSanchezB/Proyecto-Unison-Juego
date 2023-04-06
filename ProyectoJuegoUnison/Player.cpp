@@ -148,7 +148,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	//muestra la mochila (falta interfaz)
 	else if (al_key_down(&keystate, ALLEGRO_KEY_C))
 	{
-		mochila->action();
+		mochila->action(font);
 	}
 	//esto sirve para el scroll del mouse, a lo mejor se usa
 	else if (estadoMouse.z > 0)

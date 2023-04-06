@@ -29,14 +29,13 @@ private:
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_BITMAP* ESCENAS[3];
 	ALLEGRO_EVENT event;
-
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 
 	//CONSTANTES
 	const int width = 1280;
 	const int height = 720;
-	const float FPS = 120.0;
+	const float FPS = 90.0;
 	//VARIABLES
 	bool running;
 	int mouseX, mouseY;
