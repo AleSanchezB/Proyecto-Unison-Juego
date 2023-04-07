@@ -172,24 +172,24 @@ private:
 			"                     x                 x                                         x                                 x         x", //36
 			"x                    x                  x                                        x                               xx          x", //37
 			"x                    x                   x                                       x                               x           x", //38
-			"x                    x                   x                                      x        11111111   5555         x           x", //39
-			"x                    x                    x                                     x        11111111   5555         x           x", //40
-			"x                     x                   x                                     x        11111111   5555         x           x", //41
+			"x                    x                   x                                      x        11111111   2222         x           x", //39
+			"x                    x                    x                                     x        11111111   2222         x           x", //40
+			"x                     x                   x                                     x        11111111   2222         x           x", //41
 			"x                     x                   x                                     x                                x           x", //42
 			"x                      x                  x                                     x                                x           x", //43
-			"x                      x                  x                         xxxx        x       22222222     6666        x           x", //44
-			"x                       x                 x                          xx          x      22222222     6666         x          x", //45
-			"x                       x                 x                          xx          x      22222222     6666         x          x", //46
+			"x                      x                  x                         xxxx        x       33333333     4444        x           x", //44
+			"x                       x                 x                          xx          x      33333333     4444         x          x", //45
+			"x                       x                 x                          xx          x      33333333     4444         x          x", //46
 			"x            xxxx        x                x                          xx          x                               x           x", //47
 			"x             xx         xx               x       xx                 xx          x                               x           x", //48
-			"x             xx           x              x       xx                 xx          x       33333333    7777        x           x", //49
-			"x             xx           x              x       xx                 xx          x       33333333    7777        x           x", //50
-			"x             xx           x              x       xx                 xx          x       33333333    7777        x           x", //52
+			"x             xx           x              x       xx                 xx          x       55555555    6666        x           x", //49
+			"x             xx           x              x       xx                 xx          x       55555555    6666        x           x", //50
+			"x             xx           x              x       xx                 xx          x       55555555    6666        x           x", //52
 			"x             xx           x              x       xx       xx        xx          x                               x           x", //51
 			"x  xx         xx            x             x       xx       xx        xx          x                               x           x", //53
-			"x  xx         xx            x              x               xx                    x      44444444                 x           x", //54
-			"x  xx         xx            x              xxxxxx          xx                    x      44444444     88888       x           x", //55
-			"x  xx                       x              x   xxx         xx             xx     x      44444444     88888       x           x", //56
+			"x  xx         xx            x              x               xx                    x      77777777                 x           x", //54
+			"x  xx         xx            x              xxxxxx          xx                    x      77777777     88888       x           x", //55
+			"x  xx                       x              x   xxx         xx             xx     x      77777777     88888       x           x", //56
 			"x  xx                       x               x   xx                        xx     x                   88888       x           x", //57
 			"x                           x               x     xx                      xx     x                               x           x", //58
 			"x                  x        x                x      x                     xx     x                             xxx           x", //59
