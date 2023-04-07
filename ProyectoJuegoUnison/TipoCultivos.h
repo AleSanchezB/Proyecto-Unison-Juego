@@ -8,8 +8,10 @@
 class Cultivo : public Objeto
 {
 public:
-	Cultivo(std::string ruta, int x, int y, int tipo);
+	int T_Plantacion;
+	Cultivo(std::string ruta, int x, int y, int tipo, int T_Creado=0);
 	~Cultivo();
+	void Crecer(float T_Actual);
 	void action();
 	struct Tomate
 	{

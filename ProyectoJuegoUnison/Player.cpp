@@ -113,7 +113,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	//Verifico si se presiono la tecla f
 	if (al_key_down(&keystate, ALLEGRO_KEY_F) && getEscena() == 1)
 	{
-		//verifico el coudldown 
+		//verifico el cooldown 
 		if (al_current_time() - last_f_press > 2) {
 			//recorro la matriz para verificar si está lleno, despues se cambiará
 
@@ -202,6 +202,30 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			//			}
 			//		}
 			//}
+				for (int j = 0; j < colCultivos; j++)
+					if (matrizCultivos[i][j] != NULL)
+					{
+						std::cout << "Está lleno o está ocupado" << std::endl;
+						std::cout << "i: " << i << " j: " << j << std::endl;
+					}
+					else
+					{
+						//verifico si la mochila está vacia y creo un cultivo que despues se cambiará
+						if (verificacionMochila())
+						{
+							std::cout << "no se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
+							mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+							std::cout << "se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
+							Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1,al_current_time());
+							cultivos.push_back(cultivo);
+							matrizCultivos[i][j] = cultivo;
+							std::cout << "i: " << i << " j: " << j << std::endl;
+							i = filasCultivos;
+							j = colCultivos;
+							break;
+						}
+					}
+			}
 			last_f_press = al_current_time();
 		}
 	}
@@ -302,7 +326,14 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			setEscena(0);
 		}
 	}
-
+	//CHECAR PLANTACIONES (MOVER DESPUÉS)
+	for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
+	{
+		Cultivo* other = *it;
+		other->Crecer(al_current_time());
+	}
+	
+	
 	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}
 	if (MatrizCultivos[0][1]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 30, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][1]"));}
 	if (MatrizCultivos[0][2]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 50, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][2]"));}
