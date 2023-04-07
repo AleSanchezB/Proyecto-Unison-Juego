@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -156,12 +156,17 @@
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Objetcs.h" />
+    <ClInclude Include="Personajes.h" />
     <ClInclude Include="SubmenuOptions.h" />
     <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControlesCultivos.cpp" />
+    <ClCompile Include="DrawObjects.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Objetcs.cpp" />
+    <ClCompile Include="Personaje.cpp" />
     <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>
   <ItemGroup>
