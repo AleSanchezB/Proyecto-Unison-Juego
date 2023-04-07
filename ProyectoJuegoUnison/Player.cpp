@@ -113,7 +113,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	//Verifico si se presiono la tecla f
 	if (al_key_down(&keystate, ALLEGRO_KEY_F) && getEscena() == 1)
 	{
-		//verifico el coudldown 
+		//verifico el cooldown 
 		if (al_current_time() - last_f_press > 2) {
 			//recorro la matriz para verificar si está lleno, despues se cambiará
 			for (int i = 0; i < filasCultivos; i++)
@@ -132,7 +132,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 							std::cout << "no se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
 							mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
 							std::cout << "se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
-							Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1);
+							Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1,al_current_time());
 							cultivos.push_back(cultivo);
 							matrizCultivos[i][j] = cultivo;
 							std::cout << "i: " << i << " j: " << j << std::endl;
@@ -274,7 +274,12 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			setEscena(0);
 		}
 	}
-
+	//CHECAR PLANTACIONES (MOVER DESPUÉS)
+	for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
+	{
+		Cultivo* other = *it;
+		other->Crecer(al_current_time());
+	}
 	
 	
 	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}

@@ -22,7 +22,7 @@ class GameRun
 public:
 	GameRun();
 	~GameRun();
-
+	ALLEGRO_TIMER* timer;
 private:
 	//VARIABLES ALLEGRO
 	ALLEGRO_DISPLAY* displayGame;
@@ -46,7 +46,6 @@ private:
 
 
 	bool draw = true;
-	ALLEGRO_TIMER* timer;
 	//funciones
 	void initGame();
 	void DibujarGradualmente();

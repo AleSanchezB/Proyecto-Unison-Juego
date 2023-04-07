@@ -1,5 +1,7 @@
 #include "InitiMap.h"
+#include <iostream>
 
+using std::cout;
 GameRun::GameRun()
 {
 	al_init();
@@ -19,7 +21,7 @@ GameRun::GameRun()
 	//cola de eventos
 	queue = al_create_event_queue();
 
-	//Timer e incio del timer
+	//Timer e inicio del timer
 	timer = al_create_timer(1.0 / FPS);
 
 	//Registro de eventos
@@ -79,6 +81,7 @@ void GameRun::ColocarMusica() {
 	al_play_sample_instance(ambientacion);
 	al_set_sample_instance_gain(ambientacion, 0.4);
 }
+ 
 void GameRun::DibujarGradualmente()
 {
 	////al_clear_to_color(al_map_rgb(0, 0, 0));
