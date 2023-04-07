@@ -122,7 +122,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 				if (maskmap[yMizq][xMizq] == '1' && matrizCultivos[0][0] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 395, 1, al_current_time());
+					Cultivo* cultivo = new Cultivo("assets/Plants/calabaza sprites.png", 904, 395, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[0][0] = cultivo;
 				}
@@ -277,11 +277,17 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		}
 	}
 	//CHECAR PLANTACIONES (MOVER DESPUÉS)
-	for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
-	{
-		Cultivo* other = *it;
-		other->Crecer(al_current_time());
+	
+	aux++;
+	if (aux == 90) {
+		for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
+		{
+			Cultivo* other = *it;
+			other->Crecer(al_current_time());
+		}
+		aux = 0;
 	}
+	
 	
 	
 	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}

@@ -36,6 +36,7 @@ void DrawObjects::DrawBackgrounds(int escena)
 	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
 	if(escena == 1)
 		cultivosCargados->action();
+
 }
 void DrawObjects::drawOptions(int i, int Monedas)
 {

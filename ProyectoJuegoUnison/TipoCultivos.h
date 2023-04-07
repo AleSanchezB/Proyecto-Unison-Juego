@@ -9,6 +9,8 @@ class Cultivo : public Objeto
 {
 public:
 	int T_Plantacion;
+	enum {BROTE,ADOL,COSECHABLE};
+	int estado=0;
 	Cultivo(std::string ruta, int x, int y, int tipo, int T_Creado=0);
 	~Cultivo();
 	void Crecer(float T_Actual);
