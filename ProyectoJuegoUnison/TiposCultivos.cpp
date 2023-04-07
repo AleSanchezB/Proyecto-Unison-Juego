@@ -41,14 +41,22 @@ Cultivo::~Cultivo()
 }
 
 
-void Cultivo::action()
+void Cultivo::action(int escena)
 {
 	try
 	{
 		for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
 		{
 			Cultivo* other = *it;
-			al_draw_bitmap_region(other->sprite, other->sx, other->sy, other->sw, other->sh, other->x, other->y, 0);
+			//std::cout << other->sx << '\n';
+			other->aux++;
+			if (other->aux >= 90)
+			{
+				other->Crecer(other);
+				other->aux = 0;
+			}
+			if (escena == 1)
+				al_draw_bitmap_region(other->sprite, other->sx, other->sy, 40, other->sh, other->x, other->y, 0);
 		}
 	}
 	catch (const std::exception&)
@@ -57,7 +65,14 @@ void Cultivo::action()
 	}
 }
 
-void Cultivo::Crecer(float T_Actual)
+void Cultivo::Crecer(Cultivo* other)
 {
-
+	int resta = (int)(al_current_time() - other->T_Plantacion) % 7;
+	std::cout << resta << " resta" << '\n';
+	if (resta == 0 && other->estado != other->COSECHABLE) {
+		other->estado++;
+		//other->sh += 34;
+		other->sx += 40;
+		std::cout << other->sx << " sx dentro de crecer\n";
+	}
 }
