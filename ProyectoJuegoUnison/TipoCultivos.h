@@ -20,7 +20,7 @@ public:
 
 	struct Calabaza
 	{
-		std::string ruta = "assets/Plants/calabaza spritess.png";
+		std::string ruta = "assets/Plants/calabaza sprites.png";
 		float sw = 36.5;
 		float sh = 31.0;
 	};
