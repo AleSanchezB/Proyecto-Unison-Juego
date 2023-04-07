@@ -1,5 +1,6 @@
 #include "InitiMap.h"
 
+using std::cout;
 GameRun::GameRun()
 {
 	al_init();
@@ -19,7 +20,7 @@ GameRun::GameRun()
 	//cola de eventos
 	queue = al_create_event_queue();
 
-	//Timer e incio del timer
+	//Timer e inicio del timer
 	timer = al_create_timer(1.0 / FPS);
 
 	//Registro de eventos
@@ -40,7 +41,7 @@ GameRun::~GameRun()
 
 void GameRun::initGame()
 {
-	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player.png");
+	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
 	DrawObjects* drawPlayer = new DrawObjects();
 	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
@@ -70,7 +71,8 @@ void GameRun::initGame()
 		}
 	}
 }
-void GameRun::ColocarMusica() {
+void GameRun::ColocarMusica() 
+{
 	//MUSICA DE AMBIENTE
 	A_actual = al_load_sample("assets/Effects Sounds/sonidos naturales 2/Ambient/AmbientNatureOutside.wav");
 	ambientacion = al_create_sample_instance(A_actual);
@@ -79,22 +81,23 @@ void GameRun::ColocarMusica() {
 	al_play_sample_instance(ambientacion);
 	al_set_sample_instance_gain(ambientacion, 0.4);
 }
+ 
 void GameRun::DibujarGradualmente()
 {
-	al_clear_to_color(al_map_rgb(0, 0, 0));
-	//al_draw_tinted_bitmap(ESCENA1, al_map_rgba_f(1.0, 1.0, 1.0, alpha), 0, 0, 0);
-	al_draw_rectangle(0, 0, 1280, 720, al_map_rgba_f(0, 0, 0, 0), NULL);
-	//al_draw_tinted_bitmap(ESCENA2, al_map_rgba_f(1.0, 1.0, 1.0, 1.0 - alpha), 0, 0, 0);
+	////al_clear_to_color(al_map_rgb(0, 0, 0));
+	////al_draw_tinted_bitmap(ESCENA1, al_map_rgba_f(1.0, 1.0, 1.0, alpha), 0, 0, 0);
+	//al_draw_rectangle(0, 0, 1280, 720, al_map_rgba_f(0, 0, 0, 0), NULL);
+	////al_draw_tinted_bitmap(ESCENA2, al_map_rgba_f(1.0, 1.0, 1.0, 1.0 - alpha), 0, 0, 0);
 
-	// Cambiar gradualmente el nivel de opacidad de las imágenes
-	alpha -= 0.01;
-	if (alpha <= 0) {
-		alpha = 1.0;
-		//ALLEGRO_BITMAP* temp = ESCENA1;
-		//ESCENA1 = ESCENA2;
-		//ESCENA2 = temp;
-	}
+	//// Cambiar gradualmente el nivel de opacidad de las imágenes
+	//alpha -= 0.01;
+	//if (alpha <= 0) {
+	//	alpha = 1.0;
+	//	//ALLEGRO_BITMAP* temp = ESCENA1;
+	//	//ESCENA1 = ESCENA2;
+	//	//ESCENA2 = temp;
+	//}
 
-	// Actualizar la pantalla
-	al_flip_display();
+	//// Actualizar la pantalla
+	//al_flip_display();
 }
