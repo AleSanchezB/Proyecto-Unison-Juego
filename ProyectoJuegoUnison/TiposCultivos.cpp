@@ -21,14 +21,14 @@ Cultivo::Cultivo(std::string ruta, int x, int y, int tipo,int T_Creado) : Objeto
 		this->sy = 0;
 
 		this->sw = 36.5;
-		this->sh = 31.0;
+		this->sh = 34.0;
 		break;
 	case 2: //zanahoria
 		this->sx = 0;
 		this->sy = 0;
 
 		this->sw = 30.0;
-		this->sh = 25.0;
+		this->sh = 34.0;
 		break;
 	default:
 		break;
@@ -56,7 +56,7 @@ void Cultivo::action(int escena)
 				other->aux = 0;
 			}
 			if (escena == 1)
-				al_draw_bitmap_region(other->sprite, other->sx, other->sy, 40, other->sh, other->x, other->y, 0);
+				al_draw_bitmap_region(other->sprite, other->sx, other->sy, 44, other->sh, other->x, other->y, 0);
 		}
 	}
 	catch (const std::exception&)
@@ -71,8 +71,8 @@ void Cultivo::Crecer(Cultivo* other)
 	std::cout << resta << " resta" << '\n';
 	if (resta == 0 && other->estado != other->COSECHABLE) {
 		other->estado++;
-		//other->sh += 34;
-		other->sx += 40;
+		other->sx += 44;
+		//other->x -= 5;
 		std::cout << other->sx << " sx dentro de crecer\n";
 	}
 }
