@@ -1,14 +1,5 @@
-//#include "MainGame.h"
-#include "Objetcs.h"
-#include <allegro5/allegro5.h>
-#include <allegro5/bitmap.h>
-#include <list>
-
+#include "MainGame.h"
 using namespace std;
-
-#include "Objetcs.h"
-#include "Personajes.h"
-
 int main(int argc, char** argv) {
 	//MainGame main = MainGame();
 	bool running = true;

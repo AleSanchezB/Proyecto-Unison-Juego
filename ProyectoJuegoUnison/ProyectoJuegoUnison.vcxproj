@@ -150,23 +150,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="controlesCultivos.h" />
     <ClInclude Include="DrawObjects.h" />
     <ClInclude Include="GuardarDatos.h" />
     <ClInclude Include="IAMobs.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="Objetcs.h" />
-    <ClInclude Include="Personajes.h" />
+    <ClInclude Include="Mochila.h" />
+    <ClInclude Include="Objeto.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SubmenuOptions.h" />
     <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ControlesCultivos.cpp" />
     <ClCompile Include="DrawObjects.cpp" />
+    <ClCompile Include="GuardarDatos.cpp" />
+    <ClCompile Include="InitMap.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Objetcs.cpp" />
-    <ClCompile Include="Personaje.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Mochila.cpp" />
+    <ClCompile Include="Objeto.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="sonidos.cpp" />
+    <ClCompile Include="SubmenuOptions.cpp" />
     <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>
   <ItemGroup>
