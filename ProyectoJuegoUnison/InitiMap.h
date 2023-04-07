@@ -11,7 +11,7 @@
 #include <string>
 #include <chrono>
 #include <list>
-
+#include <iostream>
 #include "Objeto.h"
 #include "Player.h"
 #include "TipoCultivos.h"

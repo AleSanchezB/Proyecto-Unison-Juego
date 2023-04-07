@@ -122,109 +122,59 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 				if (maskmap[yMizq][xMizq] == '1' && matrizCultivos[0][0] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 395, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 395, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[0][0] = cultivo;
 				}
 				if (maskmap[yMizq][xMizq] == '2' && matrizCultivos[0][1] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/calabaza sprites.png", 1074, 413, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/calabaza sprites.png", 1074, 413, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[0][1] = cultivo;
 				}
 				if (maskmap[yMizq][xMizq] == '3' && matrizCultivos[1][0] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 896, 444, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 896, 444, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[1][0] = cultivo;
 				}
 				if (maskmap[yMizq][xMizq] == '4' && matrizCultivos[1][1] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 1041, 472, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 1041, 472, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[1][1] = cultivo;
 				}
 				if (maskmap[yMizq][xMizq] == '5' && matrizCultivos[2][0] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/calabaza sprites.png", 907, 488, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/calabaza sprites.png", 907, 488, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[2][0] = cultivo;
 				}
 				if (maskmap[yMizq][xMizq] == '6' && matrizCultivos[2][1] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 1035, 505, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 1035, 505, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[2][1] = cultivo;
 				}
 				if (maskmap[yMizq][xMizq] == '7' && matrizCultivos[3][0] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 898, 542, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 898, 542, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[3][0] = cultivo;
 				}
 				if (maskmap[yMizq][xMizq] == '8' && matrizCultivos[3][1] == NULL)
 				{
 					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 1050, 574, 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 1050, 574, 1, al_current_time());
 					cultivos.push_back(cultivo);
 					matrizCultivos[3][1] = cultivo;
 				}
-			}
-			//for (int i = 0; i < filasCultivos; i++)
-			//{
-			//	for (int j = 0; j < colCultivos; j++)
-			//		if (matrizCultivos[i][j] != NULL)
-			//		{
-			//			std::cout << "Está lleno o está ocupado" << std::endl;
-			//			std::cout << "i: " << i << " j: " << j << std::endl;
-			//		}
-			//		else
-			//		{
-			//			//verifico si la mochila está vacia y creo un cultivo que despues se cambiará
-			//			if (verificacionMochila())
-			//			{
-			//				std::cout << "no se ha quitado un objeto " << mochila->getcantidadObjetos() << std::endl;
-			//				mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-			//				std::cout << "se ha quitado un objeto " << mochila->getcantidadObjetos() << std::endl;
-			//				Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1);
-			//				cultivos.push_back(cultivo);
-			//				matrizCultivos[i][j] = cultivo;
-			//				std::cout << "i: " << i << " j: " << j << std::endl;
-			//				i = filasCultivos;
-			//				j = colCultivos;
-			//				break;
-			//			}
-			//		}
-			//}
-				for (int j = 0; j < colCultivos; j++)
-					if (matrizCultivos[i][j] != NULL)
-					{
-						std::cout << "Está lleno o está ocupado" << std::endl;
-						std::cout << "i: " << i << " j: " << j << std::endl;
-					}
-					else
-					{
-						//verifico si la mochila está vacia y creo un cultivo que despues se cambiará
-						if (verificacionMochila())
-						{
-							std::cout << "no se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
-							mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-							std::cout << "se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
-							Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1,al_current_time());
-							cultivos.push_back(cultivo);
-							matrizCultivos[i][j] = cultivo;
-							std::cout << "i: " << i << " j: " << j << std::endl;
-							i = filasCultivos;
-							j = colCultivos;
-							break;
-						}
-					}
 			}
 			last_f_press = al_current_time();
 		}

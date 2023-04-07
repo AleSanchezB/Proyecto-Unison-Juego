@@ -1,5 +1,4 @@
 #include "InitiMap.h"
-#include <iostream>
 
 using std::cout;
 GameRun::GameRun()
