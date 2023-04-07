@@ -7,7 +7,6 @@
 #include <string>
 #include <iostream>
 #include "GuardarDatos.h"
-#include "controlesCultivos.h"
 #include "TipoCultivos.h"
 
 class DrawObjects
@@ -26,6 +25,6 @@ private:
 
 	float xCoordsFondos = 1280;
 	int Monedas;
-	ControlarCultivos controlesCultivos;
+	Cultivo* cultivosCargados;
 };
 #endif // !1

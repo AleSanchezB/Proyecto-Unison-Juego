@@ -30,9 +30,6 @@
     <ClInclude Include="DrawObjects.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="controlesCultivos.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="GuardarDatos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -54,9 +51,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="TiposCultivos.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="ControlesCultivos.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
@@ -81,6 +75,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Mochila.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="sonidos.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

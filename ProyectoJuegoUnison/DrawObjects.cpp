@@ -30,6 +30,7 @@ DrawObjects::~DrawObjects()
 void DrawObjects::DrawBackgrounds(int escena)
 {
 	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
+	cultivosCargados->action();
 }
 void DrawObjects::drawOptions(int i, int Monedas)
 {

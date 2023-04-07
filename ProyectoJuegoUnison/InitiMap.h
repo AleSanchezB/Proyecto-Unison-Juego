@@ -16,7 +16,6 @@
 #include "Player.h"
 #include "TipoCultivos.h"
 #include "DrawObjects.h"
-#include "controlesCultivos.h"
 
 class GameRun
 {
@@ -29,9 +28,7 @@ private:
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_BITMAP* ESCENAS[3];
-	ALLEGRO_TIMER* _timer;
 	ALLEGRO_EVENT event;
-
 
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
@@ -39,7 +36,7 @@ private:
 	//CONSTANTES
 	const int width = 1280;
 	const int height = 720;
-
+	const float FPS = 120.0;
 	//VARIABLES
 	bool running;
 	int mouseX, mouseY;
@@ -48,6 +45,9 @@ private:
 	float alpha = 1.0;
 	float scale = 1.0;
 
+
+	bool draw = true;
+	ALLEGRO_TIMER* timer;
 	//funciones
 	void initGame();
 	void DibujarGradualmente();
