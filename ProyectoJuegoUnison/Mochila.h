@@ -21,16 +21,19 @@ public:
 	int getcantidadTomates();
 	int getcantidadCalabaza();
 	int getcantidadZanahoria();
-	std::list<Cultivo*>cantTomates;
-	std::list<Cultivo*>cantCalabazas;
-	std::list<Cultivo*>cantZanahorias;
+
 	void action(ALLEGRO_FONT* font);
+	int verificarObjectoSeleccionado();
+	void cambiarCasilla(int casillaSelect);
+	void quitarCultivo(int tipo);
+	bool verificacionMochila();
+	bool verificarCantidadCultivos(int tipo);
 private:
 	int cantidadObjetos;
 	int cantidadTomates;
 	int cantidadCalabaza;
 	int cantidadZanahoria;
-
+	int casillaSelect;
 	ALLEGRO_BITMAP* barraHerramientas;
 	ALLEGRO_BITMAP* seleccionHerramienta;
 	ALLEGRO_BITMAP* tom;

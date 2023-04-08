@@ -4,15 +4,12 @@ DrawObjects::DrawObjects()
 {
 	font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 	std::string rutaFondos, rutaIconos;
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		rutaFondos = "assets/fondos/EscenasInicio/ESCENA0" + std::to_string(i) + ".png";
-		//rutaIconos = "assets/fondos/Objetos/OPCIONES0" + std::to_string(i) + ".png";
 		ESCENAS[i] = al_load_bitmap(rutaFondos.c_str());
-		//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
 		//std::cout << std::endl << rutaFondos << std::endl << rutaIconos << std::endl;
 		assert(ESCENAS[i] != NULL);
-		//assert(OPCIONES[i] != NULL);
 	}
 	datosUsuario.ObtenerDatos();
 	Monedas = datosUsuario.getMonedas();
@@ -34,7 +31,7 @@ DrawObjects::~DrawObjects()
 void DrawObjects::DrawBackgrounds(int escena)
 {
 	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
-	cultivosCargados->action(escena);
+	if (escena == 1)	cultivosCargados->action(escena);
 }
 void DrawObjects::drawOptions(int i, int Monedas)
 {
