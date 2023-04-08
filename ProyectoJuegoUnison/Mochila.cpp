@@ -81,7 +81,9 @@ void Mochila::action(ALLEGRO_FONT *font)
 }
 void Mochila::cambiarCasilla(int casillaSelect)
 {
-	this->casillaSelect = casillaSelect;
+	if (this->casillaSelect == 0 && casillaSelect < 0) this->casillaSelect = 4;
+	else if(this->casillaSelect == 4 && casillaSelect > 1) this->casillaSelect = 0;
+	else this->casillaSelect = casillaSelect;
 }
 
 int Mochila::verificarObjectoSeleccionado()

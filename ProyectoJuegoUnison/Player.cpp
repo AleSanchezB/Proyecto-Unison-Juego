@@ -128,35 +128,35 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		if (maskmap[yMizq][xMizq] == '1' && matrizCultivos[0] != NULL)
 		{
-			cultivosNuevos(0);
+			Cosechar(0);
 		}
 		if (maskmap[yMizq][xMizq] == '2' && matrizCultivos[1] != NULL)
 		{
-			cultivosNuevos(1);
+			Cosechar(1);
 		}
 		if (maskmap[yMizq][xMizq] == '3' && matrizCultivos[2] != NULL)
 		{
-			cultivosNuevos(2);
+			Cosechar(2);
 		}
 		if (maskmap[yMizq][xMizq] == '4' && matrizCultivos[3] != NULL)
 		{
-			cultivosNuevos(3);
+			Cosechar(3);
 		}
 		if (maskmap[yMizq][xMizq] == '5' && matrizCultivos[4] != NULL)
 		{
-			cultivosNuevos(4);
+			Cosechar(4);
 		}
 		if (maskmap[yMizq][xMizq] == '6' && matrizCultivos[5] != NULL)
 		{
-			cultivosNuevos(5);
+			Cosechar(5);
 		}
 		if (maskmap[yMizq][xMizq] == '7' && matrizCultivos[6] != NULL)
 		{
-			cultivosNuevos(6);
+			Cosechar(6);
 		}
 		if (maskmap[yMizq][xMizq] == '8' && matrizCultivos[7] != NULL)
 		{
-			cultivosNuevos(7);
+			Cosechar(7);
 		}
 	}
 	//Verifico si se presiono la tecla f(planta)
@@ -332,20 +332,22 @@ int Player::getEscena()
 	return this->escena;
 }
 
-void Player::cultivosNuevos(int i)
+void Player::Cosechar(int i)
 {
 	Cultivo* other = matrizCultivos[i];
 	if (other->estado == other->COSECHABLE)
 	{
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		std::discrete_distribution<> dist({ 1, 3, 1 });
+		std::discrete_distribution<> dist({ 3, 2, 1 });
 		int cantidadCosechada = dist(gen) + 2;
 		std::cout << "el numero es: " << cantidadCosechada << "\n";
 		mochila->setcantidadObjetos(mochila->getcantidadObjetos() + cantidadCosechada);
+
 		if (other->tipo == 0) mochila->setcantidadTomates(mochila->getcantidadTomates() + cantidadCosechada);
 		else if (other->tipo == 1) mochila->setcantidadCalabaza(mochila->getcantidadCalabaza() + cantidadCosechada);
 		else mochila->setcantidadZanahoria(mochila->getcantidadZanahoria() + cantidadCosechada);
+
 		matrizCultivos[i] = NULL;
 	}
 }
