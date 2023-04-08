@@ -81,7 +81,9 @@ void Mochila::action(ALLEGRO_FONT *font)
 }
 void Mochila::cambiarCasilla(int casillaSelect)
 {
-	this->casillaSelect = casillaSelect;
+	if (this->casillaSelect == 0 && casillaSelect < 0) this->casillaSelect = 4;
+	else if(this->casillaSelect == 4 && casillaSelect > 1) this->casillaSelect = 0;
+	else this->casillaSelect = casillaSelect;
 }
 
 int Mochila::verificarObjectoSeleccionado()
@@ -104,7 +106,6 @@ void Mochila::quitarCultivo(int tipo)
 	default:
 		break;
 	}
-	std::cout << "se ha quitado un cultivo \n";
 }
 bool Mochila::verificarCantidadCultivos(int tipo)
 {
@@ -120,7 +121,6 @@ bool Mochila::verificarCantidadCultivos(int tipo)
 		if (getcantidadZanahoria() > 0) return true;
 		else
 		{
-			std::cout << "No tienes zanahorias \n";
 			return false;
 		}
 	default:

@@ -305,7 +305,7 @@ private:
 	void colisiones();
 	ALLEGRO_MOUSE_STATE estadoMouse;
 	Mochila* mochila;
-	void cultivosNuevos(int i);
+	void Cosechar(int i);
 };
 extern Cultivo *matrizCultivos[8];
 #endif // !PLAYER_H
