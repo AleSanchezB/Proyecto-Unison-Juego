@@ -231,28 +231,40 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			last_f_press = al_current_time();
 		}
 	}
-	// colision con el mapa de mascara
-	active = true;
-	//CHECAR SI ESTA CORRIENDO
-	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
-		speedPlayer = 4;
-		corriendo = 4;
-	}
-	else {
-		speedPlayer = 2;
-		corriendo = 0;
-	}
-	colisiones();
+  
+    
+		// colision con el mapa de mascara
 
-	if (getEscena() == 0) {
-		memcpy(maskmap, maskmap1, sizeof(maskmap));
-	}
-	else if (getEscena() == 1) {
-		memcpy(maskmap, maskmap2, sizeof(maskmap));
-	}
+		active = true;
+		//CHECAR SI ESTA CORRIENDO
+		if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
+			speedPlayer = 4;
+			corriendo = 4;
+		}
+		else {
+			speedPlayer = 2;
+			corriendo = 0;
+		}
+		colisiones();
+    
+		if (getEscena() == 0) {
+			memcpy(maskmap, maskmap1, sizeof(maskmap));
+		}
+		else if (getEscena() == 1) {
+			memcpy(maskmap, maskmap2, sizeof(maskmap));
+		}
+		else if (getEscena() == 2) {
+			memcpy(maskmap, maskmap3, sizeof(maskmap));
+		}
 
-	if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0)
-	{
+		if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
+		{
+			this->y -= speedPlayer;
+			direccion = UPW + corriendo;
+			setEscena(0);
+		}
+		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0) 
+	  {
 		this->y -= speedPlayer;
 		direccion = UPW + corriendo;
 		MapaCasa = true;
@@ -315,7 +327,6 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x = 1242;
 		setEscena(0);
 	}
-
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
 void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)
