@@ -285,23 +285,6 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			setEscena(0);
 		}
 	}
-	//CHECAR PLANTACIONES (MOVER DESPUÉS)
-	for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
-	{
-		Cultivo* other = *it;
-		other->Crecer(al_current_time());
-	}
-	
-	//if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}
-	if (MatrizCultivos[0][1]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 30, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][1]"));}
-	if (MatrizCultivos[0][2]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 50, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][2]"));}
-	if (MatrizCultivos[0][3]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 70, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][3]"));}
-	if (MatrizCultivos[0][4]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 90, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][4]"));}
-	if (MatrizCultivos[1][1]){ al_draw_text(font, al_map_rgb(255, 255, 255), 500, 110, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][1]"));}
-	if (MatrizCultivos[1][2]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 130, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][2]"));}
-	if (MatrizCultivos[1][3]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 150, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][3]"));}
-	if (MatrizCultivos[1][4]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 170, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[1][4]"));}
-
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
 void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)

@@ -8,31 +8,14 @@
 class Cultivo : public Objeto
 {
 public:
+	int aux = 0;
 	int T_Plantacion;
-	Cultivo(std::string ruta, int x, int y, int tipo, int T_Creado=0);
+	enum { BROTE, ADOL, COSECHABLE };
+	int estado = 0;
+	Cultivo(std::string ruta, int x, int y, int tipo, int T_Creado = 0);
 	~Cultivo();
-	void Crecer(float T_Actual);
-	void action();
-	struct Tomate
-	{
-		std::string ruta = "assets/Plants/tomate sprites.png";
-		float sw = 35.0;
-		float sh = 34.0;
-	};
-
-	struct Calabaza
-	{
-		std::string ruta = "assets/Plants/calabaza sprites.png";
-		float sw = 36.5;
-		float sh = 31.0;
-	};
-
-	struct Zanahoria
-	{
-		std::string ruta = "assets/Plants/zanahoria sprites.png";
-		float sw = 30.0;
-		float sh = 25.0;
-	};
+	void Crecer(Cultivo* other);
+	void action(int escena);
 
 private:
 	float sx;
