@@ -77,8 +77,8 @@ private:
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxx              xx             xxxxxx     x  xx      x", //18
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxxxxxxxxx       xx            xxxxxxx     x          x", //19
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxxccccxxx       xx            xxxxxxx     x          x", //20
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxxxccccxxx       xx            xxxxxxxxxxxxx          x", //21
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxxxccccxxxxxxxxxxxx                     xxxx          x", //22
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxxxccccxxxxxxxxxxxx            xxxxxxxxxxxxx          x", //21
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxxxccccxx        xx                     xxxx          x", //22
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxx                                      xxxxxxxxx     x", //23
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxx                                      xxxxxxxxx     x", //24
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 x                                        xxxxxxxx     x", //25
@@ -206,7 +206,89 @@ private:
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //71
 	};
 
+	char maskmap3[150][150] = {
+		//             10        20        30        40        50        60        70       80        90       100        110      120
+		//   012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //1
+			"x                                                                                                                            x", //2
+			"x                                                                                                                            x", //3
+			"x                                                                                                                            x", //4
+			"x                                                                                                                            x", //5
+			"x                                                                                                                            x", //6
+			"x                                                                                                                            x", //7
+			"x                                                                                                                            x", //8
+			"x                                                                                                                            x", //9
+			"x                                                                                                                            x", //10
+			"x                                                                                                                            x", //11
+			"x                                                                                                                            x", //12
+			"x                                                                                                                            x", //13
+			"x                                                                                                                            x", //14
+			"x                                                                                                                            x", //15
+			"x                                                                                                                            x", //16
+			"x                                                                                                                            x", //17
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //18
+			"x                         xx           x                              xx            xxxxxxxxxx        xx                     x", //19
+			"x                         xx           x                              xx            xxxxxxxxxx        xx                     x", //20
+			"x                         xx   xxxxx   x                              xx            xxxxxxxxxx        xx                     x", //21
+			"x                         xx   xxxxx   x                              x             iiiiiiiiix        xx                     x", //22
+			"x                         xx    xxx    x                              x             iiiiiiiiix        xx                     x", //23
+			"x                         xx           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx             iiiiiiiiix   xxxxxxx                     x", //24
+			"x                         xx  xxxxxx   xxxxxxxxxxxxxxxxxxx            x             iiiiiiiiix   xxxxxxx                     x", //25
+			"x                         xx x     xx  xxxxxxxxxxxxxxxxx                            iiiiiixxxx    xxx xx                     x", //26
+			"x                         xx x     xx  xx            xxx                            iiiiixxxxxx       xx                     x", //27
+			"x                         xx x     xx                                               iiiixxxxxxxx      xx                     x", //28
+			"x                         xx x     xx                                                  xxxxxxxxxx     xx                     x", //29
+			"x                         xx x     xx                                                  x        x     xx                     x", //30
+			"x                         xx xxxxxxxx                                                  x        x     xx                     x", //31
+			"x                         xx  xxxxxx                                                   x        x     xx                     x", //32
+			"x                         xx                                                           x        x     xx                     x", //33
+			"x                         xx                                                           x        x     xx                     x", //34
+			"x                         xx                                                           x        x     xx                     x", //35
+			"x                         xx                                                           x        x     xx                     x", //36
+			"x                         xx                                                           x        x     xx                     x", //37
+			"x                         xx                                                           x        x     xx                     x", //38
+			"x                         xx                                                           x        x     xx                     x", //39
+			"x                         xx                                                            xxxxxxxx      xx                     x", //40
+			"x                         xx                                                                          xx                     x", //41
+			"x                         xx                                                                          xx                     x", //42
+			"x                         xx                                                                          xx                     x", //43
+			"x                         xx                                                                          xx                     x", //44
+			"x                         xx                                                                          xx                     x", //45
+			"x                         xx                                                                          xx                     x", //46
+			"x                         xx            xxxxxx                                                        xx                     x", //47
+			"x                         xxxx      xx xx    xx                                                       xx                     x", //48
+			"x                         xxxxxxxxxxxx xx    xx                                xxxxxx                 xx                     x", //49
+			"x                         xxxx      xx xx    xx                               xxxxxxxx                xx                     x", //50
+			"x                         xxxx      xx xx    xx                               x     xx                xx                     x", //51
+			"x                         xxxx      xx  xxxxxxx                               x     xx                xx                     x", //52
+			"x                         xxxx      xx  x    x                                x     xx        xxxxx   xx                     x", //53
+			"x                         xxxx      xx                                        x     xx       xxxxxxx  xx                     x", //54
+			"x                         xxxx      xx                                        xxxxxxxx       x     x  xx                     x", //55
+			"x                         xxxx      xx                                         xxxxxx        x     x  xx                     x", //56
+			"x                         xxxx      xx                                                       x     x  xx                     x", //57
+			"x                         xxxx      xx                                                       x     x  xx                     x", //58
+			"x                         xxxx      xx                                                       xxxxxxx  xx                     x", //59
+			"x                         xxxxxxxxxxxx                                                        xxxxx   xx                     x", //60
+			"x                         xxxx      xx                                                                xx                     x", //61
+			"x                         xx                                                                          xx                     x", //62
+			"x                         xx                                                                          xx                     x", //63
+			"x                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx           x", //64
+			"x                                                                                                                            x", //65
+			"x                                                                                                                            x", //66
+			"x                                                                                                                            x", //67
+			"x                                                                                                                            x", //68
+			"x                                                                                                                            x",  //69
+			"x                                                                                                                            x", //70
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //71
+	};
+
+
+
+
 	char maskmap[150][150];
+
+
+
 
 	bool MatrizCultivos[2][5]{
 		{false,false,false,false, false},

@@ -5,7 +5,7 @@ Player::Player(std::string ruta)
 {
 	//creo el personaje
 	this->sprite = al_load_bitmap(ruta.c_str());
-	this->speedPlayer = 2;
+	this->speedPlayer = 4;
 	this->active = false;
 	this->direccion = 0;
 	this->SpritePosX = 0;
@@ -113,34 +113,68 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	//Verifico si se presiono la tecla f
 	if (al_key_down(&keystate, ALLEGRO_KEY_F) && getEscena() == 1)
 	{
-		//verifico el coudldown 
+		//verifico el cooldown 
 		if (al_current_time() - last_f_press > 2) {
 			//recorro la matriz para verificar si está lleno, despues se cambiará
-			for (int i = 0; i < filasCultivos; i++)
+
+			if (verificacionMochila())
 			{
-				for (int j = 0; j < colCultivos; j++)
-					if (matrizCultivos[i][j] != NULL)
-					{
-						std::cout << "Está lleno o está ocupado" << std::endl;
-						std::cout << "i: " << i << " j: " << j << std::endl;
-					}
-					else
-					{
-						//verifico si la mochila está vacia y creo un cultivo que despues se cambiará
-						if (verificacionMochila())
-						{
-							std::cout << "no se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
-							mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-							std::cout << "se ha quitado un objeto" << mochila->getcantidadObjetos() << std::endl;
-							Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 388, 1);
-							cultivos.push_back(cultivo);
-							matrizCultivos[i][j] = cultivo;
-							std::cout << "i: " << i << " j: " << j << std::endl;
-							i = filasCultivos;
-							j = colCultivos;
-							break;
-						}
-					}
+				if (maskmap[yMizq][xMizq] == '1' && matrizCultivos[0][0] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 904, 395, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[0][0] = cultivo;
+				}
+				if (maskmap[yMizq][xMizq] == '2' && matrizCultivos[0][1] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/calabaza sprites.png", 1074, 413, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[0][1] = cultivo;
+				}
+				if (maskmap[yMizq][xMizq] == '3' && matrizCultivos[1][0] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 896, 444, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[1][0] = cultivo;
+				}
+				if (maskmap[yMizq][xMizq] == '4' && matrizCultivos[1][1] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 1041, 472, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[1][1] = cultivo;
+				}
+				if (maskmap[yMizq][xMizq] == '5' && matrizCultivos[2][0] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/calabaza sprites.png", 907, 488, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[2][0] = cultivo;
+				}
+				if (maskmap[yMizq][xMizq] == '6' && matrizCultivos[2][1] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 1035, 505, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[2][1] = cultivo;
+				}
+				if (maskmap[yMizq][xMizq] == '7' && matrizCultivos[3][0] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/zanahoria sprites.png", 898, 542, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[3][0] = cultivo;
+				}
+				if (maskmap[yMizq][xMizq] == '8' && matrizCultivos[3][1] == NULL)
+				{
+					mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+					Cultivo* cultivo = new Cultivo("assets/Plants/tomate sprites.png", 1050, 574, 1, al_current_time());
+					cultivos.push_back(cultivo);
+					matrizCultivos[3][1] = cultivo;
+				}
 			}
 			last_f_press = al_current_time();
 		}
@@ -148,7 +182,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	//muestra la mochila (falta interfaz)
 	else if (al_key_down(&keystate, ALLEGRO_KEY_C))
 	{
-		mochila->action();
+		mochila->action(font);
 	}
 	//esto sirve para el scroll del mouse, a lo mejor se usa
 	else if (estadoMouse.z > 0)
@@ -180,48 +214,25 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		if (getEscena() == 0) {
 			memcpy(maskmap, maskmap1, sizeof(maskmap));
 		}
-		else {
+		else if (getEscena() == 1) {
 			memcpy(maskmap, maskmap2, sizeof(maskmap));
 		}
-
-
-		if (maskmap[yMizq][xMizq] == '1') {
-			MatrizCultivos[0][1] = true;
-		}
-		if (maskmap[yMizq][xMizq] == '2')
-		{
-			MatrizCultivos[0][2] = true;
-		}
-		if (maskmap[yMizq][xMizq] == '3')
-		{
-			MatrizCultivos[0][3] = true;
-		}
-		if (maskmap[yMizq][xMizq] == '4')
-		{
-			MatrizCultivos[0][4] = true;
-		}
-		if (maskmap[yMizq][xMizq] == '5')
-		{
-			MatrizCultivos[1][1] = true;
-		}
-		if (maskmap[yMizq][xMizq] == '6')
-		{
-			MatrizCultivos[1][2] = true;
-		}
-		if (maskmap[yMizq][xMizq] == '7')
-		{
-			MatrizCultivos[1][3] = true;
-		}
-		if (maskmap[yMizq][xMizq] == '8')
-		{
-			MatrizCultivos[1][4] = true;
+		else if (getEscena() == 2) {
+			memcpy(maskmap, maskmap3, sizeof(maskmap));
 		}
 
-		if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0) 
+		if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
+		{
+			this->y -= speedPlayer;
+			direccion = UPW + corriendo;
+			setEscena(0);
+		}
+		else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0) 
 		{
 			this->y -= speedPlayer;
 			direccion = UPW + corriendo;
 			MapaCasa = true;
+			setEscena(2);
 		}
 		else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o') 
 		{
@@ -265,8 +276,8 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		//cambio de mapa
 		if (this->x > 1280 && this->y >= 260 && this->y <= 330 && escena == 0)
 		{
-			/*this->x = 2;
-			setEscena(1);*/
+			this->x = 2;
+			setEscena(1);
 		}
 		else if (this->x < -38 && this->y >= 246 && this->y <= 332 && escena == 1)
 		{
@@ -274,10 +285,8 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			setEscena(0);
 		}
 	}
-
 	
-	
-	if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}
+	//if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}
 	if (MatrizCultivos[0][1]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 30, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][1]"));}
 	if (MatrizCultivos[0][2]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 50, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][2]"));}
 	if (MatrizCultivos[0][3]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 70, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][3]"));}
