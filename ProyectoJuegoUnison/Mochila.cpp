@@ -106,7 +106,6 @@ void Mochila::quitarCultivo(int tipo)
 	default:
 		break;
 	}
-	std::cout << "se ha quitado un cultivo \n";
 }
 bool Mochila::verificarCantidadCultivos(int tipo)
 {
@@ -122,7 +121,6 @@ bool Mochila::verificarCantidadCultivos(int tipo)
 		if (getcantidadZanahoria() > 0) return true;
 		else
 		{
-			std::cout << "No tienes zanahorias \n";
 			return false;
 		}
 	default:
