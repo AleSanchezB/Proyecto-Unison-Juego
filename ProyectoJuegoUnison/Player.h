@@ -11,6 +11,7 @@
 #include <string>
 #include <iostream>
 #include <list>
+#include <random>
 
 #include "Mochila.h"
 #include "Objeto.h"
@@ -154,8 +155,8 @@ private:
 			"x                                                                                 x                        xx    x           x", //18
 			"x                                                                                 x                        xxxxxxx           x", //19
 			"x                                                                                 x                        xxxxxxx           x", //20
-			"x                                                                                 x                        xxxxxxx           x", //21
-			"x                                                                                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx         x", //22
+			"x                                                                                 x  ccccc                 xxxxxxx           x", //21
+			"x                                                                                 xxxcccccxxxxxxxxxxxxxxxxxxxxxxxxxx         x", //22
 			"x                                                                                                                   x        x", //23
 			"x                                                                                                                   x        x", //24
 			"x                                                                                                                  x         x", //25
@@ -302,10 +303,10 @@ private:
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
-	bool verificacionMochila();
-	Mochila* mochila;
 	ALLEGRO_MOUSE_STATE estadoMouse;
+	Mochila* mochila;
+	void cultivosNuevos(int i);
 };
-extern Objeto *matrizCultivos[4][2];
+extern Cultivo *matrizCultivos[8];
 #endif // !PLAYER_H
 
