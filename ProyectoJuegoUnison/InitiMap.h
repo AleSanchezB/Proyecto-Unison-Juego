@@ -11,7 +11,7 @@
 #include <string>
 #include <chrono>
 #include <list>
-
+#include <iostream>
 #include "Objeto.h"
 #include "Player.h"
 #include "TipoCultivos.h"
@@ -22,21 +22,20 @@ class GameRun
 public:
 	GameRun();
 	~GameRun();
-
+	ALLEGRO_TIMER* timer;
 private:
 	//VARIABLES ALLEGRO
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
 	ALLEGRO_BITMAP* ESCENAS[3];
 	ALLEGRO_EVENT event;
-
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 
 	//CONSTANTES
 	const int width = 1280;
 	const int height = 720;
-	const float FPS = 120.0;
+	const float FPS = 90.0;
 	//VARIABLES
 	bool running;
 	int mouseX, mouseY;
@@ -47,7 +46,6 @@ private:
 
 
 	bool draw = true;
-	ALLEGRO_TIMER* timer;
 	//funciones
 	void initGame();
 	void DibujarGradualmente();

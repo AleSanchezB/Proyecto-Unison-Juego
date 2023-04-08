@@ -15,6 +15,7 @@
 #include "Mochila.h"
 #include "Objeto.h"
 #include "TipoCultivos.h"
+#include "InitiMap.h"
 
 //std::list<Objeto*> objectos;
 

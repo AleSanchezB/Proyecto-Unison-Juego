@@ -285,6 +285,12 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			setEscena(0);
 		}
 	}
+	//CHECAR PLANTACIONES (MOVER DESPUÉS)
+	for (std::list<Cultivo*>::iterator it = cultivos.begin(); it != cultivos.end(); it++)
+	{
+		Cultivo* other = *it;
+		other->Crecer(al_current_time());
+	}
 	
 	//if (MapaCasa) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 10, ALLEGRO_ALIGN_LEFT, ("Cambia MAPA CASITA"));}
 	if (MatrizCultivos[0][1]) { al_draw_text(font, al_map_rgb(255, 255, 255), 500, 30, ALLEGRO_ALIGN_LEFT, ("MatrizCultivos[0][1]"));}

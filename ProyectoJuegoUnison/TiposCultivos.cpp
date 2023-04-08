@@ -1,12 +1,12 @@
 #include "TipoCultivos.h"
 std::list<Cultivo*> cultivos;
-Cultivo::Cultivo(std::string ruta, int x, int y, int tipo) : Objeto(ruta)
+Cultivo::Cultivo(std::string ruta, int x, int y, int tipo,int T_Creado) : Objeto(ruta)
 {
 	std::cout << "Se creó" << std::endl;
 	this->sprite = al_load_bitmap(ruta.c_str());
 	this->x = x;
 	this->y = y;
-
+	this-> T_Plantacion= T_Creado;
 	switch (tipo)
 	{
 	case 0: //tomate
@@ -40,6 +40,7 @@ Cultivo::~Cultivo()
 {
 }
 
+
 void Cultivo::action()
 {
 	try
@@ -54,4 +55,9 @@ void Cultivo::action()
 	{
 		std::cout << "Error en action cultivos" << std::endl;
 	}
+}
+
+void Cultivo::Crecer(float T_Actual)
+{
+
 }
