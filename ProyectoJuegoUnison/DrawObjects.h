@@ -6,25 +6,24 @@
 #include <allegro5/allegro_font.h>
 #include <string>
 #include <iostream>
+
 #include "GuardarDatos.h"
 #include "TipoCultivos.h"
 
-class DrawObjects
+class Background
 {
 public:
-	DrawObjects();
-	~DrawObjects();
-	void action();
-	void DrawBackgrounds(int escena);
+	Background();
+	~Background();
+	void action(int escena);
 	void drawOptions(int i, int Monedas);
+	void dibujarEncima(int escena);
 private:
 	ALLEGRO_BITMAP* ESCENAS[5];
 	ALLEGRO_BITMAP* OPCIONES[3];
+	ALLEGRO_BITMAP* ESCENASA[2];
 	ALLEGRO_FONT* font;
-	DatosUsuario datosUsuario;
-
-	float xCoordsFondos = 1280;
+	Cultivo* cultivosPlantados;
 	int Monedas;
-	Cultivo* cultivosCargados;
 };
 #endif // !1

@@ -1,5 +1,5 @@
 #include "TipoCultivos.h"
-Cultivo* matrizCultivos[8];
+Cultivo* cultivosPlantados[8];
 Cultivo::Cultivo(int x, int y, int tipo, int T_Creado) : Objeto(ruta)
 {
 	this->tipo = tipo;
@@ -29,8 +29,8 @@ Cultivo::Cultivo(int x, int y, int tipo, int T_Creado) : Objeto(ruta)
 
 Cultivo::~Cultivo()
 {
+	al_destroy_bitmap(this->sprite);
 }
-
 
 void Cultivo::action(int escena)
 {
@@ -38,9 +38,9 @@ void Cultivo::action(int escena)
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			if (matrizCultivos[i] != NULL)
+			if (cultivosPlantados[i] != NULL)
 			{
-				Cultivo* other = matrizCultivos[i];
+				Cultivo* other = cultivosPlantados[i];
 				other->aux++;
 				if (other->aux >= 90 && other->estado != other->COSECHABLE)
 				{

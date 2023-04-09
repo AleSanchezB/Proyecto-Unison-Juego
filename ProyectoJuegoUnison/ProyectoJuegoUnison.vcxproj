@@ -150,6 +150,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Boton.h" />
+    <ClInclude Include="Comprador.h" />
     <ClInclude Include="DrawObjects.h" />
     <ClInclude Include="GuardarDatos.h" />
     <ClInclude Include="IAMobs.h" />
@@ -162,6 +164,8 @@
     <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boton.cpp" />
+    <ClCompile Include="Comprador.cpp" />
     <ClCompile Include="DrawObjects.cpp" />
     <ClCompile Include="GuardarDatos.cpp" />
     <ClCompile Include="InitMap.cpp" />

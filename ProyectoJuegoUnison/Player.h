@@ -17,10 +17,11 @@
 #include "Objeto.h"
 #include "TipoCultivos.h"
 #include "InitiMap.h"
+#include "GuardarDatos.h"
 
 //std::list<Objeto*> objectos;
 
-class Player
+class Player : DatosUsuario
 {
 public:
 	Player(std::string ruta);
@@ -28,33 +29,34 @@ public:
 	void action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void setEscena(int escena);
 	int getEscena();
+	Mochila* mochila;
 
 private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
+	ALLEGRO_MOUSE_STATE estadoMouse;
+
 	enum { DOWNW, RIGHTW, UPW, LEFTW };
 	float speedPlayer, direccion, SpritePosX, SpritePosY, corriendo;
-	bool active = false;
+	double last_f_press = 0.0;
 	
 	int PlayRefresh, AudRepeat;
 	int x;
 	int y;
 	int escena;
+	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
+	int vectormatriz[3];
 
+	bool active = false;
 	bool MapaV2;
 	bool MapaCasa;
-
-
 	bool f_pressed = false;
-	double last_f_press = 0.0;
-	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
 
+	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
 	//DIMESION DE LA MATRIZ MASCARA
 	const int dimxmask = 150;
 	const int dimymask = 150;
 
-	const int filasCultivos = 4;
-	const int colCultivos = 2;
 	//MATRIZ DEL MAPA MASCARA
 	char maskmap1[150][150] = {
 		//             10        20        30        40        50        60        70       80        90       100        110      120
@@ -197,7 +199,7 @@ private:
 			"x                  x        x                 x    xxx                    xx     x                             xxx           x", //60
 			"x                  x        x                  x   xxx         xxxx       xx     x                              xx           x", //61
 			"x                  x    xx  x                   x x             xx               x                             xxx           x", //62
-			"x       xxxx       x    xx  x                    x              xx          xx   x                            xx x           x", //63
+			"x       xxxx       x    xx  x                    x              xx          xx   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx           x", //63
 			"x        xx             xx  x                     x             xx          xx   xxxxxxxx  xxxx  xxx  xxx  xxxxx x           x", //64
 			"x        xx             xx  x                      x            xx          xx   xx  x  xxx    xx   xx   xx   xx x           x", //65
 			"x        xx             xx   x                      x           xx          xx    x  x  x      x     x        x  x           x", //66
@@ -284,27 +286,16 @@ private:
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //71
 	};
 
-
-
-
 	char maskmap[150][150];
-
-
-
 
 	bool MatrizCultivos[2][5]{
 		{false,false,false,false, false},
 		{false,false,false,false, false}
 	};
 
-	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
-
-	int vectormatriz[3];
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
-	ALLEGRO_MOUSE_STATE estadoMouse;
-	Mochila* mochila;
 	void Cosechar(int i);
 };
 extern Cultivo *matrizCultivos[8];

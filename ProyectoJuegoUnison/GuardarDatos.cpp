@@ -48,10 +48,10 @@ void DatosUsuario::ObtenerDatos()
 
 void DatosUsuario::setMonedas(int Monedas)
 {
-    datosJuego.Monedas = Monedas;
+    //datosJuego.Monedas = Monedas;
 }
 
 int DatosUsuario::getMonedas()
 {
-    return datosJuego.Monedas;
+    return 0;
 }

@@ -45,10 +45,10 @@
     <ClInclude Include="Mochila.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Objetcs.h">
+    <ClInclude Include="Comprador.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Personajes.h">
+    <ClInclude Include="Boton.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,10 +89,10 @@
     <ClCompile Include="DrawObjects.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Objetcs.cpp">
+    <ClCompile Include="Comprador.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Personaje.cpp">
+    <ClCompile Include="Boton.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
