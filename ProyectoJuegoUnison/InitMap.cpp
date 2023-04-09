@@ -56,7 +56,7 @@ void GameRun::initGame()
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
 		}
-		drawPlayer->DrawBackgrounds(player->getEscena());
+		drawPlayer->DrawBackgrounds(player->getEscena(),drawPlayer->TiempoEscenaActual);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			player->action(keystate, queue);

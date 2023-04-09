@@ -15,10 +15,15 @@ public:
 	DrawObjects();
 	~DrawObjects();
 	void action();
-	void DrawBackgrounds(int escena);
+	void DrawBackgrounds(int escenal, int TiempoEscenaActual);
 	void drawOptions(int i, int Monedas);
+	void InicioDia();
+	void CambioTiempoEscena(float T_Actual,int escena);
+	std::string tiempos[4] = { "","TARDE","NOCHE" };
+	float TiempoCreacion=0;
+	int TiempoEscenaActual = 0;
 private:
-	ALLEGRO_BITMAP* ESCENAS[5];
+	ALLEGRO_BITMAP* ESCENAS[14];
 	ALLEGRO_BITMAP* OPCIONES[3];
 	ALLEGRO_FONT* font;
 	DatosUsuario datosUsuario;

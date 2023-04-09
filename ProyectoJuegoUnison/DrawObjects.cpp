@@ -6,13 +6,15 @@ DrawObjects::DrawObjects()
 	std::string rutaFondos, rutaIconos;
 	for (int i = 0; i < 3; i++)
 	{
-		rutaFondos = "assets/fondos/EscenasInicio/ESCENA0" + std::to_string(i) + ".png";
-		//rutaIconos = "assets/fondos/Objetos/OPCIONES0" + std::to_string(i) + ".png";
-		ESCENAS[i] = al_load_bitmap(rutaFondos.c_str());
-		//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
-		//std::cout << std::endl << rutaFondos << std::endl << rutaIconos << std::endl;
-		assert(ESCENAS[i] != NULL);
-		//assert(OPCIONES[i] != NULL);
+		for (int j = 0; j < 3; j++) {
+			rutaFondos = "assets/fondos/EscenasInicio/ESCENA0" + std::to_string(i) + tiempos[j] + ".png";
+			//rutaIconos = "assets/fondos/Objetos/OPCIONES0" + std::to_string(i) + ".png";
+			ESCENAS[i] = al_load_bitmap(rutaFondos.c_str());
+			//OPCIONES[i] = al_load_bitmap(rutaIconos.c_str());
+			//std::cout << std::endl << rutaFondos << std::endl << rutaIconos << std::endl;
+			assert(ESCENAS[i] != NULL);
+			//assert(OPCIONES[i] != NULL);
+		}
 	}
 	datosUsuario.ObtenerDatos();
 	Monedas = datosUsuario.getMonedas();
@@ -31,9 +33,9 @@ DrawObjects::~DrawObjects()
 		std::cout << std::endl << rutaFondos << std::endl << rutaIconos << std::endl;
 	}
 }
-void DrawObjects::DrawBackgrounds(int escena)
+void DrawObjects::DrawBackgrounds(int escena,int TiempoEscenaActual)
 {
-	al_draw_bitmap(ESCENAS[escena], 0, 0, 0);
+	al_draw_bitmap(ESCENAS[escena+TiempoEscenaActual], 0, 0, 0);
 	if(escena == 1)
 		cultivosCargados->action();
 
@@ -43,3 +45,19 @@ void DrawObjects::drawOptions(int i, int Monedas)
 	al_draw_bitmap(OPCIONES[i], 18, 10, 0);
 	al_draw_text(font, al_map_rgb(255, 255, 255), 1030, 33, 0, (std::to_string(this->Monedas).c_str()));
 }
+/***********************FUNCIONES NUEVAS, LAS QUE PROBABLEMENTE TENGAS QUE COMENTAR*****************************************/
+void DrawObjects::InicioDia() {
+	TiempoCreacion = al_current_time();
+	std::cout << "Objetivos del día\n";
+	TiempoEscenaActual = 0;
+	//GENERAR TAMBIEN OBJETIVOS DEL DIA(tengo que averiguar cómo :c)
+}
+
+void DrawObjects::CambioTiempoEscena(float T_Actual,int escena) {
+	TiempoEscenaActual = 0;
+	int resta = (int)(T_Actual - TiempoCreacion) % 60;
+	if (resta == 0) {
+		TiempoEscenaActual++;
+		DrawBackgrounds(escena,TiempoEscenaActual);
+	}
+/****************************************************************************************************************************/
