@@ -24,10 +24,12 @@
 class Player : DatosUsuario
 {
 public:
+	int aux = 0;
 	Player(std::string ruta);
 	~Player();
 	void action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void setEscena(int escena);
+	void DibujarCultivo();
 	int getEscena();
 	Mochila* mochila;
 
