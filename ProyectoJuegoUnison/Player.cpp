@@ -91,7 +91,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		}
 	}
 	//Verifico si se presiono la tecla f(planta)
-	if (al_key_down(&keystate, ALLEGRO_KEY_F) && getEscena() == 1)
+	if (al_key_down(&keystate, ALLEGRO_KEY_F) && (getEscena() == 3 || getEscena() == 4 || getEscena() == 5))
 	{
 		//verifico el cooldown 
 		if (al_current_time() - last_f_press > 2) {
@@ -178,13 +178,13 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	colisiones();
 
-	if (getEscena() == 0) {
+	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2) {
 		memcpy(maskmap, maskmap1, sizeof(maskmap));
 	}
-	else if (getEscena() == 1) {
+	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5) {
 		memcpy(maskmap, maskmap2, sizeof(maskmap));
 	}
-	else if (getEscena() == 2) {
+	else if (getEscena() == 6) {
 		memcpy(maskmap, maskmap3, sizeof(maskmap));
 	}
 
@@ -192,14 +192,14 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		this->y -= speedPlayer;
 		direccion = UPW + corriendo;
-		setEscena(0);
+		setEscena(3);
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0)
 	{
 		this->y -= speedPlayer;
 		direccion = UPW + corriendo;
 		MapaCasa = true;
-		setEscena(2);
+		setEscena(6);
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o')
 	{
@@ -207,7 +207,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		direccion = UPW + corriendo;
 		MapaV2 = true;
 		this->x = 2;
-		setEscena(1);
+		setEscena(5);
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 	{
@@ -248,15 +248,15 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		PlayRefresh = 0;
 	}
 	//cambio de mapa
-	if (this->x > 1280 && this->y >= 260 && this->y <= 330 && escena == 0)
+	if (this->x > 1280 && this->y >= 260 && this->y <= 330 && (getEscena() == 0 || getEscena() == 1 || getEscena() == 2))
 	{
 		this->x = 2;
-		setEscena(1);
+		setEscena(3);
 	}
-	else if (this->x < -38 && this->y >= 246 && this->y <= 332 && escena == 1)
+	else if (this->x < -38 && this->y >= 246 && this->y <= 332 &&(getEscena() == 3 || getEscena() == 4 || getEscena() == 5))
 	{
 		this->x = 1242;
-		setEscena(0);
+		setEscena(2);
 	}
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }

@@ -8,7 +8,7 @@ Comprador::Comprador()
 		std::string ruta = "assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/" + std::to_string(i) + ".png";
 		menu[i] = al_load_bitmap(ruta.c_str());
 	}
-	backgroud = new Background();
+	//backgroud = new Background();
 	aux = 720/2;
 	animacion_x = (1280 - 44) / 2;
 	animacion_y = (720- 43) / 2;
