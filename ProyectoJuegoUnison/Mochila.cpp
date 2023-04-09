@@ -1,12 +1,13 @@
 #include "Mochila.h"
 
-Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza, int cantidadZanahoria)
+Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza, int cantidadZanahoria, ALLEGRO_FONT * font)
 {
 	this->cantidadObjetos = cantidadObjetos;
 	this->cantidadTomates = cantidadTomates;
 	this->cantidadCalabaza = cantidadCalabaza;
 	this->cantidadZanahoria = cantidadZanahoria;
-
+	this->casillaSelect = 0;
+	this->font = font;
 	/*for (int i = 0; i < cantidadTomates; i++)
 	{
 		cantTomates.push_back(new Cultivo(0,0,0));
@@ -68,7 +69,7 @@ int Mochila::getcantidadObjetos()
 	return this->cantidadObjetos;
 }
 
-void Mochila::action(ALLEGRO_FONT *font)
+void Mochila::action()
 {
 	al_draw_bitmap(barraHerramientas, 530, 658, 0);
 	al_draw_bitmap(seleccionHerramienta, 538 + 42 * casillaSelect, 663, 0);

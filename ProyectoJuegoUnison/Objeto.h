@@ -12,9 +12,10 @@ class Objeto
 public:
 	Objeto(std::string ruta);
 	~Objeto();
+	ALLEGRO_BITMAP* sprite;
+	
 	int x;
 	int y;
-	ALLEGRO_BITMAP* sprite;
 
 	void action();
 };

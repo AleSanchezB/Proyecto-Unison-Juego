@@ -25,21 +25,290 @@ Player::Player(std::string ruta)
 	//relleno la matriz de cultivos como NULL para verificar posteriormente si está disponible
 	for (int i = 0; i < 8; i++)
 	{
-		matrizCultivos[i] = NULL;
+		cultivosPlantados[i] = NULL;
 	}
 }
+
 Player::~Player()
 {
 	al_destroy_bitmap(this->sprite);
 }
+
+void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
+{
+	al_get_keyboard_state(&keystate);
+	ALLEGRO_EVENT events;
+	al_get_mouse_state(&estadoMouse);
+	al_wait_for_event(queue, &events);
+
+	//esto sirve para el scroll del mouse, a lo mejor se usa
+	if (al_key_down(&keystate, ALLEGRO_KEY_1))
+	{
+		mochila->cambiarCasilla(0);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_2))
+	{
+		mochila->cambiarCasilla(1);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_3))
+	{
+		mochila->cambiarCasilla(2);
+	}
+	//tecla para cosechar
+	if (al_key_down(&keystate, ALLEGRO_KEY_C))
+	{
+		if (maskmap[yMizq][xMizq] == '1' && cultivosPlantados[0] != NULL)
+		{
+			Cosechar(0);
+		}
+		if (maskmap[yMizq][xMizq] == '2' && cultivosPlantados[1] != NULL)
+		{
+			Cosechar(1);
+		}
+		if (maskmap[yMizq][xMizq] == '3' && cultivosPlantados[2] != NULL)
+		{
+			Cosechar(2);
+		}
+		if (maskmap[yMizq][xMizq] == '4' && cultivosPlantados[3] != NULL)
+		{
+			Cosechar(3);
+		}
+		if (maskmap[yMizq][xMizq] == '5' && cultivosPlantados[4] != NULL)
+		{
+			Cosechar(4);
+		}
+		if (maskmap[yMizq][xMizq] == '6' && cultivosPlantados[5] != NULL)
+		{
+			Cosechar(5);
+		}
+		if (maskmap[yMizq][xMizq] == '7' && cultivosPlantados[6] != NULL)
+		{
+			Cosechar(6);
+		}
+		if (maskmap[yMizq][xMizq] == '8' && cultivosPlantados[7] != NULL)
+		{
+			Cosechar(7);
+		}
+	}
+	//Verifico si se presiono la tecla f(planta)
+	if (al_key_down(&keystate, ALLEGRO_KEY_F) && (getEscena() == 3 || getEscena() == 4 || getEscena() == 5))
+	{
+		//verifico el cooldown 
+		if (al_current_time() - last_f_press > 2) {
+			//recorro la matriz para verificar si está lleno, despues se cambiará
+			if (mochila->verificacionMochila())
+			{
+				int tipo = mochila->verificarObjectoSeleccionado();
+				if (mochila->verificarCantidadCultivos(tipo))
+				{
+					if (maskmap[yMizq][xMizq] == '1' && cultivosPlantados[0] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(900, 390, tipo, al_current_time());
+						cultivosPlantados[0] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+					if (maskmap[yMizq][xMizq] == '2' && cultivosPlantados[1] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(1060, 380, tipo, al_current_time());
+						cultivosPlantados[1] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+					if (maskmap[yMizq][xMizq] == '3' && cultivosPlantados[2] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(890, 440, tipo, al_current_time());
+						cultivosPlantados[2] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+					if (maskmap[yMizq][xMizq] == '4' && cultivosPlantados[3] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(1065, 438, tipo, al_current_time());
+						cultivosPlantados[3] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+					if (maskmap[yMizq][xMizq] == '5' && cultivosPlantados[4] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(900, 485, tipo, al_current_time());
+						cultivosPlantados[4] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+					if (maskmap[yMizq][xMizq] == '6' && cultivosPlantados[5] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(1055, 492, tipo, al_current_time());
+						cultivosPlantados[5] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+					if (maskmap[yMizq][xMizq] == '7' && cultivosPlantados[6] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(893, 540, tipo, al_current_time());
+						cultivosPlantados[6] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+					if (maskmap[yMizq][xMizq] == '8' && cultivosPlantados[7] == NULL)
+					{
+						Cultivo* cultivo = new Cultivo(1074, 542, tipo, al_current_time());
+						cultivosPlantados[7] = cultivo;
+						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
+						mochila->quitarCultivo(tipo);
+					}
+				}
+			}
+			last_f_press = al_current_time();
+		}
+	}
+
+
+	// colision con el mapa de mascara
+
+	active = true;
+	//CHECAR SI ESTA CORRIENDO
+	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
+		speedPlayer = 4;
+		corriendo = 4;
+	}
+	else {
+		speedPlayer = 2;
+		corriendo = 0;
+	}
+	colisiones();
+
+	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2) {
+		memcpy(maskmap, maskmap1, sizeof(maskmap));
+	}
+	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5) {
+		memcpy(maskmap, maskmap2, sizeof(maskmap));
+	}
+	else if (getEscena() == 6) {
+		memcpy(maskmap, maskmap3, sizeof(maskmap));
+	}
+
+	if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+		setEscena(3);
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0)
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+		MapaCasa = true;
+		setEscena(6);
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o')
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+		MapaV2 = true;
+		this->x = 2;
+		setEscena(5);
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x')
+	{
+		this->y += speedPlayer;
+		direccion = DOWNW + corriendo;
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x')
+	{
+		this->x += speedPlayer;
+		direccion = RIGHTW + corriendo;
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x')
+	{
+		this->x -= speedPlayer;
+		direccion = LEFTW + corriendo;
+	}
+	else active = false;
+	if (al_key_down(&keystate, ALLEGRO_KEY_K) && maskmap[yMup][xMup] == 'c' && getEscena() == 1)
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+		MapaCasa = true;
+		setEscena(3);
+	}
+	//ANIMACION DE MOVIMIENTOS 
+	PlayRefresh++;
+	if (PlayRefresh == 10)
+	{
+		if (SpritePosX >= 200) SpritePosX = 0;
+		if (active) SpritePosX += 40;
+		else SpritePosX = 0;
+		SpritePosY = direccion;
+		PlayRefresh = 0;
+	}
+	//cambio de mapa
+	if (this->x > 1280 && this->y >= 260 && this->y <= 330 && (getEscena() == 0 || getEscena() == 1 || getEscena() == 2))
+	{
+		this->x = 2;
+		setEscena(3);
+	}
+	else if (this->x < -38 && this->y >= 246 && this->y <= 332 &&(getEscena() == 3 || getEscena() == 4 || getEscena() == 5))
+	{
+		this->x = 1242;
+		setEscena(2);
+	}
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
+}
+
+void Player::Cosechar(int i)
+{
+	Cultivo* other = cultivosPlantados[i];
+	if (other->estado == other->COSECHABLE)
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		
+
+		if (other->tipo == 0) 
+		{
+			std::discrete_distribution<> dist({ 3, 2, 1, 1});
+			int cantidadCosechada = dist(gen) + 2;
+			mochila->setcantidadTomates(mochila->getcantidadTomates() + cantidadCosechada);
+			mochila->setcantidadObjetos(mochila->getcantidadObjetos() + cantidadCosechada);
+		}
+		else if (other->tipo == 1) 
+		{
+			std::discrete_distribution<> dist({ 3, 1, 1, 0.5 });
+			int cantidadCosechada = dist(gen) + 2;
+			mochila->setcantidadCalabaza(mochila->getcantidadCalabaza() + cantidadCosechada);
+			mochila->setcantidadObjetos(mochila->getcantidadObjetos() + cantidadCosechada);
+
+		}
+		else 
+		{
+			std::discrete_distribution<> dist({ 3, 1, 0.5, 0.1 });
+			int cantidadCosechada = dist(gen) + 2;
+			mochila->setcantidadZanahoria(mochila->getcantidadZanahoria() + cantidadCosechada);
+			mochila->setcantidadObjetos(mochila->getcantidadObjetos() + cantidadCosechada);
+		}
+		cultivosPlantados[i] = NULL;
+	}
+}
+
 void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	//mando a mover al personaje y a animarlo
 	al_get_keyboard_state(&keystate);
 	move(keystate, queue);
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
-	mochila->action(font);
 }
+
+void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)
+{
+	al_draw_bitmap_region(this->sprite, SpritePosX, SpritePosY, movimientoX, movimientoY, xCoordsFondos, yJug, NULL);
+}
+
 void Player::colisiones()
 {
 	//verifico las colisiones con el mapa
@@ -103,262 +372,14 @@ void Player::colisiones()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
 }
-void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
-{
-	al_get_keyboard_state(&keystate);
-	ALLEGRO_EVENT events;
-	al_get_mouse_state(&estadoMouse);
-	al_wait_for_event(queue, &events);
 
-	//esto sirve para el scroll del mouse, a lo mejor se usa
-	if (al_key_down(&keystate, ALLEGRO_KEY_1))
-	{
-		mochila->cambiarCasilla(0);
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_2))
-	{
-		mochila->cambiarCasilla(1);
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_3))
-	{
-		mochila->cambiarCasilla(2);
-	}
-	//tecla para cosechar
-	if (al_key_down(&keystate, ALLEGRO_KEY_C))
-	{
-		if (maskmap[yMizq][xMizq] == '1' && matrizCultivos[0] != NULL)
-		{
-			Cosechar(0);
-		}
-		if (maskmap[yMizq][xMizq] == '2' && matrizCultivos[1] != NULL)
-		{
-			Cosechar(1);
-		}
-		if (maskmap[yMizq][xMizq] == '3' && matrizCultivos[2] != NULL)
-		{
-			Cosechar(2);
-		}
-		if (maskmap[yMizq][xMizq] == '4' && matrizCultivos[3] != NULL)
-		{
-			Cosechar(3);
-		}
-		if (maskmap[yMizq][xMizq] == '5' && matrizCultivos[4] != NULL)
-		{
-			Cosechar(4);
-		}
-		if (maskmap[yMizq][xMizq] == '6' && matrizCultivos[5] != NULL)
-		{
-			Cosechar(5);
-		}
-		if (maskmap[yMizq][xMizq] == '7' && matrizCultivos[6] != NULL)
-		{
-			Cosechar(6);
-		}
-		if (maskmap[yMizq][xMizq] == '8' && matrizCultivos[7] != NULL)
-		{
-			Cosechar(7);
-		}
-	}
-	//Verifico si se presiono la tecla f(planta)
-	if (al_key_down(&keystate, ALLEGRO_KEY_F) && getEscena() == 1)
-	{
-		//verifico el cooldown 
-		if (al_current_time() - last_f_press > 2) {
-			//recorro la matriz para verificar si está lleno, despues se cambiará
-			if (mochila->verificacionMochila())
-			{
-				int tipo = mochila->verificarObjectoSeleccionado();
-				if (mochila->verificarCantidadCultivos(tipo))
-				{
-					if (maskmap[yMizq][xMizq] == '1' && matrizCultivos[0] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(900, 390, tipo, al_current_time());
-						matrizCultivos[0] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-					if (maskmap[yMizq][xMizq] == '2' && matrizCultivos[1] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(1060, 380, tipo, al_current_time());
-						matrizCultivos[1] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-					if (maskmap[yMizq][xMizq] == '3' && matrizCultivos[2] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(890, 440, tipo, al_current_time());
-						matrizCultivos[2] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-					if (maskmap[yMizq][xMizq] == '4' && matrizCultivos[3] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(1065, 438, tipo, al_current_time());
-						matrizCultivos[3] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-					if (maskmap[yMizq][xMizq] == '5' && matrizCultivos[4] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(900, 485, tipo, al_current_time());
-						matrizCultivos[4] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-					if (maskmap[yMizq][xMizq] == '6' && matrizCultivos[5] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(1055, 492, tipo, al_current_time());
-						matrizCultivos[5] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-					if (maskmap[yMizq][xMizq] == '7' && matrizCultivos[6] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(893, 540, tipo, al_current_time());
-						matrizCultivos[6] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-					if (maskmap[yMizq][xMizq] == '8' && matrizCultivos[7] == NULL)
-					{
-						Cultivo* cultivo = new Cultivo(1074, 542, tipo, al_current_time());
-						matrizCultivos[7] = cultivo;
-						mochila->setcantidadObjetos(mochila->getcantidadObjetos() - 1);
-						mochila->quitarCultivo(tipo);
-					}
-				}
-			}
-			last_f_press = al_current_time();
-		}
-	}
-
-
-	// colision con el mapa de mascara
-
-	active = true;
-	//CHECAR SI ESTA CORRIENDO
-	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
-		speedPlayer = 4;
-		corriendo = 4;
-	}
-	else {
-		speedPlayer = 2;
-		corriendo = 0;
-	}
-	colisiones();
-
-	if (getEscena() == 0) {
-		memcpy(maskmap, maskmap1, sizeof(maskmap));
-	}
-	else if (getEscena() == 1) {
-		memcpy(maskmap, maskmap2, sizeof(maskmap));
-	}
-	else if (getEscena() == 2) {
-		memcpy(maskmap, maskmap3, sizeof(maskmap));
-	}
-
-	if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
-	{
-		this->y -= speedPlayer;
-		direccion = UPW + corriendo;
-		setEscena(0);
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0)
-	{
-		this->y -= speedPlayer;
-		direccion = UPW + corriendo;
-		MapaCasa = true;
-		setEscena(2);
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o')
-	{
-		this->y -= speedPlayer;
-		direccion = UPW + corriendo;
-		MapaV2 = true;
-		this->x = 2;
-		setEscena(1);
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
-	{
-		this->y -= speedPlayer;
-		direccion = UPW + corriendo;
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x')
-	{
-		this->y += speedPlayer;
-		direccion = DOWNW + corriendo;
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x')
-	{
-		this->x += speedPlayer;
-		direccion = RIGHTW + corriendo;
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x')
-	{
-		this->x -= speedPlayer;
-		direccion = LEFTW + corriendo;
-	}
-	else active = false;
-	if (al_key_down(&keystate, ALLEGRO_KEY_K) && maskmap[yMup][xMup] == 'c' && getEscena() == 1)
-	{
-		this->y -= speedPlayer;
-		direccion = UPW + corriendo;
-		MapaCasa = true;
-		setEscena(3);
-	}
-	//ANIMACION DE MOVIMIENTOS 
-	PlayRefresh++;
-	if (PlayRefresh == 10)
-	{
-		if (SpritePosX >= 200) SpritePosX = 0;
-		if (active) SpritePosX += 40;
-		else SpritePosX = 0;
-		SpritePosY = direccion;
-		PlayRefresh = 0;
-	}
-	//cambio de mapa
-	if (this->x > 1280 && this->y >= 260 && this->y <= 330 && escena == 0)
-	{
-		this->x = 2;
-		setEscena(1);
-	}
-	else if (this->x < -38 && this->y >= 246 && this->y <= 332 && escena == 1)
-	{
-		this->x = 1242;
-		setEscena(0);
-	}
-	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
-}
-void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)
-{
-	al_draw_bitmap_region(this->sprite, SpritePosX, SpritePosY, movimientoX, movimientoY, xCoordsFondos, yJug, NULL);
-}
 //obtengo la escena en la que estoy
 void Player::setEscena(int escena)
 {
 	this->escena = escena;
 }
+
 int Player::getEscena()
 {
 	return this->escena;
-}
-
-void Player::Cosechar(int i)
-{
-	Cultivo* other = matrizCultivos[i];
-	if (other->estado == other->COSECHABLE)
-	{
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::discrete_distribution<> dist({ 3, 1, 1 });
-		int cantidadCosechada = dist(gen) + 2;
-	
-		mochila->setcantidadObjetos(mochila->getcantidadObjetos() + cantidadCosechada);
-
-		if (other->tipo == 0) mochila->setcantidadTomates(mochila->getcantidadTomates() + cantidadCosechada);
-		else if (other->tipo == 1) mochila->setcantidadCalabaza(mochila->getcantidadCalabaza() + cantidadCosechada);
-		else mochila->setcantidadZanahoria(mochila->getcantidadZanahoria() + cantidadCosechada);
-
-		matrizCultivos[i] = NULL;
-	}
 }

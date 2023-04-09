@@ -8,15 +8,18 @@
 class Cultivo : public Objeto
 {
 public:
-	int aux = 0;
-	int T_Plantacion;
-	enum { BROTE, ADOL, COSECHABLE };
-	int estado = 0;
 	Cultivo(int x, int y, int tipo, int T_Creado = 0);
 	~Cultivo();
-	void Crecer(Cultivo* other);
-	void action(int escena);
+	
+	enum { BROTE, ADOL, COSECHABLE };
+	
+	int aux = 0;
+	int T_Plantacion;
+	int estado = 0;
 	int tipo;
+	
+	void action(int escena);
+	void Crecer(Cultivo* other);
 private:
 	float sx;
 	float sy;
@@ -24,5 +27,5 @@ private:
 	float sh;
 	std::string ruta;
 };
-extern Cultivo* matrizCultivos[8];
+extern Cultivo* cultivosPlantados[8];
 #endif // !1

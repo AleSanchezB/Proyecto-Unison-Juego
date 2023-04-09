@@ -1,6 +1,5 @@
 #include "InitiMap.h"
 
-using std::cout;
 GameRun::GameRun()
 {
 	al_init();
@@ -9,7 +8,6 @@ GameRun::GameRun()
 	al_install_keyboard();
 	al_init_font_addon();
 	al_init_ttf_addon();
-	al_init_primitives_addon();
 	running = true;
 
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
@@ -32,6 +30,7 @@ GameRun::GameRun()
 	al_start_timer(timer);
 	initGame();
 }
+
 GameRun::~GameRun()
 {
 	al_destroy_display(displayGame);
@@ -42,7 +41,8 @@ GameRun::~GameRun()
 void GameRun::initGame()
 {
 	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
-	DrawObjects* drawPlayer = new DrawObjects();
+	Background* background = new Background();
+	Comprador* comprador = new Comprador();
 	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
 	{
@@ -50,13 +50,15 @@ void GameRun::initGame()
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
 
+		/*if (al_key_down(&keystate, ALLEGRO_KEY_K))
+			comprador->animtaion(1);*/
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
 		{
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
 		}
-		drawPlayer->DrawBackgrounds(player->getEscena());
+		background->action(player->getEscena(), background->TiempoEscenaActual);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			player->action(keystate, queue);
@@ -65,12 +67,15 @@ void GameRun::initGame()
 		if (draw)
 		{
 			draw = false;
-			drawPlayer->drawOptions(i, 900);
+			background->dibujarEncima(player->getEscena());
+			background->drawOptions(i, 900);
+			player->mochila->action();
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}
 	}
 }
+
 void GameRun::ColocarMusica() 
 {
 	//MUSICA DE AMBIENTE
