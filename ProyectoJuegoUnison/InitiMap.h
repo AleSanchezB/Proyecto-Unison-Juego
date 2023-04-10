@@ -6,6 +6,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <thread>
 
 #include "Player.h"
@@ -45,4 +46,5 @@ private:
 	void DibujarGradualmente();
 	void ColocarMusica();
 };
+extern Background* background;
 #endif // !1

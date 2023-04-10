@@ -32,6 +32,8 @@ Player::Player(std::string ruta)
 Player::~Player()
 {
 	al_destroy_bitmap(this->sprite);
+	al_destroy_font(font);
+	delete mochila;
 }
 
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
@@ -207,7 +209,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		direccion = UPW + corriendo;
 		MapaV2 = true;
 		this->x = 2;
-		setEscena(5);
+		setEscena(3);
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 	{

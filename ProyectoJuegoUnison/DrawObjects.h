@@ -6,6 +6,7 @@
 #include <allegro5/allegro_font.h>
 #include <string>
 #include <iostream>
+#include <thread>
 
 #include "GuardarDatos.h"
 #include "TipoCultivos.h"
@@ -23,11 +24,11 @@ public:
 	float TiempoCreacion = 0;
 	int TiempoEscenaActual = 0;
 	void dibujarEncima(int escena);
+	ALLEGRO_FONT* font;
 private:
 	ALLEGRO_BITMAP* ESCENAS[14];
 	ALLEGRO_BITMAP* OPCIONES[3];
 	ALLEGRO_BITMAP* ESCENASA[14];
-	ALLEGRO_FONT* font;
 	Cultivo* cultivosPlantados;
 	int Monedas;
 };

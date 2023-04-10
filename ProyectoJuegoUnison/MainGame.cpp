@@ -21,7 +21,7 @@ MainGame::~MainGame()
 
 void MainGame::initVars()
 {
-    iconDisplay = al_load_bitmap("assets/Player/frame01.png");
+    iconDisplay = al_load_bitmap("assets/Player/Sprites Players/characters/Walk_Run Player.png");
     for (int i = 0; i <= 3; i++)
     {
         string ruta = "assets/fondos/imgLogin/Banner0" + to_string(i) + ".png";

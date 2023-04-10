@@ -1,5 +1,6 @@
 #include "InitiMap.h"
 
+Background* background;
 GameRun::GameRun()
 {
 	al_init();
@@ -36,6 +37,11 @@ GameRun::~GameRun()
 	al_destroy_display(displayGame);
 	al_destroy_timer(timer);
 	al_uninstall_keyboard();
+	al_destroy_event_queue(queue);
+	al_destroy_sample(A_actual);
+	al_destroy_sample_instance(ambientacion);
+	al_uninstall_audio();
+	al_uninstall_mouse();
 }
 
 void GameRun::initGame()
@@ -51,7 +57,7 @@ void GameRun::initGame()
 		al_get_keyboard_state(&keystate);
 
 		/*if (al_key_down(&keystate, ALLEGRO_KEY_K))
-			comprador->animtaion(1);*/
+			comprador->Menu(keystate, queue);*/
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
 		{
@@ -68,12 +74,13 @@ void GameRun::initGame()
 		{
 			draw = false;
 			background->dibujarEncima(player->getEscena());
-			background->drawOptions(i, 900);
-			player->mochila->action();
+			background->drawOptions(i, mochila->getMonedas());
+			mochila->action();
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}
 	}
+	delete player, background, comprador;
 }
 
 void GameRun::ColocarMusica() 
