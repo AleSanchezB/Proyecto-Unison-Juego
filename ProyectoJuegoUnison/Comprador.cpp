@@ -160,10 +160,13 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 					&& events.mouse.y >= btnVender[1]->y && events.mouse.y <= btnVender[1]->y + btnVender[1]->h)
 				{
 					btnVen = 1;
-					this->CantVender = 0;
-					cantDig = 0;
-					animacionMonedas();
-					VerificarVenta();
+					if (mochila->verificacionMochila() && 
+						mochila->verificarCantidadCultivosGuardados(this->TipoCultivo, this->CantVender))
+					{
+						animacionMonedas();
+						VerificarVenta();
+						cantDig = 0;
+					}
 				}
 				else btnVen = 0;
 
@@ -203,6 +206,7 @@ void Comprador::animacionMonedas()
 		}
 	}
 	DibujarElFondo();
+	action();
 	al_draw_bitmap_region(coins, 0, 0, 31, 31, 988, 25, 0);
 	al_flip_display();
 	Sleep(2000);
@@ -254,18 +258,32 @@ void Comprador::action(int btnCult, int btnCant, int btnCultB, int btnCantB, int
 	btnSalir[btnExit]->action();
 	btnVender[btnVen]->action();
 }
-void Comprador::VerificarVenta()
+bool Comprador::VerificarVenta()
 {
 	if (mochila->verificacionMochila())
 	{
-		if (mochila->verificarCantidadCultivos(this->TipoCultivo))
+		if (mochila->verificarCantidadCultivosGuardados(this->TipoCultivo, this->CantVender))
 		{
 			mochila->quitarCultivo(this->TipoCultivo);
 			int Pago = 0;
-			if (TipoCultivo == 1) Pago = CantVender * PRECIOTOM;
-			else if (TipoCultivo == 2) Pago = CantVender * PRECIOZCALA;
-			else Pago = CantVender * PRECIOZANA;
-			mochila->setMonedas(mochila->getMonedas() + Pago);
+			if (TipoCultivo == 1) Pago = this->CantVender * PRECIOTOM;
+			else if (TipoCultivo == 2) Pago = this->CantVender * PRECIOZCALA;
+			else Pago = this->CantVender * PRECIOZANA;
+			animacionDinero(Pago);
+			this->CantVender = 0;
+			return true;
 		}
+	}
+	return false;
+}
+void Comprador::animacionDinero(int Pago)
+{
+	for (int i = 1; i <= Pago; i++)
+	{
+		mochila->setMonedas(mochila->getMonedas() + 1);
+		Sleep(20);
+		DibujarElFondo();
+		action();
+		al_flip_display();
 	}
 }

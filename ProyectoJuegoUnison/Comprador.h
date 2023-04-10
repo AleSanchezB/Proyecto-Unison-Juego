@@ -21,6 +21,7 @@ public:
 	void Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void animacionMenu(int tipo);
 	void animacionMonedas();
+	void animacionDinero(int Pago);
 private:
 	ALLEGRO_BITMAP* menu[37];
 	ALLEGRO_BITMAP* coins;
@@ -41,7 +42,7 @@ private:
 	void AnimacionRevsera();
 	void action(int btnCult = 0, int btnCant = 1, int btnCultB = 0, int btnCantB = 1, int btnExit = 0, int btnVen = 0);
 	void DibujarElFondo(int i = 0);
-	void VerificarVenta();
+	bool VerificarVenta();
 };
 
 #endif // !COMPRADOR_H

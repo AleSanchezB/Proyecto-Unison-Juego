@@ -49,7 +49,6 @@ void Cultivo::action(int escena)
 				}
 				al_draw_bitmap_region(other->sprite, other->sx, other->sy, other->sw, other->sh, other->x, other->y, 0);
 			}
-
 		}
 	}
 	catch (const std::exception&)

@@ -29,7 +29,15 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	cal = al_load_bitmap("assets/Plants/calabaza item.png");
 	zana = al_load_bitmap("assets/Plants/zanahoria item.png");
 }
-
+Mochila::~Mochila()
+{
+	al_destroy_font(font);
+	al_destroy_bitmap(seleccionHerramienta);
+	al_destroy_bitmap(barraHerramientas);
+	al_destroy_bitmap(tom);
+	al_destroy_bitmap(cal);
+	al_destroy_bitmap(zana);
+}
 void Mochila::setcantidadObjetos(int cantidadObjetos)
 {
 	this->cantidadObjetos = cantidadObjetos;
@@ -143,4 +151,26 @@ void Mochila::setMonedas(int Monedas)
 int Mochila::getMonedas()
 {
 	return this->Monedas = Monedas;
+}
+
+bool Mochila::verificarCantidadCultivosGuardados(int tipo, int cantidad)
+{
+	switch (tipo)
+	{
+	case 0:
+		if (cantidad > 0 && cantidad <= getcantidadTomates()) return true;
+		else return false;
+	case 1:
+		if (cantidad > 0 && cantidad <= getcantidadCalabaza()) return true;
+		else return false;
+	case 2:
+		if (cantidad > 0 && cantidad <= getcantidadZanahoria()) return true;
+		else
+		{
+			return false;
+		}
+	default:
+		break;
+	}
+	return false;
 }

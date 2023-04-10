@@ -22,17 +22,17 @@ public:
 private:
     //DECLARACION DE VARIABLES ALLEGRO
     ALLEGRO_DISPLAY* firstDisplay;
-    ALLEGRO_BITMAP* iconDisplay = NULL;
+    ALLEGRO_BITMAP* iconDisplay;
     ALLEGRO_BITMAP* fondos[5];
     ALLEGRO_EVENT_QUEUE* queue;
     ALLEGRO_FONT* fontMenu;
     ALLEGRO_EVENT event;
     ALLEGRO_MIXER* mixer;
     ALLEGRO_VOICE* voice;
-    ALLEGRO_SAMPLE_INSTANCE* songInstance;
     ALLEGRO_SAMPLE* sample;
-    ALLEGRO_SAMPLE_INSTANCE* efectClickInstance;
     ALLEGRO_SAMPLE* efectClick;
+    ALLEGRO_SAMPLE_INSTANCE* songInstance;
+    ALLEGRO_SAMPLE_INSTANCE* efectClickInstance;
     ALLEGRO_SAMPLE_ID idClickEffect;
 
     Panel panelOptions;

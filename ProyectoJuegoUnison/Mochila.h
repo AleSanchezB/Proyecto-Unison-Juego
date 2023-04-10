@@ -27,6 +27,7 @@ public:
 
 	bool verificacionMochila();
 	bool verificarCantidadCultivos(int tipo);
+	bool verificarCantidadCultivosGuardados(int tipo, int cantidad);
 
 
 	void setMonedas(int monedas);

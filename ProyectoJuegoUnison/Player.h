@@ -48,7 +48,6 @@ private:
 	int y;
 	int escena;
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
-	int vectormatriz[3];
 
 	bool active = false;
 	bool MapaV2;
@@ -291,18 +290,12 @@ private:
 	};
 
 	char maskmap[150][150];
-
-	bool MatrizCultivos[2][5]{
-		{false,false,false,false, false},
-		{false,false,false,false, false}
-	};
-
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
 	void Cosechar(int i);
 };
-extern Cultivo *matrizCultivos[8];
+
 extern Mochila* mochila;
 #endif // !PLAYER_H
 
