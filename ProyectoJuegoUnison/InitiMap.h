@@ -45,4 +45,5 @@ private:
 	void DibujarGradualmente();
 	void ColocarMusica();
 };
+extern Background* background;
 #endif // !1

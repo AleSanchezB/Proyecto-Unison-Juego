@@ -8,6 +8,7 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	this->cantidadZanahoria = cantidadZanahoria;
 	this->casillaSelect = 0;
 	this->font = font;
+	this->Monedas = 999;
 	/*for (int i = 0; i < cantidadTomates; i++)
 	{
 		cantTomates.push_back(new Cultivo(0,0,0));
@@ -133,4 +134,13 @@ bool Mochila::verificacionMochila()
 {
 	if (getcantidadObjetos() > 0) return true;
 	return false;
+}
+void Mochila::setMonedas(int Monedas)
+{
+	this->Monedas = Monedas;
+}
+
+int Mochila::getMonedas()
+{
+	return this->Monedas = Monedas;
 }

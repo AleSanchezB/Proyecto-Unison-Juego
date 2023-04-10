@@ -31,8 +31,9 @@ public:
 	void setEscena(int escena);
 	void DibujarCultivo();
 	int getEscena();
-	Mochila* mochila;
-
+	
+	void setMonedas(int monedas);
+	int getMonedas();
 private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
@@ -54,6 +55,7 @@ private:
 	bool MapaCasa;
 	bool f_pressed = false;
 
+	int Monedas;
 	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
 	//DIMESION DE LA MATRIZ MASCARA
 	const int dimxmask = 150;
@@ -301,5 +303,6 @@ private:
 	void Cosechar(int i);
 };
 extern Cultivo *matrizCultivos[8];
+extern Mochila* mochila;
 #endif // !PLAYER_H
 

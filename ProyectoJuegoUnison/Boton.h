@@ -7,15 +7,14 @@
 class Boton
 {
 public:
-	Boton(std::string ruta, std::string btnPresionado, float x, float y, float w, float h);
+	Boton(std::string ruta, float x, float y, float w, float h);
 	~Boton();
-
 	float x;
-	float y;	
+	float y;
 	float w;
 	float h;
-	ALLEGRO_BITMAP* sprite[2];
-	void action(int i);
+	ALLEGRO_BITMAP* sprite;
+	void action();
 private:
 
 };

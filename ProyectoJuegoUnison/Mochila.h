@@ -27,12 +27,17 @@ public:
 
 	bool verificacionMochila();
 	bool verificarCantidadCultivos(int tipo);
+
+
+	void setMonedas(int monedas);
+	int getMonedas();
 private:
 	int cantidadObjetos;
 	int cantidadTomates;
 	int cantidadCalabaza;
 	int cantidadZanahoria;
 	int casillaSelect;
+	int Monedas;
 
 	ALLEGRO_BITMAP* barraHerramientas;
 	ALLEGRO_BITMAP* seleccionHerramienta;

@@ -1,5 +1,6 @@
 #include "InitiMap.h"
 
+Background* background;
 GameRun::GameRun()
 {
 	al_init();
@@ -41,7 +42,7 @@ GameRun::~GameRun()
 void GameRun::initGame()
 {
 	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
-	Background* background = new Background();
+	background = new Background();
 	Comprador* comprador = new Comprador();
 	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
@@ -51,13 +52,13 @@ void GameRun::initGame()
 		al_get_keyboard_state(&keystate);
 
 		/*if (al_key_down(&keystate, ALLEGRO_KEY_K))
-			comprador->animtaion(1);*/
+			comprador->Menu(keystate, queue);
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
 		{
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
-		}
+		}*/
 		background->action(player->getEscena(), background->TiempoEscenaActual);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
@@ -68,8 +69,8 @@ void GameRun::initGame()
 		{
 			draw = false;
 			background->dibujarEncima(player->getEscena());
-			background->drawOptions(i, 900);
-			player->mochila->action();
+			background->drawOptions(i, mochila->getMonedas());
+			mochila->action();
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}

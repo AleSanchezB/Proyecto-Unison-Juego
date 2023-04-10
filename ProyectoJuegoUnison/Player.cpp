@@ -383,3 +383,8 @@ int Player::getEscena()
 {
 	return this->escena;
 }
+
+int Player::getMonedas()
+{
+	return mochila->getMonedas();
+}

@@ -23,11 +23,11 @@ public:
 	float TiempoCreacion = 0;
 	int TiempoEscenaActual = 0;
 	void dibujarEncima(int escena);
+	ALLEGRO_FONT* font;
 private:
 	ALLEGRO_BITMAP* ESCENAS[14];
 	ALLEGRO_BITMAP* OPCIONES[3];
 	ALLEGRO_BITMAP* ESCENASA[14];
-	ALLEGRO_FONT* font;
 	Cultivo* cultivosPlantados;
 	int Monedas;
 };
