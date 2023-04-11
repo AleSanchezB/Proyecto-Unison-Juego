@@ -16,7 +16,6 @@
 #include "Mochila.h"
 #include "Objeto.h"
 #include "TipoCultivos.h"
-#include "InitiMap.h"
 #include "GuardarDatos.h"
 
 //std::list<Objeto*> objectos;
@@ -28,12 +27,11 @@ public:
 	Player(std::string ruta);
 	~Player();
 	void action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
+	void action();
 	void setEscena(int escena);
 	void DibujarCultivo();
 	int getEscena();
 	
-	void setMonedas(int monedas);
-	int getMonedas();
 private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
@@ -54,7 +52,6 @@ private:
 	bool MapaCasa;
 	bool f_pressed = false;
 
-	int Monedas;
 	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
 	//DIMESION DE LA MATRIZ MASCARA
 	const int dimxmask = 150;
@@ -288,14 +285,12 @@ private:
 			"x                                                                                                                            x", //70
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //71
 	};
-
 	char maskmap[150][150];
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
 	void Cosechar(int i);
 };
-
 extern Mochila* mochila;
 #endif // !PLAYER_H
 

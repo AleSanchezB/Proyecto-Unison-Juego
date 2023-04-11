@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "DrawObjects.h"
 #include "Comprador.h"
+#include "Comprador.h"
 
 class GameRun
 {
@@ -47,4 +48,5 @@ private:
 	void ColocarMusica();
 };
 extern Background* background;
+extern Player* player;
 #endif // !1

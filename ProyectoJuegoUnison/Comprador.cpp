@@ -36,7 +36,9 @@ void Comprador::animacionMenu(int tipo)
 	for (int i = 35; i >= 0; i--)
 	{
 		Sleep(60);
-		background->action(0, 0);
+		background->action(player->getEscena(), 0);
+		background->drawOptions(0, mochila->getMonedas());
+		player->action();
 		al_draw_bitmap(menu[i], 0, 0, 0);
 		al_flip_display();
 		al_clear_to_color(al_map_rgb_f(255, 255, 255));
@@ -161,7 +163,7 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 				{
 					btnVen = 1;
 					if (mochila->verificacionMochila() && 
-						mochila->verificarCantidadCultivosGuardados(this->TipoCultivo, this->CantVender))
+						mochila->verificarCantidadCultivosGuardados(this->TipoCultivo-1, this->CantVender))
 					{
 						animacionMonedas();
 						VerificarVenta();
@@ -181,7 +183,6 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 			}
 		}
 		action(btnCult, btnCant, btnCultB, btnCantB, btnExit, btnVen);
-		DibujarCantidadSelec();
 		al_flip_display();
 		if (al_key_down(&keystate, ALLEGRO_KEY_M)) animacionMonedas();
 	}
@@ -232,17 +233,21 @@ void Comprador::DibujarCantidadSelec()
 }
 void Comprador::DibujarElFondo(int escena)
 {
-	background->action(0, 0);
+	background->action(player->getEscena(), 0);
+	player->action();
 	background->drawOptions(0, mochila->getMonedas());
 	al_draw_bitmap(menu[escena], 0, 0, 0);
+	DibujarCantidadSelec();
 }
 void Comprador::AnimacionRevsera()
 {
 	for (int i = 1; i <= 35; i++)
 	{
 		Sleep(60);
-		DibujarElFondo();
-		action();
+		background->action(3, 0);
+		background->drawOptions(0, mochila->getMonedas());
+		player->action();
+		al_draw_bitmap(menu[i], 0, 0, 0);
 		al_flip_display();
 		al_clear_to_color(al_map_rgb_f(255, 255, 255));
 	}
@@ -262,9 +267,9 @@ bool Comprador::VerificarVenta()
 {
 	if (mochila->verificacionMochila())
 	{
-		if (mochila->verificarCantidadCultivosGuardados(this->TipoCultivo, this->CantVender))
+		if (mochila->verificarCantidadCultivosGuardados(this->TipoCultivo-1, this->CantVender))
 		{
-			mochila->quitarCultivo(this->TipoCultivo);
+			mochila->quitarCultivo(this->TipoCultivo-1);
 			int Pago = 0;
 			if (TipoCultivo == 1) Pago = this->CantVender * PRECIOTOM;
 			else if (TipoCultivo == 2) Pago = this->CantVender * PRECIOZCALA;

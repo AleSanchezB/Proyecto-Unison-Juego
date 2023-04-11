@@ -56,6 +56,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		mochila->cambiarCasilla(2);
 	}
+
 	//tecla para cosechar
 	if (al_key_down(&keystate, ALLEGRO_KEY_C))
 	{
@@ -306,6 +307,10 @@ void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
 
+void Player::action()
+{
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
+}
 void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)
 {
 	al_draw_bitmap_region(this->sprite, SpritePosX, SpritePosY, movimientoX, movimientoY, xCoordsFondos, yJug, NULL);
