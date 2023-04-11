@@ -1,6 +1,7 @@
 #include "InitiMap.h"
 
 Background* background;
+Player* player;
 GameRun::GameRun()
 {
 	al_init();
@@ -46,8 +47,8 @@ GameRun::~GameRun()
 
 void GameRun::initGame()
 {
-	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
-	Background* background = new Background();
+	player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
+	background = new Background();
 	Comprador* comprador = new Comprador();
 	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
@@ -56,14 +57,18 @@ void GameRun::initGame()
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
 
-		/*if (al_key_down(&keystate, ALLEGRO_KEY_K))
-			comprador->Menu(keystate, queue);*/
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
 		{
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
 		}
+		if (al_key_down(&keystate, ALLEGRO_KEY_E))
+		{
+			player->setEscena(10);
+			comprador->Menu(keystate, queue);
+		}
+		player->setEscena(3);
 		background->action(player->getEscena(), background->TiempoEscenaActual);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
@@ -80,7 +85,7 @@ void GameRun::initGame()
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}
 	}
-	delete player, background, comprador;
+	delete background,player,comprador;
 }
 
 void GameRun::ColocarMusica() 

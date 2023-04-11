@@ -7,12 +7,8 @@
 #include <Windows.h>
 #include <cmath>
 #define DX 4
-#include "DrawObjects.h"
-#include "InitiMap.h"
 #include "Boton.h"
-#include "Player.h"
-#include "Mochila.h"
-
+#include "InitiMap.h"
 class Comprador
 {
 public:
