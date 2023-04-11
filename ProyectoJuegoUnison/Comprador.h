@@ -42,5 +42,3 @@ private:
 };
 
 #endif // !COMPRADOR_H
-
-
