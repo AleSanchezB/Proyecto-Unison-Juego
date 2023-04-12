@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Boton.h" />
     <ClInclude Include="Comprador.h" />
+    <ClInclude Include="TiempoDia.h" />
     <ClInclude Include="DrawObjects.h" />
     <ClInclude Include="GuardarDatos.h" />
     <ClInclude Include="IAMobs.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="sonidos.cpp" />
     <ClCompile Include="SubmenuOptions.cpp" />
+    <ClCompile Include="TiempoDia.cpp" />
     <ClCompile Include="TiposCultivos.cpp" />
   </ItemGroup>
   <ItemGroup>

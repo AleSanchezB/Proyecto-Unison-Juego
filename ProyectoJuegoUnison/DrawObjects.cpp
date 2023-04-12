@@ -10,8 +10,7 @@ Background::Background()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			if(i > 1) rutaFondos = "assets/fondos/Escenas/ESCENA0" + std::to_string(i)+ ".png";
-			else rutaFondos = "assets/fondos/Escenas/ESCENA0" + std::to_string(i) + tiempos[j] + ".png";
+			rutaFondos = "assets/fondos/Escenas/ESCENA0" + std::to_string(i) + tiempos[j] + ".png";
 			ESCENAS[aux] = al_load_bitmap(rutaFondos.c_str());
 			assert(ESCENAS[aux] != NULL);
 			aux++;
@@ -98,9 +97,9 @@ Background::~Background()
 	al_destroy_bitmap(OPCIONES[1]);
 	al_destroy_font(font);
 }
-void Background::action(int escena, int TiempoEscenaActual)
+void Background::action(int escena, int TiempoDiaEscena)
 {
-	al_draw_bitmap(ESCENAS[escena + TiempoEscenaActual], 0, 0, 0);
+	al_draw_bitmap(ESCENAS[escena + TiempoDiaEscena], 0, 0, 0);
 	if (escena == 3 || escena == 4 || escena == 5) cultivosPlantados->action(escena);
 }
 void Background::drawOptions(int i, int Monedas)
@@ -109,27 +108,12 @@ void Background::drawOptions(int i, int Monedas)
 	al_draw_text(font, al_map_rgb(255, 255, 255), 1030, 33, 0, (std::to_string(Monedas).c_str()));
 }
 
-void Background::dibujarEncima(int escena)
+void Background::dibujarEncima(int escena, int TiempoDiaEscena)
 {
-	if (escena < 7)
-		al_draw_bitmap(ESCENASA[escena], 0, 0, 0);
+	if (escena < 6)
+		al_draw_bitmap(ESCENASA[escena+TiempoDiaEscena], 0, 0, 0);
 }
 
 /***********************FUNCIONES NUEVAS, LAS QUE PROBABLEMENTE TENGAS QUE COMENTAR*****************************************/
-//void Background::InicioDia() {
-//	TiempoCreacion = al_current_time();
-//	std::cout << "Objetivos del día\n";
-//	TiempoEscenaActual = 0;
-//	//GENERAR TAMBIEN OBJETIVOS DEL DIA(tengo que averiguar cómo :c)
-//}
-//
-//void Background::CambioTiempoEscena(float T_Actual, int escena)
-//{
-//	TiempoEscenaActual = 0;
-//	int resta = (int)(T_Actual - TiempoCreacion) % 60;
-//	if (resta == 0) {
-//		TiempoEscenaActual++;
-//		action(escena, TiempoEscenaActual);
-//	}
-//}
+
 /****************************************************************************************************************************/
