@@ -18,12 +18,10 @@ public:
 	~Background();
 	void action(int escenal, int TiempoEscenaActual);
 	void drawOptions(int i, int Monedas);
-	void InicioDia();
-	void CambioTiempoEscena(float T_Actual, int escena);
 	std::string tiempos[4] = { "","TARDE","NOCHE" };
 	float TiempoCreacion = 0;
 	int TiempoEscenaActual = 0;
-	void dibujarEncima(int escena);
+	void dibujarEncima(int escena, int TiempoDiaEscena);
 	ALLEGRO_FONT* font;
 private:
 	ALLEGRO_BITMAP* ESCENAS[14];

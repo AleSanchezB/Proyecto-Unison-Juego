@@ -12,7 +12,6 @@
 #include "Player.h"
 #include "DrawObjects.h"
 #include "Comprador.h"
-#include "Comprador.h"
 
 class GameRun
 {

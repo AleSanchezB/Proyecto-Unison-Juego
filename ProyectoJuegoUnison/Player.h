@@ -17,10 +17,11 @@
 #include "Objeto.h"
 #include "TipoCultivos.h"
 #include "GuardarDatos.h"
+#include "TiempoDia.h"
 
 //std::list<Objeto*> objectos;
 
-class Player : DatosUsuario
+class Player : public Dia
 {
 public:
 	int aux = 0;

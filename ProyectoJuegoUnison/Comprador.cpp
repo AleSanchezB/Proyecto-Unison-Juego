@@ -36,7 +36,7 @@ void Comprador::animacionMenu(int tipo)
 	for (int i = 35; i >= 0; i--)
 	{
 		Sleep(60);
-		background->action(player->getEscena(), 0);
+		background->action(player->getEscena()+player->TiempoDiaEscena, 0);
 		background->drawOptions(0, mochila->getMonedas());
 		player->action();
 		al_draw_bitmap(menu[i], 0, 0, 0);
@@ -186,7 +186,7 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 		al_flip_display();
 		if (al_key_down(&keystate, ALLEGRO_KEY_M)) animacionMonedas();
 	}
-	AnimacionRevsera();
+	AnimacionReversa();
 }
 void Comprador::animacionMonedas()
 {
@@ -210,7 +210,6 @@ void Comprador::animacionMonedas()
 	action();
 	al_draw_bitmap_region(coins, 0, 0, 31, 31, 988, 25, 0);
 	al_flip_display();
-	Sleep(2000);
 	animacion_x = 716;
 	animacion_y = 587;
 }
@@ -233,18 +232,18 @@ void Comprador::DibujarCantidadSelec()
 }
 void Comprador::DibujarElFondo(int escena)
 {
-	background->action(player->getEscena(), 0);
+	background->action(player->getEscena()+player->TiempoDiaEscena, 0);
 	player->action();
 	background->drawOptions(0, mochila->getMonedas());
 	al_draw_bitmap(menu[escena], 0, 0, 0);
 	DibujarCantidadSelec();
 }
-void Comprador::AnimacionRevsera()
+void Comprador::AnimacionReversa()
 {
 	for (int i = 1; i <= 35; i++)
 	{
 		Sleep(60);
-		background->action(3, 0);
+		background->action(player->getEscena()+player->TiempoDiaEscena, 0);
 		background->drawOptions(0, mochila->getMonedas());
 		player->action();
 		al_draw_bitmap(menu[i], 0, 0, 0);
