@@ -1,10 +1,4 @@
 #include "MainGame.h"
-#include <string.h>
-#include "InitiMap.h"
-#include "SubmenuOptions.h"
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
-#include <Windows.h>
 
 MainGame::MainGame()
 {
@@ -12,7 +6,6 @@ MainGame::MainGame()
     al_install_keyboard();
     al_install_mouse();
     al_install_audio();
-    al_init_primitives_addon();
     al_init_acodec_addon();
     al_reserve_samples(2);
     al_init_image_addon();
@@ -28,7 +21,7 @@ MainGame::~MainGame()
 
 void MainGame::initVars()
 {
-    iconDisplay = al_load_bitmap("assets/Player/frame01.png");
+    iconDisplay = al_load_bitmap("assets/Player/Sprites Players/characters/Walk_Run Player.png");
     for (int i = 0; i <= 3; i++)
     {
         string ruta = "assets/fondos/imgLogin/Banner0" + to_string(i) + ".png";

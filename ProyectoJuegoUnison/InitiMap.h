@@ -5,17 +5,14 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-#include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_audio.h>
-#include <windows.h>
-#include <string>
-#include <chrono>
-#include <list>
-#include <iostream>
-#include "Objeto.h"
+#include <allegro5/allegro_acodec.h>
+#include <thread>
+
 #include "Player.h"
-#include "TipoCultivos.h"
 #include "DrawObjects.h"
+#include "Comprador.h"
+#include "Comprador.h"
 
 class GameRun
 {
@@ -36,19 +33,20 @@ private:
 	const int width = 1280;
 	const int height = 720;
 	const float FPS = 90.0;
+
 	//VARIABLES
 	bool running;
 	int mouseX, mouseY;
 	int i;
-
 	float alpha = 1.0;
 	float scale = 1.0;
-
-
 	bool draw = true;
+
 	//funciones
 	void initGame();
 	void DibujarGradualmente();
 	void ColocarMusica();
 };
+extern Background* background;
+extern Player* player;
 #endif // !1

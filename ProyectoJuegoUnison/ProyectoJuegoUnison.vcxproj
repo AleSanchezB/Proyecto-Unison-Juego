@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -150,6 +150,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Boton.h" />
+    <ClInclude Include="Comprador.h" />
     <ClInclude Include="DrawObjects.h" />
     <ClInclude Include="GuardarDatos.h" />
     <ClInclude Include="IAMobs.h" />
@@ -162,6 +164,8 @@
     <ClInclude Include="TipoCultivos.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boton.cpp" />
+    <ClCompile Include="Comprador.cpp" />
     <ClCompile Include="DrawObjects.cpp" />
     <ClCompile Include="GuardarDatos.cpp" />
     <ClCompile Include="InitMap.cpp" />

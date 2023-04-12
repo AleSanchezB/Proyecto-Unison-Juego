@@ -1,6 +1,7 @@
 #include "InitiMap.h"
 
-using std::cout;
+Background* background;
+Player* player;
 GameRun::GameRun()
 {
 	al_init();
@@ -9,7 +10,6 @@ GameRun::GameRun()
 	al_install_keyboard();
 	al_init_font_addon();
 	al_init_ttf_addon();
-	al_init_primitives_addon();
 	running = true;
 
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
@@ -32,17 +32,24 @@ GameRun::GameRun()
 	al_start_timer(timer);
 	initGame();
 }
+
 GameRun::~GameRun()
 {
 	al_destroy_display(displayGame);
 	al_destroy_timer(timer);
 	al_uninstall_keyboard();
+	al_destroy_event_queue(queue);
+	al_destroy_sample(A_actual);
+	al_destroy_sample_instance(ambientacion);
+	al_uninstall_audio();
+	al_uninstall_mouse();
 }
 
 void GameRun::initGame()
 {
-	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
-	DrawObjects* drawPlayer = new DrawObjects();
+	player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
+	background = new Background();
+	Comprador* comprador = new Comprador();
 	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
 	while (running)
 	{
@@ -56,7 +63,13 @@ void GameRun::initGame()
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
 		}
-		drawPlayer->DrawBackgrounds(player->getEscena(),drawPlayer->TiempoEscenaActual);
+		if (al_key_down(&keystate, ALLEGRO_KEY_E))
+		{
+			player->setEscena(10);
+			comprador->Menu(keystate, queue);
+		}
+		player->setEscena(3);
+		background->action(player->getEscena(), background->TiempoEscenaActual);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			player->action(keystate, queue);
@@ -65,12 +78,16 @@ void GameRun::initGame()
 		if (draw)
 		{
 			draw = false;
-			drawPlayer->drawOptions(i, 900);
+			background->dibujarEncima(player->getEscena());
+			background->drawOptions(i, mochila->getMonedas());
+			mochila->action();
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}
 	}
+	delete background,player,comprador;
 }
+
 void GameRun::ColocarMusica() 
 {
 	//MUSICA DE AMBIENTE
