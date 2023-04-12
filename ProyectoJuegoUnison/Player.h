@@ -26,12 +26,11 @@ public:
 	int aux = 0;
 	Player(std::string ruta);
 	~Player();
-	void action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
+	//void action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void action();
 	void setEscena(int escena);
-	void DibujarCultivo();
 	int getEscena();
-	
+	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
@@ -287,7 +286,7 @@ private:
 	};
 	char maskmap[150][150];
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
-	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
+	
 	void colisiones();
 	void Cosechar(int i);
 };

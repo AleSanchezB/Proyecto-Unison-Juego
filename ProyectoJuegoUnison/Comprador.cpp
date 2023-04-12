@@ -1,8 +1,8 @@
 #include "Comprador.h"
-
+Comprador* comprador;
 Comprador::Comprador()
 {
-	this->TipoCultivo = 2;
+	this->TipoCultivo = 1;
 	this->CantVender = 1;
 	cantDig = std::log10(this->CantVender) + 1;
 	coins = al_load_bitmap("assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/coins2.png");
@@ -186,7 +186,7 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 		al_flip_display();
 		if (al_key_down(&keystate, ALLEGRO_KEY_M)) animacionMonedas();
 	}
-	AnimacionRevsera();
+	AnimacionReversa();
 }
 void Comprador::animacionMonedas()
 {
@@ -195,22 +195,19 @@ void Comprador::animacionMonedas()
 		for (int i = 0; i < 8; i++)
 		{
 			Sleep(60);
+			al_clear_to_color(al_map_rgb_f(255, 255, 255));
 			DibujarElFondo();
 			action();
 			DibujarCantidadSelec();
 			al_draw_bitmap_region(coins, 31 * i, 0, 31, 31, animacion_x, animacion_y, 0);
 			al_flip_display();
-			al_clear_to_color(al_map_rgb_f(255, 255, 255));
 			animacion_x += 5;
 			animacion_y = 0.001261 * std::pow(animacion_x, 2) - 4.1391 * animacion_x + 2903.71;
 			//0.0012A B= -4.14 C 2903.7  0.017*std::pow(animacion_x,2)-20.65*animacion_x+2050   A = -0.0495 B = 86.67722 C = 37242.37588
 		}
 	}
-	DibujarElFondo();
-	action();
 	al_draw_bitmap_region(coins, 0, 0, 31, 31, 988, 25, 0);
 	al_flip_display();
-	Sleep(2000);
 	animacion_x = 716;
 	animacion_y = 587;
 }
@@ -238,8 +235,9 @@ void Comprador::DibujarElFondo(int escena)
 	background->drawOptions(0, mochila->getMonedas());
 	al_draw_bitmap(menu[escena], 0, 0, 0);
 	DibujarCantidadSelec();
+	action();
 }
-void Comprador::AnimacionRevsera()
+void Comprador::AnimacionReversa()
 {
 	for (int i = 1; i <= 35; i++)
 	{
@@ -286,9 +284,8 @@ void Comprador::animacionDinero(int Pago)
 	for (int i = 1; i <= Pago; i++)
 	{
 		mochila->setMonedas(mochila->getMonedas() + 1);
-		Sleep(20);
 		DibujarElFondo();
-		action();
 		al_flip_display();
+		Sleep(20);
 	}
 }

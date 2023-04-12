@@ -35,10 +35,11 @@ private:
 	const int PRECIOZCALA = 200;
 	const int PRECIOZANA = 300;
 	void DibujarCantidadSelec();
-	void AnimacionRevsera();
+	void AnimacionReversa();
 	void action(int btnCult = 0, int btnCant = 1, int btnCultB = 0, int btnCantB = 1, int btnExit = 0, int btnVen = 0);
 	void DibujarElFondo(int i = 0);
 	bool VerificarVenta();
 };
 
 #endif // !COMPRADOR_H
+extern Comprador* comprador;

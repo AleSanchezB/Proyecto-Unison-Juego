@@ -12,7 +12,6 @@
 #include "Player.h"
 #include "DrawObjects.h"
 #include "Comprador.h"
-#include "Comprador.h"
 
 class GameRun
 {
@@ -33,7 +32,7 @@ private:
 	const int width = 1280;
 	const int height = 720;
 	const float FPS = 90.0;
-
+	const double TARGET_FPS = 1000000000 / FPS;
 	//VARIABLES
 	bool running;
 	int mouseX, mouseY;
@@ -46,6 +45,8 @@ private:
 	void initGame();
 	void DibujarGradualmente();
 	void ColocarMusica();
+	void Update(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
+	void Draw();
 };
 extern Background* background;
 extern Player* player;

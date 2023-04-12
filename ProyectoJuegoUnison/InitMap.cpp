@@ -49,16 +49,15 @@ void GameRun::initGame()
 {
 	player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
 	background = new Background();
-	Comprador* comprador = new Comprador();
-	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
+	comprador = new Comprador();
+	Sleep(1000);
 	while (running)
 	{
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
-
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
-		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
+		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
 		{
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
@@ -72,23 +71,33 @@ void GameRun::initGame()
 		background->action(player->getEscena(), background->TiempoEscenaActual);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
-			player->action(keystate, queue);
+			Update(keystate, queue);
 			draw = true;
 		}
 		if (draw)
 		{
 			draw = false;
-			background->dibujarEncima(player->getEscena());
-			background->drawOptions(i, mochila->getMonedas());
-			mochila->action();
-			al_flip_display();
-			al_clear_to_color(al_map_rgb_f(254, 254, 254));
+			Draw();
 		}
 	}
-	delete background,player,comprador;
+	delete background, player, comprador;
 }
 
-void GameRun::ColocarMusica() 
+void GameRun::Update(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
+{
+	player->move(keystate, queue);
+}
+void GameRun::Draw()
+{
+	background->action(player->getEscena(), background->TiempoEscenaActual);
+	player->action();
+	background->dibujarEncima(player->getEscena());
+	background->drawOptions(i, mochila->getMonedas());
+	mochila->action();
+	al_flip_display();
+	al_clear_to_color(al_map_rgb_f(254, 254, 254));
+}
+void GameRun::ColocarMusica()
 {
 	//MUSICA DE AMBIENTE
 	A_actual = al_load_sample("assets/Effects Sounds/sonidos naturales 2/Ambient/AmbientNatureOutside.wav");
@@ -98,7 +107,7 @@ void GameRun::ColocarMusica()
 	al_play_sample_instance(ambientacion);
 	al_set_sample_instance_gain(ambientacion, 0.4);
 }
- 
+
 void GameRun::DibujarGradualmente()
 {
 	////al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -117,4 +126,34 @@ void GameRun::DibujarGradualmente()
 
 	//// Actualizar la pantalla
 	//al_flip_display();
+	/*player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
+	background = new Background();
+	comprador = new Comprador();
+	auto now = 0;
+	auto lastTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+	auto delta = 0;
+	int fps = 0;
+	auto time = 0;
+	while (running)
+	{
+		now = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+		delta += (now - lastTime) / TARGET_FPS;
+		time += (now - lastTime);
+		lastTime = now;
+		al_wait_for_event(queue, &event);
+		ALLEGRO_KEYBOARD_STATE keystate;
+		al_get_keyboard_state(&keystate);
+
+		if (delta >= 1)
+		{
+			Update(keystate, queue);
+			Draw();
+			delta--;
+			fps++;
+		}
+		if (time >= 1000000000)
+		{
+			std::cout << fps << '\n';
+			fps = 0;
+		}*/
 }

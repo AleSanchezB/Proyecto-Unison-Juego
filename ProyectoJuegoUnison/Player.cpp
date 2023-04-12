@@ -258,8 +258,8 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	else if (this->x < -38 && this->y >= 246 && this->y <= 332 &&(getEscena() == 3 || getEscena() == 4 || getEscena() == 5))
 	{
-		this->x = 1242;
-		setEscena(2);
+		this->x = 1200;
+		setEscena(0);
 	}
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
@@ -299,13 +299,13 @@ void Player::Cosechar(int i)
 	}
 }
 
-void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
-{
-	//mando a mover al personaje y a animarlo
-	al_get_keyboard_state(&keystate);
-	move(keystate, queue);
-	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
-}
+//void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
+//{
+//	//mando a mover al personaje y a animarlo
+//	al_get_keyboard_state(&keystate);
+//	move(keystate, queue);
+//	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
+//}
 
 void Player::action()
 {
