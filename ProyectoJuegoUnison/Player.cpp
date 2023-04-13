@@ -165,7 +165,13 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			last_f_press = al_current_time();
 		}
 	}
-
+	//presionar "K" para dormir
+	//COLOCAR CAMA EN MAPA LÓGICO PARA NO PODER DORMIR DONDE SEA
+	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena()+TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/) {
+		std::cout << "a mimir\n";
+		setEscena(0);
+		IniciarDia();
+	}
 
 	// colision con el mapa de mascara
 
