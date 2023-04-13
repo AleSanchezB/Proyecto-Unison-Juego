@@ -1,13 +1,11 @@
 #ifndef INIMAP_H
 #define INIMAP_H
-#include <iostream>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-#include <thread>
 
 #include "Player.h"
 #include "DrawObjects.h"
@@ -32,7 +30,7 @@ private:
 	const int width = 1280;
 	const int height = 720;
 	const float FPS = 90.0;
-	const double TARGET_FPS = 1000000000 / FPS;
+
 	//VARIABLES
 	bool running;
 	int mouseX, mouseY;
@@ -45,8 +43,6 @@ private:
 	void initGame();
 	void DibujarGradualmente();
 	void ColocarMusica();
-	void Update(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
-	void Draw();
 };
 extern Background* background;
 extern Player* player;

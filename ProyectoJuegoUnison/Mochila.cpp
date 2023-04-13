@@ -8,21 +8,7 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	this->cantidadZanahoria = cantidadZanahoria;
 	this->casillaSelect = 0;
 	this->font = font;
-	this->Monedas = 0;
-	/*for (int i = 0; i < cantidadTomates; i++)
-	{
-		cantTomates.push_back(new Cultivo(0,0,0));
-	}
-
-	for (int i = 0; i < cantidadCalabaza; i++)
-	{
-		cantCalabazas.push_back(new Cultivo( 0, 0, 1));
-	}
-
-	for (int i = 0; i < cantidadZanahoria; i++)
-	{
-		cantZanahorias.push_back(new Cultivo(0, 0, 2));
-	}*/
+	this->Monedas = 10;
 	barraHerramientas = al_load_bitmap("assets/fondos/Objetos/barraHerramientas.png");
 	seleccionHerramienta = al_load_bitmap("assets/fondos/Objetos/seleccionHerramienta.png");
 	tom = al_load_bitmap("assets/Plants/tomate item.png");

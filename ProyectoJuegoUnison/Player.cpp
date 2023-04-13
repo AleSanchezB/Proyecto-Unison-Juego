@@ -167,8 +167,8 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	//presionar "K" para dormir
 	//COLOCAR CAMA EN MAPA LÓGICO PARA NO PODER DORMIR DONDE SEA
-	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena()+TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/) {
-		std::cout << "a mimir\n";
+	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/) 
+	{
 		setEscena(0);
 		IniciarDia();
 	}
@@ -177,7 +177,8 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 
 	active = true;
 	//CHECAR SI ESTA CORRIENDO
-	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
+	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) 
+	{
 		speedPlayer = 4;
 		corriendo = 4;
 	}
@@ -187,10 +188,12 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	colisiones();
 
-	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2) {
+	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2) 
+	{
 		memcpy(maskmap, maskmap1, sizeof(maskmap));
 	}
-	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5) {
+	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5) 
+	{
 		memcpy(maskmap, maskmap2, sizeof(maskmap));
 	}
 	else if (getEscena() == 6) {
@@ -243,7 +246,6 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		this->y -= speedPlayer;
 		direccion = UPW + corriendo;
-		MapaCasa = true;
 		setEscena(3);
 	}
 	//ANIMACION DE MOVIMIENTOS 
@@ -257,14 +259,14 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		PlayRefresh = 0;
 	}
 	//cambio de mapa
-	if (this->x > 1280 && this->y >= 260 && this->y <= 330 && (getEscena() == 0 || getEscena() == 1 || getEscena() == 2))
+	if (this->x > 1280 && this->y >= 260 && this->y <= 330 && getEscena() == 0 + TiempoDiaEscena)
 	{
 		this->x = 2;
 		setEscena(3);
 	}
-	else if (this->x < -38 && this->y >= 246 && this->y <= 332 &&(getEscena() == 3 || getEscena() == 4 || getEscena() == 5))
+	else if (this->x < -38 && this->y >= 246 && this->y <= 332 && getEscena() == 3 + TiempoDiaEscena)
 	{
-		this->x = 1200;
+		this->x = 1242;
 		setEscena(0);
 	}
 	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
@@ -277,16 +279,16 @@ void Player::Cosechar(int i)
 	{
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		
 
-		if (other->tipo == 0) 
+
+		if (other->tipo == 0)
 		{
-			std::discrete_distribution<> dist({ 3, 2, 1, 1});
+			std::discrete_distribution<> dist({ 3, 2, 1, 1 });
 			int cantidadCosechada = dist(gen) + 2;
 			mochila->setcantidadTomates(mochila->getcantidadTomates() + cantidadCosechada);
 			mochila->setcantidadObjetos(mochila->getcantidadObjetos() + cantidadCosechada);
 		}
-		else if (other->tipo == 1) 
+		else if (other->tipo == 1)
 		{
 			std::discrete_distribution<> dist({ 3, 1, 1, 0.5 });
 			int cantidadCosechada = dist(gen) + 2;
@@ -294,7 +296,7 @@ void Player::Cosechar(int i)
 			mochila->setcantidadObjetos(mochila->getcantidadObjetos() + cantidadCosechada);
 
 		}
-		else 
+		else
 		{
 			std::discrete_distribution<> dist({ 3, 1, 0.5, 0.1 });
 			int cantidadCosechada = dist(gen) + 2;
@@ -305,13 +307,13 @@ void Player::Cosechar(int i)
 	}
 }
 
-//void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
-//{
-//	//mando a mover al personaje y a animarlo
-//	al_get_keyboard_state(&keystate);
-//	move(keystate, queue);
-//	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
-//}
+void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
+{
+	//mando a mover al personaje y a animarlo
+	al_get_keyboard_state(&keystate);
+	move(keystate, queue);
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
+}
 
 void Player::action()
 {

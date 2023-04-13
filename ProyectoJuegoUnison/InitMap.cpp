@@ -54,10 +54,11 @@ void GameRun::initGame()
 	player->IniciarDia();
 	while (running)
 	{
-		player->CambioTiempoDia(al_current_time()+1);
+		player->CambioTiempoDia(al_current_time() + 1);
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
+
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
 		{
@@ -73,32 +74,22 @@ void GameRun::initGame()
 		background->action(player->getEscena(), player->TiempoDiaEscena);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
-			Update(keystate, queue);
+			player->action(keystate, queue);
 			draw = true;
 		}
 		if (draw)
 		{
 			draw = false;
-			Draw();
+			background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
+			background->drawOptions(i, mochila->getMonedas());
+			mochila->action();
+			al_flip_display();
+			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}
 	}
 	delete background, player, comprador;
 }
 
-void GameRun::Update(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
-{
-	player->move(keystate, queue);
-}
-void GameRun::Draw()
-{
-	background->action(player->getEscena(), background->TiempoEscenaActual);
-	player->action();
-	background->dibujarEncima(player->getEscena());
-	background->drawOptions(i, mochila->getMonedas());
-	mochila->action();
-	al_flip_display();
-	al_clear_to_color(al_map_rgb_f(254, 254, 254));
-}
 void GameRun::ColocarMusica()
 {
 	//MUSICA DE AMBIENTE
@@ -128,34 +119,4 @@ void GameRun::DibujarGradualmente()
 
 	//// Actualizar la pantalla
 	//al_flip_display();
-	/*player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
-	background = new Background();
-	comprador = new Comprador();
-	auto now = 0;
-	auto lastTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-	auto delta = 0;
-	int fps = 0;
-	auto time = 0;
-	while (running)
-	{
-		now = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
-		delta += (now - lastTime) / TARGET_FPS;
-		time += (now - lastTime);
-		lastTime = now;
-		al_wait_for_event(queue, &event);
-		ALLEGRO_KEYBOARD_STATE keystate;
-		al_get_keyboard_state(&keystate);
-
-		if (delta >= 1)
-		{
-			Update(keystate, queue);
-			Draw();
-			delta--;
-			fps++;
-		}
-		if (time >= 1000000000)
-		{
-			std::cout << fps << '\n';
-			fps = 0;
-		}*/
 }

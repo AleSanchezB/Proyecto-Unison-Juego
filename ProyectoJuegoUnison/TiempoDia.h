@@ -1,6 +1,5 @@
 #ifndef DIA_H
 #define DIA_H_INCLUDED
-#include <iostream>
 #include <allegro5/allegro5.h>
 class Dia
 {

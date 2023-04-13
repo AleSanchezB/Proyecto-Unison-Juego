@@ -1,7 +1,4 @@
 #include "SubmenuOptions.h"
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
-#include <iostream>
 
 SubMenuOptions::SubMenuOptions()
 {
@@ -34,7 +31,6 @@ void SubMenuOptions::setPanel()
 		draw_panel(panel);
 		al_flip_display();
 		i += 2;
-		std::cout << i << endl;
 		if (i >= 1000) run = false;
 	}
 }
