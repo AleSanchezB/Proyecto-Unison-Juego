@@ -164,7 +164,6 @@ void MainGame::drawRec()
         al_clear_to_color(al_map_rgb(0, 0, 0));
         al_draw_filled_rectangle(10, 10, 210, 110, al_map_rgb(0, 0, 50));
         al_flip_display();
-        cout << gain << endl;
 
         if (event1.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
         {

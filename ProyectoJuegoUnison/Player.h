@@ -9,7 +9,6 @@
 #include <allegro5/timer.h>
 
 #include <string>
-#include <iostream>
 #include <list>
 #include <random>
 
@@ -32,7 +31,7 @@ public:
 	void setEscena(int escena);
 	void DibujarCultivo();
 	int getEscena();
-	
+
 private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
@@ -41,7 +40,7 @@ private:
 	enum { DOWNW, RIGHTW, UPW, LEFTW };
 	float speedPlayer, direccion, SpritePosX, SpritePosY, corriendo;
 	double last_f_press = 0.0;
-	
+
 	int PlayRefresh, AudRepeat;
 	int x;
 	int y;

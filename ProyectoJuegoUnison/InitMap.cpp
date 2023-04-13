@@ -54,13 +54,13 @@ void GameRun::initGame()
 	player->IniciarDia();
 	while (running)
 	{
-		player->CambioTiempoDia(al_current_time()+1);
+		player->CambioTiempoDia(al_current_time() + 1);
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
 
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
-		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
+		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
 		{
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
@@ -80,17 +80,17 @@ void GameRun::initGame()
 		if (draw)
 		{
 			draw = false;
-			background->dibujarEncima(player->getEscena(),player->TiempoDiaEscena);
+			background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
 			background->drawOptions(i, mochila->getMonedas());
 			mochila->action();
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}
 	}
-	delete background,player,comprador;
+	delete background, player, comprador;
 }
 
-void GameRun::ColocarMusica() 
+void GameRun::ColocarMusica()
 {
 	//MUSICA DE AMBIENTE
 	A_actual = al_load_sample("assets/Effects Sounds/sonidos naturales 2/Ambient/AmbientNatureOutside.wav");
@@ -100,7 +100,7 @@ void GameRun::ColocarMusica()
 	al_play_sample_instance(ambientacion);
 	al_set_sample_instance_gain(ambientacion, 0.4);
 }
- 
+
 void GameRun::DibujarGradualmente()
 {
 	////al_clear_to_color(al_map_rgb(0, 0, 0));

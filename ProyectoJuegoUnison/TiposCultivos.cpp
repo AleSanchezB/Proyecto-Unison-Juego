@@ -53,7 +53,6 @@ void Cultivo::action(int escena)
 	}
 	catch (const std::exception&)
 	{
-		std::cout << "Error en action cultivos" << std::endl;
 	}
 }
 

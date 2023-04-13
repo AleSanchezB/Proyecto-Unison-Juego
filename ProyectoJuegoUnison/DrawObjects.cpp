@@ -111,7 +111,7 @@ void Background::drawOptions(int i, int Monedas)
 void Background::dibujarEncima(int escena, int TiempoDiaEscena)
 {
 	if (escena < 6)
-		al_draw_bitmap(ESCENASA[escena+TiempoDiaEscena], 0, 0, 0);
+		al_draw_bitmap(ESCENASA[escena + TiempoDiaEscena], 0, 0, 0);
 }
 
 /***********************FUNCIONES NUEVAS, LAS QUE PROBABLEMENTE TENGAS QUE COMENTAR*****************************************/

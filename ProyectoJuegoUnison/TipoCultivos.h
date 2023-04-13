@@ -3,7 +3,6 @@
 #include "Objeto.h"
 #include <string>
 #include <list>
-#include <iostream>
 
 class Cultivo : public Objeto
 {

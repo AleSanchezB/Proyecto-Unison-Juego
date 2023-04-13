@@ -2,8 +2,8 @@
 
 Comprador::Comprador()
 {
-	this->TipoCultivo = 2;
-	this->CantVender = 1;
+	this->TipoCultivo = 1;
+	this->CantVender = 0;
 	cantDig = std::log10(this->CantVender) + 1;
 	coins = al_load_bitmap("assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/coins2.png");
 	for (int i = 35; i > 0; i--)
@@ -36,13 +36,19 @@ void Comprador::animacionMenu(int tipo)
 	for (int i = 35; i >= 0; i--)
 	{
 		Sleep(60);
-		background->action(player->getEscena()+player->TiempoDiaEscena, 0);
+		background->action(player->getEscena() + player->TiempoDiaEscena, 0);
 		background->drawOptions(0, mochila->getMonedas());
 		player->action();
 		al_draw_bitmap(menu[i], 0, 0, 0);
 		al_flip_display();
 		al_clear_to_color(al_map_rgb_f(255, 255, 255));
 	}
+}
+void Comprador::Sleep(int segundos)
+{
+	clock_t finEspera;
+	finEspera = clock() + segundos * CLOCKS_PER_SEC;
+	while (clock() < finEspera) {}
 }
 void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
@@ -162,8 +168,8 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 					&& events.mouse.y >= btnVender[1]->y && events.mouse.y <= btnVender[1]->y + btnVender[1]->h)
 				{
 					btnVen = 1;
-					if (mochila->verificacionMochila() && 
-						mochila->verificarCantidadCultivosGuardados(this->TipoCultivo-1, this->CantVender))
+					if (mochila->verificacionMochila() &&
+						mochila->verificarCantidadCultivosGuardados(this->TipoCultivo - 1, this->CantVender))
 					{
 						animacionMonedas();
 						VerificarVenta();
@@ -232,7 +238,7 @@ void Comprador::DibujarCantidadSelec()
 }
 void Comprador::DibujarElFondo(int escena)
 {
-	background->action(player->getEscena()+player->TiempoDiaEscena, 0);
+	background->action(player->getEscena() + player->TiempoDiaEscena, 0);
 	player->action();
 	background->drawOptions(0, mochila->getMonedas());
 	al_draw_bitmap(menu[escena], 0, 0, 0);
@@ -243,7 +249,7 @@ void Comprador::AnimacionReversa()
 	for (int i = 1; i <= 35; i++)
 	{
 		Sleep(60);
-		background->action(player->getEscena()+player->TiempoDiaEscena, 0);
+		background->action(player->getEscena() + player->TiempoDiaEscena, 0);
 		background->drawOptions(0, mochila->getMonedas());
 		player->action();
 		al_draw_bitmap(menu[i], 0, 0, 0);
@@ -266,9 +272,9 @@ bool Comprador::VerificarVenta()
 {
 	if (mochila->verificacionMochila())
 	{
-		if (mochila->verificarCantidadCultivosGuardados(this->TipoCultivo-1, this->CantVender))
+		if (mochila->verificarCantidadCultivosGuardados(this->TipoCultivo - 1, this->CantVender))
 		{
-			mochila->quitarCultivo(this->TipoCultivo-1);
+			mochila->quitarCultivo(this->TipoCultivo - 1);
 			int Pago = 0;
 			if (TipoCultivo == 1) Pago = this->CantVender * PRECIOTOM;
 			else if (TipoCultivo == 2) Pago = this->CantVender * PRECIOZCALA;

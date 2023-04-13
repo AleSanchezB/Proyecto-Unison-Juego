@@ -4,8 +4,9 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/bitmap.h>
 #include <string>
-#include <Windows.h>
 #include <cmath>
+#include <ctime>
+
 #define DX 4
 #include "Boton.h"
 #include "InitiMap.h"
@@ -39,6 +40,7 @@ private:
 	void action(int btnCult = 0, int btnCant = 1, int btnCultB = 0, int btnCantB = 1, int btnExit = 0, int btnVen = 0);
 	void DibujarElFondo(int i = 0);
 	bool VerificarVenta();
+	void Sleep(int segundos);
 };
 
 #endif // !COMPRADOR_H
