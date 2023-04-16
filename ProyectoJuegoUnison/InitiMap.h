@@ -29,7 +29,6 @@ private:
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 	ALLEGRO_BITMAP* iconDisplay;
-
 	//CONSTANTES
 	const int width = 1280;
 	const int height = 720;

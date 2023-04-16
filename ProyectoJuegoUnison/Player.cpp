@@ -36,7 +36,7 @@ Player::~Player()
 	al_destroy_font(font);
 	delete mochila;
 }
-void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
+void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight)
 {
 	cameraPosition[0] - (1280 / 2) + (x + Wiidth / 2);
 	cameraPosition[1] - (720 / 2) + (y + Heeight / 2);
@@ -45,58 +45,6 @@ void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		cameraPosition[0] = 0;
 	if (cameraPosition[1] < 0)
 		cameraPosition[1] = 0;
-}
-
-	xMup = xMask;
-	if (xMup < 0) xMup = 0;
-	if (xMup > dimxmask) xMup = dimxmask;
-	yMup = yMask - 1;
-	if (yMup < 0) yMup = 0;
-	if (yMup > dimymask) yMup = dimymask;
-
-	xMdown = xMask;
-	if (xMdown < 0) xMdown = 0;
-	if (xMdown > dimxmask) xMdown = dimxmask;
-	yMdown = yMask + 1;
-	if (yMdown < 0) yMdown = 0;
-	if (yMdown > dimymask) yMdown = dimymask;
-
-	xMizq = xMask - 1;
-	if (xMizq < 0) xMizq = 0;
-	if (xMizq > dimxmask) xMizq = dimxmask;
-	yMizq = yMask;
-	if (yMizq < 0) yMizq = 0;
-	if (yMizq > dimymask) yMizq = dimymask;
-
-	xMder = (this->x / moniotpixancho) + 1;
-	if (xMder < 0) xMder = 0;
-	if (xMder > dimxmask) xMder = dimxmask;
-	yMder = yMask;
-	if (yMder < 0) yMder = 0;
-	if (yMder > dimymask) yMder = dimymask;
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(this->x)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(this->y)).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 70, ALLEGRO_ALIGN_LEFT, ("xMask: " + std::to_string(xMask)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 70, ALLEGRO_ALIGN_LEFT, ("yMask: " + std::to_string(yMask)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 70, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMask][xMask])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 90, ALLEGRO_ALIGN_LEFT, ("xMup: " + std::to_string(xMup)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 90, ALLEGRO_ALIGN_LEFT, ("yMup: " + std::to_string(yMup)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 90, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMup][xMup])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 110, ALLEGRO_ALIGN_LEFT, ("xMdown: " + std::to_string(xMdown)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 110, ALLEGRO_ALIGN_LEFT, ("yMdown: " + std::to_string(yMdown)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 110, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMdown][xMdown])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 130, ALLEGRO_ALIGN_LEFT, ("xMizq: " + std::to_string(xMizq)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 130, ALLEGRO_ALIGN_LEFT, ("yMizq: " + std::to_string(yMizq)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 130, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMizq][xMizq])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + std::to_string(xMder)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
 }
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
@@ -229,7 +177,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	//presionar "K" para dormir
 	//COLOCAR CAMA EN MAPA LÓGICO PARA NO PODER DORMIR DONDE SEA
-	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/) 
+	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
 	{
 		setEscena(0);
 		IniciarDia();
@@ -237,9 +185,6 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 
 	//ZOOM CAMARA
 
-	ALLEGRO_TRANSFORM camera;
-
-	//if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 	if ((al_key_down(&keystate, ALLEGRO_KEY_EQUALS)) || (al_key_down(&keystate, ALLEGRO_KEY_PAD_PLUS))) {
 		scale += 0.01f;
 		//std::cout << scale;
@@ -249,43 +194,15 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 
 	CameraUpdate(cameraPosition, this->x, this->y, 32, 32);
-
 	al_identity_transform(&camera);
 	al_translate_transform(&camera, -(this->x + 16), -(this->y + 16));
 	al_scale_transform(&camera, scale, scale);
 	al_translate_transform(&camera, -cameraPosition[0] + (this->x + 16), -cameraPosition[1] + (this->y + 16));
 	al_use_transform(&camera);
 
-	// colision con el mapa de mascara
-
-	
-	//ZOOM CAMARA
-
-	ALLEGRO_TRANSFORM camera;
-	
-		//if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
-		if ((al_key_down(&keystate, ALLEGRO_KEY_EQUALS)) || (al_key_down(&keystate, ALLEGRO_KEY_PAD_PLUS))) {
-			scale += 0.01f;
-			//std::cout << scale;
-		}
-		if (al_key_down(&keystate, ALLEGRO_KEY_MINUS)) {
-			scale -= 0.01f;
-		}
-
-		CameraUpdate(cameraPosition, this->x, this->y, 32, 32);
-
-		al_identity_transform(&camera);
-		al_translate_transform(&camera, -(this->x + 16), -(this->y + 16));
-		al_scale_transform(&camera, scale, scale);
-		al_translate_transform(&camera, -cameraPosition[0] + (this->x + 16), -cameraPosition[1] + (this->y + 16));
-		al_use_transform(&camera);
-
-		
-	
-
 	active = true;
 	//CHECAR SI ESTA CORRIENDO
-	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) 
+	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT))
 	{
 		speedPlayer = 4;
 		corriendo = 4;
@@ -296,11 +213,11 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	colisiones();
 
-	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2) 
+	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2)
 	{
 		memcpy(maskmap, maskmap1, sizeof(maskmap));
 	}
-	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5) 
+	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5)
 	{
 		memcpy(maskmap, maskmap2, sizeof(maskmap));
 	}
@@ -340,7 +257,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
-		AvisoCama = true;
+		//AvisoCama = true;
 		std::cout << "Holaaa";
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
@@ -363,7 +280,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
 	}
-	
+
 	else active = false;
 	if (al_key_down(&keystate, ALLEGRO_KEY_K) && maskmap[yMup][xMup] == 'c' && getEscena() == 1)
 	{

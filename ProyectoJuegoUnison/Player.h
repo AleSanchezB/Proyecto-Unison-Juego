@@ -36,13 +36,13 @@ private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
 	ALLEGRO_MOUSE_STATE estadoMouse;
-
+	ALLEGRO_TRANSFORM camera;
 	enum { DOWNW, RIGHTW, UPW, LEFTW };
 	float speedPlayer, direccion, SpritePosX, SpritePosY, corriendo;
 	double last_f_press = 0.0;
 
 	int PlayRefresh, AudRepeat;
-	
+	int x, y;
 	int escena;
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
 
