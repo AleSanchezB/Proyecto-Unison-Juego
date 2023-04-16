@@ -50,7 +50,7 @@ void GameRun::initGame()
 	player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
 	background = new Background();
 	Comprador* comprador = new Comprador();
-	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
+
 	player->IniciarDia();
 	while (running)
 	{
@@ -67,10 +67,8 @@ void GameRun::initGame()
 		}
 		if (al_key_down(&keystate, ALLEGRO_KEY_E))
 		{
-			//player->setEscena(10);
 			comprador->Menu(keystate, queue);
 		}
-		//player->setEscena(3);
 		background->action(player->getEscena(), player->TiempoDiaEscena);
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{

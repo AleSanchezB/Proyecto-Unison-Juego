@@ -36,6 +36,17 @@ Player::~Player()
 	delete mochila;
 }
 
+void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight)
+{
+	cameraPosition[0] - (1280 / 2) + (x + Wiidth / 2);
+	cameraPosition[1] - (720 / 2) + (y + Heeight / 2);
+
+	if (cameraPosition[0] < 0)
+		cameraPosition[0] = 0;
+	if (cameraPosition[1] < 0)
+		cameraPosition[1] = 0;
+}
+
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
@@ -172,6 +183,27 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		setEscena(0);
 		IniciarDia();
 	}
+
+	//ZOOM CAMARA
+
+	ALLEGRO_TRANSFORM camera;
+
+	//if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
+	if ((al_key_down(&keystate, ALLEGRO_KEY_EQUALS)) || (al_key_down(&keystate, ALLEGRO_KEY_PAD_PLUS))) {
+		scale += 0.01f;
+		//std::cout << scale;
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_MINUS)) {
+		scale -= 0.01f;
+	}
+
+	CameraUpdate(cameraPosition, this->x, this->y, 32, 32);
+
+	al_identity_transform(&camera);
+	al_translate_transform(&camera, -(this->x + 16), -(this->y + 16));
+	al_scale_transform(&camera, scale, scale);
+	al_translate_transform(&camera, -cameraPosition[0] + (this->x + 16), -cameraPosition[1] + (this->y + 16));
+	al_use_transform(&camera);
 
 	// colision con el mapa de mascara
 
