@@ -11,12 +11,15 @@
 #include "DrawObjects.h"
 #include "Comprador.h"
 
+
+
 class GameRun
 {
 public:
 	GameRun();
 	~GameRun();
 	ALLEGRO_TIMER* timer;
+	bool running;
 private:
 	//VARIABLES ALLEGRO
 	ALLEGRO_DISPLAY* displayGame;
@@ -26,14 +29,13 @@ private:
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 	ALLEGRO_BITMAP* iconDisplay;
-
 	//CONSTANTES
 	const int width = 1280;
 	const int height = 720;
 	const float FPS = 90.0;
 
 	//VARIABLES
-	bool running;
+	
 	int mouseX, mouseY;
 	int i;
 	float alpha = 1.0;

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "InitiMap.h"
 //esta matriz nos permite saber cual hoyo de siembra está disponible
 Mochila* mochila;
 Player::Player(std::string ruta)
@@ -35,7 +36,16 @@ Player::~Player()
 	al_destroy_font(font);
 	delete mochila;
 }
+void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight)
+{
+	cameraPosition[0] - (1280 / 2) + (x + Wiidth / 2);
+	cameraPosition[1] - (720 / 2) + (y + Heeight / 2);
 
+	if (cameraPosition[0] < 0)
+		cameraPosition[0] = 0;
+	if (cameraPosition[1] < 0)
+		cameraPosition[1] = 0;
+}
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
@@ -167,17 +177,32 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	//presionar "K" para dormir
 	//COLOCAR CAMA EN MAPA LÓGICO PARA NO PODER DORMIR DONDE SEA
-	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/) 
+	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
 	{
 		setEscena(0);
 		IniciarDia();
 	}
 
-	// colision con el mapa de mascara
+	//ZOOM CAMARA
+
+	if ((al_key_down(&keystate, ALLEGRO_KEY_EQUALS)) || (al_key_down(&keystate, ALLEGRO_KEY_PAD_PLUS))) {
+		scale += 0.01f;
+		//std::cout << scale;
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_MINUS)) {
+		scale -= 0.01f;
+	}
+
+	CameraUpdate(cameraPosition, this->x, this->y, 32, 32);
+	al_identity_transform(&camera);
+	al_translate_transform(&camera, -(this->x + 16), -(this->y + 16));
+	al_scale_transform(&camera, scale, scale);
+	al_translate_transform(&camera, -cameraPosition[0] + (this->x + 16), -cameraPosition[1] + (this->y + 16));
+	al_use_transform(&camera);
 
 	active = true;
 	//CHECAR SI ESTA CORRIENDO
-	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) 
+	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT))
 	{
 		speedPlayer = 4;
 		corriendo = 4;
@@ -188,11 +213,11 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	colisiones();
 
-	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2) 
+	if (getEscena() == 0 || getEscena() == 1 || getEscena() == 2)
 	{
 		memcpy(maskmap, maskmap1, sizeof(maskmap));
 	}
-	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5) 
+	else if (getEscena() == 3 || getEscena() == 4 || getEscena() == 5)
 	{
 		memcpy(maskmap, maskmap2, sizeof(maskmap));
 	}
@@ -221,6 +246,20 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x = 2;
 		setEscena(3);
 	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o')
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+		this->x = 2;
+		setEscena(1);
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMup][xMup] == 'b')
+	{
+		this->x -= speedPlayer;
+		direccion = LEFTW + corriendo;
+		//AvisoCama = true;
+		std::cout << "Holaaa";
+	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 	{
 		this->y -= speedPlayer;
@@ -241,6 +280,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
 	}
+
 	else active = false;
 	if (al_key_down(&keystate, ALLEGRO_KEY_K) && maskmap[yMup][xMup] == 'c' && getEscena() == 1)
 	{
