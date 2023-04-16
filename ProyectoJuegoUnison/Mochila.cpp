@@ -6,6 +6,7 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	this->cantidadTomates = cantidadTomates;
 	this->cantidadCalabaza = cantidadCalabaza;
 	this->cantidadZanahoria = cantidadZanahoria;
+	this->capacidadMochila = 10;
 	this->casillaSelect = 0;
 	this->font = font;
 	this->Monedas = 10;
@@ -159,4 +160,10 @@ bool Mochila::verificarCantidadCultivosGuardados(int tipo, int cantidad)
 		break;
 	}
 	return false;
+}
+
+bool Mochila::verificarMochilaLlena(int cantidadIngresar)
+{
+	if (cantidadIngresar > this->capacidadMochila) return false;
+	else return true;
 }

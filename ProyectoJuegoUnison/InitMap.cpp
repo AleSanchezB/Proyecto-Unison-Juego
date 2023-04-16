@@ -12,11 +12,12 @@ GameRun::GameRun()
 	al_init_ttf_addon();
 	running = true;
 
-	al_set_new_display_flags(ALLEGRO_RESIZABLE);
-
+	al_get_display_mode(al_get_num_display_modes() - 1, &disp_data);
+	w = disp_data.width;
+	h = disp_data.height;
 	displayGame = al_create_display(width, height);
-	al_set_window_title(displayGame, "Juego version Beta");
-
+	al_set_window_title(displayGame, "Agromania");
+	iconDisplay = al_load_bitmap("assets/fondos/Icono/Icono.png");
 	//cola de eventos
 	queue = al_create_event_queue();
 
@@ -28,6 +29,7 @@ GameRun::GameRun()
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 	al_register_event_source(queue, al_get_mouse_event_source());
+	al_set_display_icon(displayGame, iconDisplay);
 	ColocarMusica();
 	al_start_timer(timer);
 	initGame();
@@ -58,7 +60,6 @@ void GameRun::initGame()
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
-
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
 		{
