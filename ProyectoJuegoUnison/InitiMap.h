@@ -6,7 +6,7 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-
+#include <iostream>
 #include "Player.h"
 #include "DrawObjects.h"
 #include "Comprador.h"
@@ -25,6 +25,7 @@ private:
 	ALLEGRO_EVENT event;
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
+	ALLEGRO_BITMAP* iconDisplay;
 
 	//CONSTANTES
 	const int width = 1280;
@@ -43,6 +44,10 @@ private:
 	void initGame();
 	void DibujarGradualmente();
 	void ColocarMusica();
+
+	int w;
+	int h;
+	ALLEGRO_DISPLAY_MODE disp_data;
 };
 extern Background* background;
 extern Player* player;
