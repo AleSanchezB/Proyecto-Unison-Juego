@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "InitiMap.h"
 //esta matriz nos permite saber cual hoyo de siembra está disponible
 Mochila* mochila;
 Player::Player(std::string ruta)
@@ -32,6 +33,18 @@ Player::~Player()
 {
 	al_destroy_bitmap(this->sprite);
 }
+
+void CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight)
+{
+	cameraPosition[0] - (1280 / 2) + (x + Wiidth / 2);
+	cameraPosition[1] - (720 / 2) + (y + Heeight / 2);
+
+	if (cameraPosition[0] < 0)
+		cameraPosition[0] = 0;
+	if (cameraPosition[1] < 0)
+		cameraPosition[1] = 0;
+}
+
 void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	//mando a mover al personaje y a animarlo
@@ -102,6 +115,8 @@ void Player::colisiones()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + std::to_string(xMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
+
+	if(AvisoCama) al_draw_text(font, al_map_rgb(255, 255, 255), 500, 150, ALLEGRO_ALIGN_LEFT, ("Cama "));
 }
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
@@ -235,6 +250,31 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 
 	// colision con el mapa de mascara
 
+	
+	//ZOOM CAMARA
+
+	ALLEGRO_TRANSFORM camera;
+	
+		//if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
+		if ((al_key_down(&keystate, ALLEGRO_KEY_EQUALS)) || (al_key_down(&keystate, ALLEGRO_KEY_PAD_PLUS))) {
+			scale += 0.01f;
+			//std::cout << scale;
+		}
+		if (al_key_down(&keystate, ALLEGRO_KEY_MINUS)) {
+			scale -= 0.01f;
+		}
+
+		CameraUpdate(cameraPosition, this->x, this->y, 32, 32);
+
+		al_identity_transform(&camera);
+		al_translate_transform(&camera, -(this->x + 16), -(this->y + 16));
+		al_scale_transform(&camera, scale, scale);
+		al_translate_transform(&camera, -cameraPosition[0] + (this->x + 16), -cameraPosition[1] + (this->y + 16));
+		al_use_transform(&camera);
+
+		
+	
+
 	active = true;
 	//CHECAR SI ESTA CORRIENDO
 	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT)) {
@@ -278,6 +318,20 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x = 2;
 		setEscena(1);
 	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMup][xMup] == 'o')
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+		this->x = 2;
+		setEscena(1);
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMup][xMup] == 'b')
+	{
+		this->x -= speedPlayer;
+		direccion = LEFTW + corriendo;
+		AvisoCama = true;
+		std::cout << "Holaaa";
+	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 	{
 		this->y -= speedPlayer;
@@ -298,6 +352,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
 	}
+	
 	else active = false;
 	if (al_key_down(&keystate, ALLEGRO_KEY_K) && maskmap[yMup][xMup] == 'c' && getEscena() == 1)
 	{

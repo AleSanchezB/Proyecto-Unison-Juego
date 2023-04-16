@@ -17,12 +17,15 @@
 #include "TipoCultivos.h"
 #include "DrawObjects.h"
 
+
+
 class GameRun
 {
 public:
 	GameRun();
 	~GameRun();
 	ALLEGRO_TIMER* timer;
+	bool running;
 private:
 	//VARIABLES ALLEGRO
 	ALLEGRO_DISPLAY* displayGame;
@@ -37,7 +40,7 @@ private:
 	const int height = 720;
 	const float FPS = 90.0;
 	//VARIABLES
-	bool running;
+	
 	int mouseX, mouseY;
 	int i;
 

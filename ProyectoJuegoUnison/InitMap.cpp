@@ -1,6 +1,9 @@
 #include "InitiMap.h"
 
+
 using std::cout;
+
+
 GameRun::GameRun()
 {
 	al_init();
@@ -41,14 +44,20 @@ GameRun::~GameRun()
 
 void GameRun::initGame()
 {
+	
+
 	Player* player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
 	DrawObjects* drawPlayer = new DrawObjects();
 	//cultivos.push_back(new Cultivo("assets/Basic Plants.png", 5, 10, 0));
+
+
+
 	while (running)
 	{
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
+		
 
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
 		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
