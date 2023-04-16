@@ -30,6 +30,7 @@ public:
 	void action();
 	void setEscena(int escena);
 	int getEscena();
+	
 
 private:
 	ALLEGRO_BITMAP* sprite;
@@ -41,8 +42,7 @@ private:
 	double last_f_press = 0.0;
 
 	int PlayRefresh, AudRepeat;
-	int x;
-	int y;
+	
 	int escena;
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
 

@@ -2,6 +2,8 @@
 
 Background* background;
 Player* player;
+
+
 GameRun::GameRun()
 {
 	al_init();
