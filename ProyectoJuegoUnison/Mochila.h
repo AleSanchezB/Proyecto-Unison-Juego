@@ -28,11 +28,12 @@ public:
 	bool verificacionMochila();
 	bool verificarCantidadCultivos(int tipo);
 	bool verificarCantidadCultivosGuardados(int tipo, int cantidad);
-
+	bool verificarMochilaLlena(int cantidad);
 
 	void setMonedas(int monedas);
 	int getMonedas();
 private:
+	int capacidadMochila;
 	int cantidadObjetos;
 	int cantidadTomates;
 	int cantidadCalabaza;

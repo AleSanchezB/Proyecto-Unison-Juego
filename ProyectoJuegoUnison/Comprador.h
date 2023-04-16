@@ -6,7 +6,8 @@
 #include <string>
 #include <cmath>
 #include <ctime>
-
+#include <iostream>
+#include <cstdlib> 
 #define DX 4
 #include "Boton.h"
 #include "InitiMap.h"
@@ -22,6 +23,7 @@ public:
 private:
 	ALLEGRO_BITMAP* menu[37];
 	ALLEGRO_BITMAP* coins;
+	ALLEGRO_FONT* font;
 	int animacion_y;
 	int animacion_x;
 	Boton* btnflechaArriba[4];
@@ -41,6 +43,8 @@ private:
 	void DibujarElFondo(int i = 0);
 	bool VerificarVenta();
 	void Sleep(int segundos);
+	void DibujarPrecios();
+	void Delet();
 };
 
 #endif // !COMPRADOR_H

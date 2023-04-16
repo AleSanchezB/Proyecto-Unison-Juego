@@ -4,32 +4,34 @@ Comprador::Comprador()
 {
 	this->TipoCultivo = 1;
 	this->CantVender = 0;
-	cantDig = std::log10(this->CantVender) + 1;
-	coins = al_load_bitmap("assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/coins2.png");
+	this->animacion_x = 716;
+	this->animacion_y = 587;
+	this->cantDig = std::log10(this->CantVender) + 1;
+	this->font = al_load_font("assets/fonts/Minecraft.ttf", 18, 0);
+	this->coins = al_load_bitmap("assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/coins2.png");
+
 	for (int i = 35; i > 0; i--)
 	{
 		std::string ruta = "assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/" + std::to_string(i) + ".png";
 		menu[i] = al_load_bitmap(ruta.c_str());
+		assert(menu[i] != NULL);
 	}
-	menu[0] = al_load_bitmap("assets/Tienda/Menus/MenuVenta.png");
-	//backgroud = new Background();
-	animacion_x = 716;
-	animacion_y = 587;
+	menu[0] = al_load_bitmap("assets/Tienda/Menus/Menu.png");
+	for (int i = 0; i < 2; i++)
+	{
+		btnflechaArriba[i] = new Boton("assets/Tienda/botones/MenuVenta/btnArriba0.png", 680, 462 + 68 * (i % 2), 22, 18);
+		btnflechaArriba[i + 2] = new Boton("assets/Tienda/botones/MenuVenta/btnArriba1.png", 680, 462 + 68 * (i % 2), 22, 18);
 
-	btnflechaArriba[0] = new Boton("assets/Tienda/botones/MenuVenta/btnArriba.png", 680, 462, 22, 18);
-	btnflechaArriba[1] = new Boton("assets/Tienda/botones/MenuVenta/btnArriba.png", 680, 530, 22, 18);
-	btnflechaArriba[2] = new Boton("assets/Tienda/botones/MenuVenta/btnArribaP.png", 680, 462, 22, 18);
-	btnflechaArriba[3] = new Boton("assets/Tienda/botones/MenuVenta/btnArribaP.png", 680, 530, 22, 18);
+		btnflechaAbajo[i] = new Boton("assets/Tienda/botones/MenuVenta/btnAbajo0.png", 680, 488 + 68 * (i % 2), 22, 18);
+		btnflechaAbajo[i + 2] = new Boton("assets/Tienda/botones/MenuVenta/btnAbajo1.png", 680, 488 + 68 * (i % 2), 22, 18);
 
-	btnflechaAbajo[0] = new Boton("assets/Tienda/botones/MenuVenta/btnAbajo.png", 680, 488, 22, 18);
-	btnflechaAbajo[1] = new Boton("assets/Tienda/botones/MenuVenta/btnAbajo.png", 680, 556, 22, 18);
-	btnflechaAbajo[2] = new Boton("assets/Tienda/botones/MenuVenta/btnAbajoP.png", 680, 488, 22, 18);
-	btnflechaAbajo[3] = new Boton("assets/Tienda/botones/MenuVenta/btnAbajoP.png", 680, 556, 22, 18);
+		btnSalir[i] = new Boton("assets/Tienda/botones/MenuVenta/btnSalir" + std::to_string(i) + ".png", 872, 67, 38, 38);
+		btnVender[i] = new Boton("assets/Tienda/botones/MenuVenta/btnVender" + std::to_string(i) + ".png", 716, 587, 118, 39);
+	}
+}
+Comprador::~Comprador()
+{
 
-	btnSalir[0] = new Boton("assets/Tienda/botones/MenuVenta/btnSalir.png", 872, 67, 38, 38);
-	btnVender[0] = new Boton("assets/Tienda/botones/MenuVenta/btnVender.png", 716, 587, 118, 39);
-	btnSalir[1] = new Boton("assets/Tienda/botones/MenuVenta/btnSalirP.png", 872, 67, 38, 38);
-	btnVender[1] = new Boton("assets/Tienda/botones/MenuVenta/btnVenderP.png", 716, 587, 118, 39);
 }
 void Comprador::animacionMenu(int tipo)
 {
@@ -46,9 +48,13 @@ void Comprador::animacionMenu(int tipo)
 }
 void Comprador::Sleep(int segundos)
 {
-	clock_t finEspera;
-	finEspera = clock() + segundos * CLOCKS_PER_SEC;
-	while (clock() < finEspera) {}
+	int i = 0;
+	int finespera = 300000 * segundos;
+
+	while (i < finespera)
+	{
+		i++;
+	}
 }
 void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
@@ -69,6 +75,7 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 		al_get_keyboard_state(&keystate);
 		al_wait_for_event(queue, &events);
 		DibujarElFondo();
+		if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE) break;
 		if (events.type == ALLEGRO_EVENT_MOUSE_AXES)
 		{
 			//boton para seleccionar el tipo de cultivo
@@ -194,6 +201,12 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 	}
 	AnimacionReversa();
 }
+void Comprador::DibujarPrecios()
+{
+	al_draw_text(this->font, al_map_rgb(0, 0, 0), 425.3, 248, 0, "1.- Tomates  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . $100");
+	al_draw_text(this->font, al_map_rgb(0, 0, 0), 425.3, 325, 0, "2.- Calabazas  . . . . . . . . . . . . . . . . . . . . . . . . . . . $200");
+	al_draw_text(this->font, al_map_rgb(0, 0, 0), 425.3, 397, 0, "3.- Zanahorias . . . . . . . . . . . . . . . . . . . . . . . . . . . $300");
+}
 void Comprador::animacionMonedas()
 {
 	while (animacion_y > 90)
@@ -242,6 +255,7 @@ void Comprador::DibujarElFondo(int escena)
 	player->action();
 	background->drawOptions(0, mochila->getMonedas());
 	al_draw_bitmap(menu[escena], 0, 0, 0);
+	DibujarPrecios();
 	DibujarCantidadSelec();
 }
 void Comprador::AnimacionReversa()
