@@ -100,7 +100,7 @@ Background::~Background()
 void Background::action(int escena, int TiempoDiaEscena)
 {
 	al_draw_bitmap(ESCENAS[escena + TiempoDiaEscena], 0, 0, 0);
-	if (escena == 3 || escena == 4 || escena == 5) cultivosPlantados->action(escena);
+	if (escena == 3) cultivosPlantados->action(escena);
 }
 void Background::drawOptions(int i, int Monedas)
 {
@@ -110,7 +110,7 @@ void Background::drawOptions(int i, int Monedas)
 
 void Background::dibujarEncima(int escena, int TiempoDiaEscena)
 {
-	if (escena < 6)
+	if (escena < 3)
 		al_draw_bitmap(ESCENASA[escena + TiempoDiaEscena], 0, 0, 0);
 }
 
