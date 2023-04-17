@@ -169,15 +169,15 @@ private:
 			"x                                                                                                                  x         x", //25
 			"x                    xxxxxxxxxx                                                                                    x         x", //26
 			"x                 xxxxxxxxxxxxxxxx                                                                                x          x", //27
-			"                   x             x                                                                                x          x", //28
-			"                   x             x                                                                               x           x", //29
-			"                    x             x                                                                              x           x", //30
-			"                    x             x                                                                              x           x", //31
-			"                    x             x                                                                              x           x", //32
-			"                     x             x                                                                              x          x", //33
-			"                     x              xx                                           x                                 x         x", //34
-			"                     x                x                                          x                                 x         x", //35
-			"                     x                 x                                         x                                 x         x", //36
+			"o                  x             x                                                                                x          x", //28
+			"o                  x             x                                                                               x           x", //29
+			"o                   x             x                                                                              x           x", //30
+			"o                   x             x                                                                              x           x", //31
+			"o                   x             x                                                                              x           x", //32
+			"o                    x             x                                                                              x          x", //33
+			"o                    x              xx                                           x                                 x         x", //34
+			"o                    x                x                                          x                                 x         x", //35
+			"o                    x                 x                                         x                                 x         x", //36
 			"x                    x                  x                                        x                               xx          x", //37
 			"x                    x                   x                                       x                               x           x", //38
 			"x                    x                   x                                      x        11111111   2222         x           x", //39
