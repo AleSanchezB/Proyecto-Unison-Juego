@@ -189,7 +189,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		scale += 0.01f;
 		//std::cout << scale;
 	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_MINUS)) {
+	if (al_key_down(&keystate, ALLEGRO_KEY_MINUS) && scale>1.0 ) {
 		scale -= 0.01f;
 	}
 
