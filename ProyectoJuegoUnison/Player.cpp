@@ -36,6 +36,8 @@ Player::~Player()
 	al_destroy_font(font);
 	delete mochila;
 }
+//YA NO ES NECESARIO LA PUEDEN BORRAR
+/*
 void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight)
 {
 	cameraPosition[0] - (1280 / 2) + (x + Wiidth / 2);
@@ -45,7 +47,7 @@ void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, i
 		cameraPosition[0] = 0;
 	if (cameraPosition[1] < 0)
 		cameraPosition[1] = 0;
-}
+}*/
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
@@ -194,12 +196,9 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		scale -= 0.01f;
 	}
 
-	CameraUpdate(cameraPosition, this->x, this->y, 32, 32);
-	al_identity_transform(&camera);
-	al_translate_transform(&camera, -(this->x + 16), -(this->y + 16));
-	al_scale_transform(&camera, scale, scale);
-	al_translate_transform(&camera, -cameraPosition[0] + (this->x + 16), -cameraPosition[1] + (this->y + 16));
-	al_use_transform(&camera);
+	
+	
+
 
 	active = true;
 	//CHECAR SI ESTA CORRIENDO
@@ -214,6 +213,10 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	colisiones();
 
+	//ESTABLECE EL MAPA LOGICO DE COLISIONES Y EL ZOOM DE CAMARA
+
+	scale = 1.0f;
+
 	if (getEscena() == 0)
 	{
 		memcpy(maskmap, maskmap1, sizeof(maskmap));
@@ -224,7 +227,16 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	else if (getEscena() == 6) {
 		memcpy(maskmap, maskmap3, sizeof(maskmap));
+		//ZOOM DISPLAY
+		scale = 1.65f;
+
 	}
+	//ZOOM DISPLAY
+	al_identity_transform(&camera);
+	al_translate_transform(&camera, -790, -214);
+	al_scale_transform(&camera, scale, scale);
+	al_translate_transform(&camera, -cameraPosition[0] + 776, -cameraPosition[1] + 216);
+	al_use_transform(&camera);
 
 	//salir del cuarto
 	if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
@@ -258,8 +270,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
-		//AvisoCama = true;
-		std::cout << "Holaaa";
+		
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 	{
@@ -281,8 +292,10 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
 	}
-
 	else active = false;
+
+	
+
 	if (al_key_down(&keystate, ALLEGRO_KEY_G) && maskmap[yMup][xMup] == 'c' && getEscena() == 3)
 	{
 		this->y -= speedPlayer;
