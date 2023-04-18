@@ -14,6 +14,24 @@ Cultivo::Cultivo(int x, int y, int tipo, int T_Creado) : Objeto(ruta)
 	case 2: //zanahoria
 		this->ruta = "assets/Plants/zanahoria sprites.png";
 		break;
+	case 3: //berenjena
+		this->ruta = "assets/Plants/berenjana sprites.png";
+		break;
+	case 4: //ejotes
+		this->ruta = "assets/Plants/ejotes sprites.png";
+		break;
+	case 5: //maiz
+		this->ruta = "assets/Plants/maiz sprites.png";
+		break;
+	case 6: //papa
+		this->ruta = "assets/Plants/papa sprites.png";
+		break;
+	case 7: //papaya
+		this->ruta = "assets/Plants/papaya sprites.png";
+		break;
+	case 8: //remolacha
+		this->ruta = "assets/Plants/remolacha sprites.png";
+		break;
 	default:
 		break;
 	}
