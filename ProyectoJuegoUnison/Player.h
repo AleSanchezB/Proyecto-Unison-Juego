@@ -175,11 +175,11 @@ private:
 			"o                   x             x                                                                              x           x", //31
 			"o                   x             x                                                                              x           x", //32
 			"o                    x             x                                                                              x          x", //33
-			"o                    x              xx                                           x                                 x         x", //34
-			"o                    x                x                                          x                                 x         x", //35
-			"o                    x                 x                                         x                                 x         x", //36
-			"x                    x                  x                                        x                               xx          x", //37
-			"x                    x                   x                                       x                               x           x", //38
+			"o                    x              xx                                                                             x         x", //34
+			"o                    x                x                                         xx                                 x         x", //35
+			"o                    x                 x                                        xx                                 x         x", //36
+			"x                    x                  x                                       xx                               xx          x", //37
+			"x                    x                   x                                      xx                               x           x", //38
 			"x                    x                   x                                      x        11111111   2222         x           x", //39
 			"x                    x                    x                                     x        11111111   2222         x           x", //40
 			"x                     x                   x                                     x        11111111   2222         x           x", //41
