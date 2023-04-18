@@ -231,6 +231,12 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		scale = 1.65f;
 
 	}
+	else if (getEscena() == 9) {
+		memcpy(maskmap, maskmap4, sizeof(maskmap));
+		//ZOOM DISPLAY
+		scale = 1.3f;
+
+	}
 	//ZOOM DISPLAY
 	al_identity_transform(&camera);
 	al_translate_transform(&camera, -790, -214);
@@ -253,6 +259,11 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		direccion = UPW + corriendo;
 		TeclaCasa = true;
 		
+	}
+	//CAMBIA A LA TIENDA
+	else if (al_key_down(&keystate, ALLEGRO_KEY_T)) {
+		setEscena(9);
+		MapaCasa = true;
 	}
 	//CAMBIO DE ESCENA A CASITA CUANDO PRESIONA H
 	else if (maskmap[yMup][xMup] == 'c' && al_key_down(&keystate, ALLEGRO_KEY_H) && getEscena() == 0) {
