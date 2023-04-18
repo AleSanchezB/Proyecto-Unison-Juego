@@ -245,13 +245,21 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		direccion = UPW + corriendo;
 		setEscena(0);
 	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0) //ingresar a la casa
+
+	//AVISO PARA QUE PRESIONE TECLA H 
+	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' ) 
 	{
 		this->y -= speedPlayer;
 		direccion = UPW + corriendo;
-		MapaCasa = true;
-		setEscena(6);
+		TeclaCasa = true;
+		
 	}
+	//CAMBIO DE ESCENA A CASITA CUANDO PRESIONA H
+	else if (maskmap[yMup][xMup] == 'c' && al_key_down(&keystate, ALLEGRO_KEY_H) && getEscena() == 0) {
+		setEscena(6);
+		MapaCasa = true;
+	}
+
 	else if (maskmap[yMup][xMup] == 'o' && getEscena() == 3) //cambia a escena de cultivos
 	{
 		this->y -= speedPlayer;
@@ -468,6 +476,8 @@ void Player::colisiones()
 	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + std::to_string(xMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
 	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
+	if(TeclaCasa) al_draw_text(font, al_map_rgb(255, 255, 255), 500, 20, ALLEGRO_ALIGN_LEFT, ("PRESIONA H PARA ENTRAR A LA CASITA " ));
+	
 }
 
 //obtengo la escena en la que estoy

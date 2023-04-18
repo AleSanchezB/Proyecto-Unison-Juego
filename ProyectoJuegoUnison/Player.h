@@ -49,6 +49,7 @@ private:
 	bool active = false;
 	bool MapaV2;
 	bool MapaCasa;
+	bool TeclaCasa;
 	bool f_pressed = false;
 
 	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
