@@ -176,13 +176,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	//presionar "K" para dormir
 	//COLOCAR CAMA EN MAPA LÓGICO PARA NO PODER DORMIR DONDE SEA
-	if (al_key_down(&keystate, ALLEGRO_KEY_K) && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
-	{
-		setEscena(3);
-		this->x = 502;
-		this->y = 400;
-		IniciarDia();
-	}
+	
 
 	//ZOOM CAMARA
 
