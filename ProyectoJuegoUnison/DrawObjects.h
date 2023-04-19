@@ -15,7 +15,7 @@ public:
 	Background();
 	~Background();
 	void action(int escenal, int TiempoEscenaActual);
-	void drawOptions(int i, int Monedas);
+	void drawOptions(int i, int Monedas, int escenam);
 	std::string tiempos[4] = { "","TARDE","NOCHE" };
 	float TiempoCreacion = 0;
 	int TiempoEscenaActual = 0;

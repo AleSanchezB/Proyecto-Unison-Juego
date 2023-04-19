@@ -39,7 +39,7 @@ void Comprador::animacionMenu(int tipo)
 	{
 		Sleep(60);
 		background->action(player->getEscena() + player->TiempoDiaEscena, 0);
-		background->drawOptions(0, mochila->getMonedas());
+		background->drawOptions(0, mochila->getMonedas(), player->getEscena());//nuevo parametro escena
 		player->action();
 		al_draw_bitmap(menu[i], 0, 0, 0);
 		al_flip_display();
@@ -253,7 +253,7 @@ void Comprador::DibujarElFondo(int escena)
 {
 	background->action(player->getEscena() + player->TiempoDiaEscena, 0);
 	player->action();
-	background->drawOptions(0, mochila->getMonedas());
+	background->drawOptions(0, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
 	al_draw_bitmap(menu[escena], 0, 0, 0);
 	DibujarPrecios();
 	DibujarCantidadSelec();
@@ -264,7 +264,7 @@ void Comprador::AnimacionReversa()
 	{
 		Sleep(60);
 		background->action(player->getEscena() + player->TiempoDiaEscena, 0);
-		background->drawOptions(0, mochila->getMonedas());
+		background->drawOptions(0, mochila->getMonedas(), player->getEscena()); //nuevo parametro de escena
 		player->action();
 		al_draw_bitmap(menu[i], 0, 0, 0);
 		al_flip_display();

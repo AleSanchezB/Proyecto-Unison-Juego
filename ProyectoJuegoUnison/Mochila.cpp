@@ -1,5 +1,6 @@
 #include "Mochila.h"
 
+
 Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza, int cantidadZanahoria,
 	int cantidadBerenjena, int cantidadEjotes, int cantidadMaiz, int cantidadPapa,
 	int cantidadPapaya, int cantidadRemolacha, ALLEGRO_FONT* font)
@@ -132,21 +133,33 @@ int Mochila::getcantidadObjetos()
 }
 
 
-void Mochila::action()
+void Mochila::action(int escena)
 {
-	al_draw_bitmap(barraHerramientas, 530, 658, 0);
-	al_draw_bitmap(seleccionHerramienta, 538 + 42 * casillaSelect, 663, 0);
+	int yPosBarra = 658, selectHer = 663, bitmapver =669, textCant =690;
+	
+	//Para establecer la barra de herraminetas cada que le haga zoom
+	if (escena == 6 || escena == 9) {
+		yPosBarra = 555;
+		selectHer = 560;
+		bitmapver =566; 
+		textCant = 586;}
 
-	al_draw_bitmap(tom, 548, 669, 0);
-	al_draw_bitmap(cal, 589, 669, 0);
-	al_draw_bitmap(zana, 635, 669, 0);
-	al_draw_bitmap(bere, 676, 669, 0);
-	al_draw_bitmap(ejo, 717, 669, 0);
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572, 690, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadTomates).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42, 690, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadCalabaza).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 2, 690, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadZanahoria).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 3, 690, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadBerenjena).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 4, 690, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadEjotes).c_str());
+
+
+
+	al_draw_bitmap(barraHerramientas, 530, yPosBarra, 0);
+	al_draw_bitmap(seleccionHerramienta, 538 + 42 * casillaSelect, selectHer, 0);
+	al_draw_bitmap(tom, 548, bitmapver, 0);
+	al_draw_bitmap(cal, 589, bitmapver, 0);
+	al_draw_bitmap(zana, 635, bitmapver, 0);
+	al_draw_bitmap(bere, 676, bitmapver, 0);
+	al_draw_bitmap(ejo, 717, bitmapver, 0);
+	al_draw_text(font, al_map_rgb(255, 255, 255), 572, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadTomates).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadCalabaza).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 2, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadZanahoria).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 3, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadBerenjena).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 4, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadEjotes).c_str());
+	
 }
 void Mochila::cambiarCasilla(int casillaSelect)
 {

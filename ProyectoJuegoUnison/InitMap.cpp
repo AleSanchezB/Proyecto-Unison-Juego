@@ -82,8 +82,8 @@ void GameRun::initGame()
 		{
 			draw = false;
 			background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
-			background->drawOptions(i, mochila->getMonedas());
-			mochila->action();
+			background->drawOptions(i, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
+			mochila->action(player->getEscena());
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}

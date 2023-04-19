@@ -38,7 +38,7 @@ public:
 	void setcantidadPapaya(int cantidadPapaya);
 	void setcantidadRemolacha(int cantidadRemolacha);
 
-	void action();
+	void action(int escena);
 	void cambiarCasilla(int casillaSelect);
 	void quitarCultivo(int tipo);
 
