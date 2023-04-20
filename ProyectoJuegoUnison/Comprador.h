@@ -20,6 +20,21 @@ public:
 	void animacionMenu(int tipo);
 	void animacionMonedas();
 	void animacionDinero(int Pago);
+	void GenerarVendibles();
+	std::string cultivos[9] = { 
+		".- Tomates  . . . . . . . . . . . . . . . . . . . . . . . . . . . . $100", 
+		".- Calabazas  . . . . . . . . . . . . . . . . . . . . . . . . . . . $150",
+		".- Zanahorias . . . . . . . . . . . . . . . . . . . . . . . . . . . $150",
+		"-. Berenjenas . . . . . . . . . . . . . . . . . . . . . . . . . . . $200",
+		"-. Ejotes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . $180",
+		"-. Remolacha  . . . . . . . . . . . . . . . . . . . . . . . . . . . $200",
+		"-. Maiz . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . $250",
+		"-. Papa  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .$250",
+		"-. Papaya  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .$200"
+	};
+	std::string MensajeVendibles[3];
+	int vendibles[3];
+	
 private:
 	ALLEGRO_BITMAP* menu[37];
 	ALLEGRO_BITMAP* coins;

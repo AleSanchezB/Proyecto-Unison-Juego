@@ -56,14 +56,15 @@ void GameRun::initGame()
 	Comprador* comprador = new Comprador();
 
 	player->IniciarDia();
+	comprador->GenerarVendibles();
 	while (running)
 	{
 		player->CambioTiempoDia(al_current_time() + 1);
 		al_wait_for_event(queue, &event);
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
-		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) running = false;
-		else if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
+		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) break;
+		else
 		{
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
@@ -82,10 +83,17 @@ void GameRun::initGame()
 		{
 			draw = false;
 			background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
-			background->drawOptions(i, mochila->getMonedas());
-			mochila->action();
+			background->drawOptions(i, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
+			mochila->action(player->getEscena());
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
+		}
+
+		if (al_key_down(&keystate, ALLEGRO_KEY_K) && (player->getEscena() + player->TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
+		{
+			player->setEscena(player->getEscena());
+			player->IniciarDia();
+			comprador->GenerarVendibles();
 		}
 	}
 	delete background, player, comprador;
