@@ -102,10 +102,20 @@ void Background::action(int escena, int TiempoDiaEscena)
 	al_draw_bitmap(ESCENAS[escena + TiempoDiaEscena], 0, 0, 0);
 	if (escena == 3) cultivosPlantados->action(escena);
 }
-void Background::drawOptions(int i, int Monedas)
+void Background::drawOptions(int i, int Monedas, int escena)
 {
-	al_draw_bitmap(OPCIONES[i], 18, 10, 0);
-	al_draw_text(font, al_map_rgb(255, 255, 255), 1030, 33, 0, (std::to_string(Monedas).c_str()));
+	//PARA EL ZOOM que se vea la cantidad de monedas
+	int xopciones = 18, yopciones = 10, xtextomoneda = 1030, ytextomoneda = 33;
+
+	if (escena == 6 || escena == 9) {
+		xopciones = -60;
+		yopciones = 50;
+		xtextomoneda = 952;
+		ytextomoneda = 73;
+	}
+
+	al_draw_bitmap(OPCIONES[i], xopciones, yopciones, 0);
+	al_draw_text(font, al_map_rgb(255, 255, 255), xtextomoneda, ytextomoneda, 0, (std::to_string(Monedas).c_str()));
 }
 
 void Background::dibujarEncima(int escena, int TiempoDiaEscena)

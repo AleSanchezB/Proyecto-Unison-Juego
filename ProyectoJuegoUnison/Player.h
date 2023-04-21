@@ -49,6 +49,8 @@ private:
 	bool active = false;
 	bool MapaV2;
 	bool MapaCasa;
+	bool TeclaCasa;
+	bool TeclaCasaSalir;
 	bool f_pressed = false;
 
 	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
@@ -175,14 +177,14 @@ private:
 			"o                   x             x                                                                              x           x", //31
 			"o                   x             x                                                                              x           x", //32
 			"o                    x             x                                                                              x          x", //33
-			"o                    x              xx                                           x                                 x         x", //34
-			"o                    x                x                                          x                                 x         x", //35
-			"o                    x                 x                                         x                                 x         x", //36
-			"x                    x                  x                                        x                               xx          x", //37
-			"x                    x                   x                                       x                               x           x", //38
-			"x                    x                   x                                      x        11111111   2222222      x           x", //39
-			"x                    x                    x                                     x        11111111   2222222      x           x", //40
-			"x                     x                   x                                     x        11111111   2222222      x           x", //41
+			"o                    x              xx                                                                             x         x", //34
+			"o                    x                x                                         xx                                 x         x", //35
+			"o                    x                 x                                        xx                                 x         x", //36
+			"x                    x                  x                                       xx                               xx          x", //37
+			"x                    x                   x                                      xx                               x           x", //38
+			"x                    x                   x                                      x        11111111   2222         x           x", //39
+			"x                    x                    x                                     x        11111111   2222         x           x", //40
+			"x                     x                   x                                     x        11111111   2222         x           x", //41
 			"x                     x                   x                                     x                                x           x", //42
 			"x                      x                  x                                     x                                x           x", //43
 			"x                      x                  x                         xxxx        x       33333333     4444        x           x", //44
@@ -290,6 +292,83 @@ private:
 			"x                                                                                                                            x", //70
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //71
 	};
+
+	char maskmap4[150][150] = {
+		//             10        20        30        40        50        60        70       80        90       100        110      120
+		//   012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //1
+			"x                                                                                                                            x", //2
+			"x                                                                                                                            x", //3
+			"x                                                                                                                            x", //4
+			"x                                                                                                                            x", //5
+			"x                                                                                                                            x", //6
+			"x                                                                                                                            x", //7
+			"x                                                                                                                            x", //8
+			"x                                                                                                                            x", //9
+			"x                                                                                                                            x", //10
+			"x                                                                                                                            x", //11
+			"x                                                                                                                            x", //12
+			"x                                                                                                                            x", //13
+			"x                                                                                                                            x", //14
+			"x                                                                                                                            x", //15
+			"x                                                                                                                            x", //16
+			"x                                                                                                                            x", //17
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //18
+			"x                         xx                                                                                                 x", //19
+			"x                         xx                                                                                                 x", //20
+			"x                         xx                                                                                                 x", //21
+			"x                         xx                                                                                                 x", //22
+			"x                         xx                                                                                                 x", //23
+			"x                         xx                                                                                                 x", //24
+			"x                         xx                                                                                                 x", //25
+			"x                         xx                                                                                                 x", //26
+			"x                         xx                                                                                                 x", //27
+			"x                         xx                                                                                                 x", //28
+			"x                         xx                                                                                                 x", //29
+			"x                         xx                                                                                                 x", //30
+			"x                         xx                                                                                                 x", //31
+			"x                         xx                                                                                                 x", //32
+			"x                         xx                                                                                                 x", //33
+			"x                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                      x", //34
+			"x                         xx                           xxx                                                                   x", //35
+			"x                         xx                           xxx                                                                   x", //36
+			"x                         xx                           xxx                                                                   x", //37
+			"x                         xx                                                                                                 x", //38
+			"x                         xx                                                                                                 x", //39
+			"x                         xx                                                                                                 x", //40
+			"x                         xx                                                    xxxxxx                                       x", //41
+			"x                         xx                                                    xxxxxx                                       x", //42
+			"x                         xx                                                                                                 x", //43
+			"x                         xx                                                                                                 x", //44
+			"x                         xx                                                                                                 x", //45
+			"x                         xx                                                                                                 x", //46
+			"x                         xx                                                                                                 x", //47
+			"x                         xx                                                                                                 x", //48
+			"x                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                      x", //49
+			"x                         xxxx      xx xx    xxx                               xxxxxxxx      x        x                      x", //50
+			"x                         xxxx      xx xx    xx                               x     xx       x        x                      x", //51
+			"x                         xxxx      xx  xxxxxxx                               x     xx       x        x                      x", //52
+			"x                         xxxx      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       xxxxxx   x                      x", //53
+			"x                         xxxx      xx                                        x     xx x     xxxxxxx  x                      x", //54
+			"x                         xxxx      xx                                        xxxxxxxx x     x     x  xx                     x", //55
+			"x                         xxxx      xx                                         xxxxxx  x     x     x  xx                     x", //56
+			"x                         xxxx      xx                                                 x     x     x  xx                     x", //57
+			"x                         xxxx      xx                                                 x     x     x  xx                     x", //58
+			"x                         xxxx      xx                                                xx     xxxxxxx  xx                     x", //59
+			"x                         xxxxxxxxxxxx                                                xx      xxxxx   xx                     x", //60
+			"x                         xxxx      xx                                                xx              xx                     x", //61
+			"x                         xx         x                                                xx              xx                     x", //62
+			"x                         xx         x                                                xx              xx                     x", //63
+			"x                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx           x", //64
+			"x                                                                                                                            x", //65
+			"x                                                                                                                            x", //66
+			"x                                                                                                                            x", //67
+			"x                                                                                                                            x", //68
+			"x                                                                                                                            x",  //69
+			"x                                                                                                                            x", //70
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //71
+	};
+
 	char maskmap[150][150];
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);

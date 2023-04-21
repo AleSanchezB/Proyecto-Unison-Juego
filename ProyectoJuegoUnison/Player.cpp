@@ -36,6 +36,8 @@ Player::~Player()
 	al_destroy_font(font);
 	delete mochila;
 }
+//YA NO ES NECESARIO LA PUEDEN BORRAR
+/*
 void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight)
 {
 	cameraPosition[0] - (1280 / 2) + (x + Wiidth / 2);
@@ -45,7 +47,7 @@ void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, i
 		cameraPosition[0] = 0;
 	if (cameraPosition[1] < 0)
 		cameraPosition[1] = 0;
-}
+}*/
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
@@ -184,16 +186,13 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		scale += 0.01f;
 		//std::cout << scale;
 	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_MINUS)) {
+	if (al_key_down(&keystate, ALLEGRO_KEY_MINUS) && scale>1.0 ) {
 		scale -= 0.01f;
 	}
 
-	CameraUpdate(cameraPosition, this->x, this->y, 32, 32);
-	al_identity_transform(&camera);
-	al_translate_transform(&camera, -(this->x + 16), -(this->y + 16));
-	al_scale_transform(&camera, scale, scale);
-	al_translate_transform(&camera, -cameraPosition[0] + (this->x + 16), -cameraPosition[1] + (this->y + 16));
-	al_use_transform(&camera);
+	
+	
+
 
 	active = true;
 	//CHECAR SI ESTA CORRIENDO
@@ -208,6 +207,10 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	colisiones();
 
+	//ESTABLECE EL MAPA LOGICO DE COLISIONES Y EL ZOOM DE CAMARA
+
+	scale = 1.0f;
+
 	if (getEscena() == 0)
 	{
 		memcpy(maskmap, maskmap1, sizeof(maskmap));
@@ -218,7 +221,24 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	}
 	else if (getEscena() == 6) {
 		memcpy(maskmap, maskmap3, sizeof(maskmap));
+		//ZOOM DISPLAY
+		scale = 1.25f;
+
 	}
+	else if (getEscena() == 9) {
+		memcpy(maskmap, maskmap4, sizeof(maskmap));
+		//ZOOM DISPLAY
+		scale = 1.2f;
+
+	}
+	
+
+	//ZOOM DISPLAY
+	al_identity_transform(&camera);
+	al_translate_transform(&camera, -790, -214);
+	al_scale_transform(&camera, scale, scale);
+	al_translate_transform(&camera, -cameraPosition[0] + 776, -cameraPosition[1] + 216);
+	al_use_transform(&camera);
 
 	//salir del cuarto
 	if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
@@ -227,13 +247,26 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		direccion = UPW + corriendo;
 		setEscena(0);
 	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' && getEscena() == 0) //ingresar a la casa
+
+	//AVISO PARA QUE PRESIONE TECLA H 
+	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] == 'c' ) 
 	{
 		this->y -= speedPlayer;
 		direccion = UPW + corriendo;
-		MapaCasa = true;
-		setEscena(6);
+		TeclaCasa = true;
 	}
+	//CAMBIA A LA TIENDA
+	else if (al_key_down(&keystate, ALLEGRO_KEY_T)) {
+		setEscena(9);
+		this->x = 600;
+		this->y = 444;
+	}
+	//CAMBIO DE ESCENA A CASITA CUANDO PRESIONA H
+	else if ((maskmap[yMup][xMup] == 'c' || maskmap[yMdown][xMdown] == 'c') && al_key_down(&keystate, ALLEGRO_KEY_H) && getEscena() == 0) {
+		setEscena(6);
+		MapaCasa = true;
+	}
+
 	else if (maskmap[yMup][xMup] == 'o' && getEscena() == 3) //cambia a escena de cultivos
 	{
 		this->y -= speedPlayer;
@@ -252,6 +285,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
+		
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 	{
@@ -273,8 +307,10 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
 	}
-
 	else active = false;
+
+	
+
 	if (al_key_down(&keystate, ALLEGRO_KEY_G) && maskmap[yMup][xMup] == 'c' && getEscena() == 3)
 	{
 		this->y -= speedPlayer;
@@ -425,28 +461,29 @@ void Player::colisiones()
 	if (yMder < 0) yMder = 0;
 	if (yMder > dimymask) yMder = dimymask;
 
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(this->x)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(this->y)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(this->x)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(this->y)).c_str());
 
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 70, ALLEGRO_ALIGN_LEFT, ("xMask: " + std::to_string(xMask)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 70, ALLEGRO_ALIGN_LEFT, ("yMask: " + std::to_string(yMask)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 70, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMask][xMask])).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 70, ALLEGRO_ALIGN_LEFT, ("xMask: " + std::to_string(xMask)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 70, ALLEGRO_ALIGN_LEFT, ("yMask: " + std::to_string(yMask)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 70, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMask][xMask])).c_str());
 
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 90, ALLEGRO_ALIGN_LEFT, ("xMup: " + std::to_string(xMup)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 90, ALLEGRO_ALIGN_LEFT, ("yMup: " + std::to_string(yMup)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 90, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMup][xMup])).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 90, ALLEGRO_ALIGN_LEFT, ("xMup: " + std::to_string(xMup)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 90, ALLEGRO_ALIGN_LEFT, ("yMup: " + std::to_string(yMup)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 90, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMup][xMup])).c_str());
 
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 110, ALLEGRO_ALIGN_LEFT, ("xMdown: " + std::to_string(xMdown)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 110, ALLEGRO_ALIGN_LEFT, ("yMdown: " + std::to_string(yMdown)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 110, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMdown][xMdown])).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 110, ALLEGRO_ALIGN_LEFT, ("xMdown: " + std::to_string(xMdown)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 110, ALLEGRO_ALIGN_LEFT, ("yMdown: " + std::to_string(yMdown)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 110, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMdown][xMdown])).c_str());
 
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 130, ALLEGRO_ALIGN_LEFT, ("xMizq: " + std::to_string(xMizq)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 130, ALLEGRO_ALIGN_LEFT, ("yMizq: " + std::to_string(yMizq)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 130, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMizq][xMizq])).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 130, ALLEGRO_ALIGN_LEFT, ("xMizq: " + std::to_string(xMizq)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 130, ALLEGRO_ALIGN_LEFT, ("yMizq: " + std::to_string(yMizq)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 130, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMizq][xMizq])).c_str());
 
-	al_draw_text(font, al_map_rgb(255, 255, 255), 10, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + std::to_string(xMder)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 150, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 300, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + std::to_string(xMder)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
+	if(TeclaCasa) al_draw_text(font, al_map_rgb(255, 255, 255), 500, 20, ALLEGRO_ALIGN_LEFT, ("PRESIONA H PARA ENTRAR A LA CASITA " ));
 }
 
 //obtengo la escena en la que estoy
