@@ -56,6 +56,7 @@ void GameRun::initGame()
 	Comprador* comprador = new Comprador();
 
 	player->IniciarDia();
+	comprador->GenerarVendibles();
 	while (running)
 	{
 		player->CambioTiempoDia(al_current_time() + 1);
@@ -89,6 +90,12 @@ void GameRun::initGame()
 				al_flip_display();
 				al_clear_to_color(al_map_rgb_f(254, 254, 254));
 			}
+		}
+		if (al_key_down(&keystate, ALLEGRO_KEY_K) && (player->getEscena() + player->TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
+		{
+			player->setEscena(3);
+			player->IniciarDia();
+			comprador->GenerarVendibles();
 		}
 	}
 	delete background, player, comprador;
