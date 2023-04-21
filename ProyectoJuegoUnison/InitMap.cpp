@@ -88,35 +88,10 @@ void GameRun::initGame()
 			al_flip_display();
 			al_clear_to_color(al_map_rgb_f(254, 254, 254));
 		}
-	}
-			if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
-			{
-				if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
-				else i = 0;
-			}
-			if (al_key_down(&keystate, ALLEGRO_KEY_E))
-			{
-				comprador->Menu(keystate, queue);
-			}
-			background->action(player->getEscena(), player->TiempoDiaEscena);
-			if (event.type == ALLEGRO_EVENT_TIMER)
-			{
-				player->action(keystate, queue);
-				draw = true;
-			}
-			if (draw)
-			{
-				draw = false;
-				background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
-				background->drawOptions(i, mochila->getMonedas());
-				mochila->action();
-				al_flip_display();
-				al_clear_to_color(al_map_rgb_f(254, 254, 254));
-			}
-		}
+
 		if (al_key_down(&keystate, ALLEGRO_KEY_K) && (player->getEscena() + player->TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
 		{
-			player->setEscena(3);
+			player->setEscena(player->getEscena());
 			player->IniciarDia();
 			comprador->GenerarVendibles();
 		}

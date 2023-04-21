@@ -36,18 +36,6 @@ Player::~Player()
 	al_destroy_font(font);
 	delete mochila;
 }
-//YA NO ES NECESARIO LA PUEDEN BORRAR
-/*
-void Player::CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight)
-{
-	cameraPosition[0] - (1280 / 2) + (x + Wiidth / 2);
-	cameraPosition[1] - (720 / 2) + (y + Heeight / 2);
-
-	if (cameraPosition[0] < 0)
-		cameraPosition[0] = 0;
-	if (cameraPosition[1] < 0)
-		cameraPosition[1] = 0;
-}*/
 void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 {
 	al_get_keyboard_state(&keystate);
@@ -176,23 +164,6 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 			last_f_press = al_current_time();
 		}
 	}
-	//presionar "K" para dormir
-	//COLOCAR CAMA EN MAPA LÓGICO PARA NO PODER DORMIR DONDE SEA
-	
-
-	//ZOOM CAMARA
-
-	if ((al_key_down(&keystate, ALLEGRO_KEY_EQUALS)) || (al_key_down(&keystate, ALLEGRO_KEY_PAD_PLUS))) {
-		scale += 0.01f;
-		//std::cout << scale;
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_MINUS) && scale>1.0 ) {
-		scale -= 0.01f;
-	}
-
-	
-	
-
 
 	active = true;
 	//CHECAR SI ESTA CORRIENDO
@@ -235,11 +206,14 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 
 	//ZOOM DISPLAY
 	al_identity_transform(&camera);
-	al_translate_transform(&camera, -790, -214);
-	al_scale_transform(&camera, scale, scale);
-	al_translate_transform(&camera, -cameraPosition[0] + 776, -cameraPosition[1] + 216);
+	if (getEscena() == 3 || getEscena() == 6)
+	{
+		al_translate_transform(&camera, -790, -214);
+		al_scale_transform(&camera, scale, scale);
+		al_translate_transform(&camera, -cameraPosition[0] + 776, -cameraPosition[1] + 216);
+	}
+	else al_scale_transform(&camera, scale, scale);
 	al_use_transform(&camera);
-
 	//salir del cuarto
 	if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
 	{
