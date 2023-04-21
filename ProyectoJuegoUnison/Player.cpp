@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
 
 //esta matriz nos permite saber cual hoyo de siembra está disponible
 Mochila* mochila;
@@ -217,8 +218,11 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	//salir del cuarto
 	if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
 	{
-		this->y -= speedPlayer;
-		direccion = UPW + corriendo;
+		this->x += speedPlayer;
+		direccion = RIGHTW + corriendo;
+		
+	}
+	else if ((maskmap[yMup][xMup] == 'i' || maskmap[yMdown][xMdown] == 'i') && al_key_down(&keystate, ALLEGRO_KEY_O) && getEscena() == 0) {
 		setEscena(0);
 	}
 
@@ -230,11 +234,19 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		TeclaCasa = true;
 	}
 	//CAMBIA A LA TIENDA
-	else if (al_key_down(&keystate, ALLEGRO_KEY_T)) {
+
+	else if (getEscena() == 9 && al_key_down(&keystate, ALLEGRO_KEY_T)) {
+		setEscena(0);
+		this->x = 600;
+		this->y = 444;
+	}
+
+	else if (getEscena() != 9 && al_key_down(&keystate, ALLEGRO_KEY_T)) {
 		setEscena(9);
 		this->x = 600;
 		this->y = 444;
 	}
+	
 	//CAMBIO DE ESCENA A CASITA CUANDO PRESIONA H
 	else if ((maskmap[yMup][xMup] == 'c' || maskmap[yMdown][xMdown] == 'c') && al_key_down(&keystate, ALLEGRO_KEY_H) && getEscena() == 0) {
 		setEscena(6);
