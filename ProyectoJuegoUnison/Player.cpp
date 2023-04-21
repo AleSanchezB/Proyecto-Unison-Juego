@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "InitiMap.h"
+
 //esta matriz nos permite saber cual hoyo de siembra está disponible
 Mochila* mochila;
 Player::Player(std::string ruta)
@@ -22,7 +22,7 @@ Player::Player(std::string ruta)
 	this->font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 
 	//creo una mochila incial con 3 cultivos 1 de cada 1
-	mochila = new Mochila(3, 1, 1, 1, 1, 1);
+	mochila = new Mochila(5, 1, 1, 1, 1, 1);
 	//relleno la matriz de cultivos como NULL para verificar posteriormente si está disponible
 	for (int i = 0; i < 8; i++)
 	{
@@ -111,7 +111,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		}
 	}
 	//Verifico si se presiono la tecla f(planta)
-	if (al_key_down(&keystate, ALLEGRO_KEY_F) && (getEscena() == 3 + TiempoDiaEscena))
+	if (al_key_down(&keystate, ALLEGRO_KEY_F))
 	{
 		//verifico el cooldown 
 		if (al_current_time() - last_f_press > 2) {
@@ -258,8 +258,6 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		this->x -= speedPlayer;
 		direccion = LEFTW + corriendo;
-		//AvisoCama = true;
-		std::cout << "Holaaa";
 	}
 	else if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
 	{
