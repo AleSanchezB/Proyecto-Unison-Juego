@@ -161,11 +161,11 @@ private:
 			"x              x    xxxxxxxxxxxxx                                                xx                         x    x           x", //15
 			"x                                                                                 x                        xx    x           x", //16
 			"x                                                                                 x                        xx    x           x", //17
-			"x                                                                                 x                        xx    x           x", //18
-			"x                                                                                 x                        xxxxxxx           x", //19
-			"x                                                                                 x                        xxxxxxx           x", //20
-			"x                                                                                 x  ccccc                 xxxxxxx           x", //21
-			"x                                                                                 xxxcccccxxxxxxxxxxxxxxxxxxxxxxxxxx         x", //22
+			"x                                                                                 x xxxxxxxxxxx            xx    x           x", //18
+			"x                                                                                 x  xxxxxxxxxx            xxxxxxx           x", //19
+			"x                                                                                 x xxxxttttttx            xxxxxxx           x", //20
+			"x                                                                                 x xxxxttttttx            xxxxxxx           x", //21
+			"x                                                                                 xxxxxxttttttxxxxxxxxxxxxxxxxxxxxxx         x", //22
 			"x                                                                                                                   x        x", //23
 			"x                                                                                                                   x        x", //24
 			"x                                                                                                                  x         x", //25
@@ -333,7 +333,7 @@ private:
 			"x                         xx  xx xxxx                  xxx                                   x                               x", //35
 			"x                         xx  xxxxxxx                  xxxxxxxxxxxxxxxxxxxxxx                x                               x", //36
 			"x                         xx  xxxxxxxxxxxxx xxxx       xxxxxxxxxxxxxxxxxxxxxx                x                               x", //37
-			"x                         xx  xx          x xxxx                            x                x                               x", //38
+			"x                         xx  xx          x xxxx       xxxxxxxxxxxxxxxxxxxxxx                x                               x", //38
 			"x                         xx  xx          x                                 xxxxxxxxxxxxxxxxxx                               x", //39
 			"x                         xx  xx          x                                    xx     x  x   x                               x", //40
 			"x                         xx  xx  xxxxxxxxx                                    xxxxxxxx  x   x                               x", //41

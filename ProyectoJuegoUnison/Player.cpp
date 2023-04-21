@@ -207,13 +207,15 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 
 	//ZOOM DISPLAY
 	al_identity_transform(&camera);
-	if (getEscena() == 3 || getEscena() == 6)
+	if (getEscena() == 6 ||getEscena() == 9 )
 	{
 		al_translate_transform(&camera, -790, -214);
 		al_scale_transform(&camera, scale, scale);
 		al_translate_transform(&camera, -cameraPosition[0] + 776, -cameraPosition[1] + 216);
 	}
-	else al_scale_transform(&camera, scale, scale);
+	else {
+		al_scale_transform(&camera, scale, scale);
+	}
 	al_use_transform(&camera);
 	//salir del cuarto
 	if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMdown][xMdown] == 'i')
@@ -222,8 +224,10 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		direccion = RIGHTW + corriendo;
 		
 	}
-	else if ((maskmap[yMup][xMup] == 'i' || maskmap[yMdown][xMdown] == 'i') && al_key_down(&keystate, ALLEGRO_KEY_O) && getEscena() == 0) {
+	else if ((maskmap[yMup][xMup] == 'i' || maskmap[yMdown][xMdown] == 'i') && al_key_down(&keystate, ALLEGRO_KEY_O) && getEscena() == 6) {
 		setEscena(0);
+		this->x = 754;
+		this->y = 224;
 	}
 
 	//AVISO PARA QUE PRESIONE TECLA H 
@@ -233,15 +237,16 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 		direccion = UPW + corriendo;
 		TeclaCasa = true;
 	}
+	//SALE DE LA TIENDA
+
+	else if (getEscena() == 9 && al_key_down(&keystate, ALLEGRO_KEY_O)) {
+		setEscena(3);
+		this->x = 912;
+		this->y = 218;
+	}
 	//CAMBIA A LA TIENDA
 
-	else if (getEscena() == 9 && al_key_down(&keystate, ALLEGRO_KEY_T)) {
-		setEscena(0);
-		this->x = 600;
-		this->y = 444;
-	}
-
-	else if (getEscena() != 9 && al_key_down(&keystate, ALLEGRO_KEY_T)) {
+	else if ((maskmap[yMup][xMup] == 't' || maskmap[yMdown][xMdown] == 't') && al_key_down(&keystate, ALLEGRO_KEY_T)) {
 		setEscena(9);
 		this->x = 600;
 		this->y = 444;
