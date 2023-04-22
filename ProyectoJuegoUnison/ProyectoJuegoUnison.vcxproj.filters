@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IAMobs.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="InitiMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -25,12 +22,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="SubmenuOptions.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawObjects.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="GuardarDatos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="TipoCultivos.h">
@@ -54,6 +45,9 @@
     <ClInclude Include="TiempoDia.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="DibujarFondo.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,12 +57,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="GuardarDatos.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawObjects.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="SubmenuOptions.cpp">
@@ -99,6 +87,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="TiempoDia.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="DibujarFondo.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

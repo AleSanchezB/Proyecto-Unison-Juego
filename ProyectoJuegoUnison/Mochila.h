@@ -55,6 +55,7 @@ private:
 	ALLEGRO_BITMAP* seleccionHerramienta;
 	ALLEGRO_FONT* font;
 
+	ALLEGRO_BITMAP* mochila;
 	ALLEGRO_BITMAP* tom;
 	ALLEGRO_BITMAP* cal;
 	ALLEGRO_BITMAP* zana;
