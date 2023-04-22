@@ -5,8 +5,6 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
 #include <string>
-
-#include "GuardarDatos.h"
 #include "TipoCultivos.h"
 
 class Background

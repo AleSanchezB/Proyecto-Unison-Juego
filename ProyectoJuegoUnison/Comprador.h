@@ -6,8 +6,6 @@
 #include <string>
 #include <cmath>
 #include <ctime>
-#include <iostream>
-#include <cstdlib> 
 #define DX 4
 #include "Boton.h"
 #include "InitiMap.h"

@@ -68,35 +68,36 @@ void GameRun::initGame()
 		{
 			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
 			else i = 0;
-		}
-		if (al_key_down(&keystate, ALLEGRO_KEY_E))
-		{
-			comprador->Menu(keystate, queue);
-		}
-		background->action(player->getEscena(), player->TiempoDiaEscena);
-		if (event.type == ALLEGRO_EVENT_TIMER)
-		{
-			player->action(keystate, queue);
-			draw = true;
-		}
-		if (draw)
-		{
-			draw = false;
-			background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
-			background->drawOptions(i, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
-			mochila->action(player->getEscena());
-			al_flip_display();
-			al_clear_to_color(al_map_rgb_f(254, 254, 254));
-		}
 
-		if (al_key_down(&keystate, ALLEGRO_KEY_K) && (player->getEscena() + player->TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
-		{
-			player->setEscena(player->getEscena());
-			player->IniciarDia();
-			comprador->GenerarVendibles();
+			if (player->menu)
+			{
+				comprador->Menu(keystate, queue);
+				player->menu = false;
+			}
+			background->action(player->getEscena(), player->TiempoDiaEscena);
+			if (event.type == ALLEGRO_EVENT_TIMER)
+			{
+				player->action(keystate, queue);
+				draw = true;
+			}
+			if (draw)
+			{
+				draw = false;
+				background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
+				background->drawOptions(i, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
+				mochila->action(player->getEscena());
+				al_flip_display();
+				al_clear_to_color(al_map_rgb_f(254, 254, 254));
+			}
+			if (player->dormir)
+			{
+				comprador->GenerarVendibles();
+			}
 		}
 	}
-	delete background, player, comprador;
+	delete background;
+	delete player;	
+	delete comprador;
 }
 
 void GameRun::ColocarMusica()
@@ -108,24 +109,4 @@ void GameRun::ColocarMusica()
 	al_attach_sample_instance_to_mixer(ambientacion, al_get_default_mixer());
 	al_play_sample_instance(ambientacion);
 	al_set_sample_instance_gain(ambientacion, 0.4);
-}
-
-void GameRun::DibujarGradualmente()
-{
-	////al_clear_to_color(al_map_rgb(0, 0, 0));
-	////al_draw_tinted_bitmap(ESCENA1, al_map_rgba_f(1.0, 1.0, 1.0, alpha), 0, 0, 0);
-	//al_draw_rectangle(0, 0, 1280, 720, al_map_rgba_f(0, 0, 0, 0), NULL);
-	////al_draw_tinted_bitmap(ESCENA2, al_map_rgba_f(1.0, 1.0, 1.0, 1.0 - alpha), 0, 0, 0);
-
-	//// Cambiar gradualmente el nivel de opacidad de las imágenes
-	//alpha -= 0.01;
-	//if (alpha <= 0) {
-	//	alpha = 1.0;
-	//	//ALLEGRO_BITMAP* temp = ESCENA1;
-	//	//ESCENA1 = ESCENA2;
-	//	//ESCENA2 = temp;
-	//}
-
-	//// Actualizar la pantalla
-	//al_flip_display();
 }

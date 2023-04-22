@@ -322,7 +322,7 @@ void Comprador::GenerarVendibles() {
 		aux = cultivos[aleatorio];
 		cultivos[aleatorio] = cultivos[i];
 		cultivos[i] = aux;
-		//Vendibles[] guarda el indice que se creó, que (debería) coincidir con los valores de los cultivos para la mochila 
+		//Vendibles[] guarda el indice que se creï¿½, que (deberï¿½a) coincidir con los valores de los cultivos para la mochila 
 		vendibles[i] = aleatorio;
 	}
 }

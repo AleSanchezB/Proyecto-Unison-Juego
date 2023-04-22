@@ -15,15 +15,11 @@
 #include "Mochila.h"
 #include "Objeto.h"
 #include "TipoCultivos.h"
-#include "GuardarDatos.h"
 #include "TiempoDia.h"
-
-//std::list<Objeto*> objectos;
 
 class Player : public Dia
 {
 public:
-	int aux = 0;
 	Player(std::string ruta);
 	~Player();
 	void action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
@@ -31,12 +27,14 @@ public:
 	void setEscena(int escena);
 	int getEscena();
 	
-
+	bool dormir = true;
+	bool menu = false;
 private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
 	ALLEGRO_MOUSE_STATE estadoMouse;
 	ALLEGRO_TRANSFORM camera;
+	ALLEGRO_KEYBOARD_STATE keystate;
 	enum { DOWNW, RIGHTW, UPW, LEFTW };
 	float speedPlayer, direccion, SpritePosX, SpritePosY, corriendo;
 	double last_f_press = 0.0;
@@ -47,12 +45,7 @@ private:
 	int xMask, yMask, xMup, yMup, xMdown, yMdown, xMizq, yMizq, xMder, yMder;
 
 	bool active = false;
-	bool MapaV2;
-	bool MapaCasa;
-	bool TeclaCasa;
-	bool TeclaCasaSalir;
 	bool f_pressed = false;
-
 	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
 
 	//VARIABLES PARA EL ZOOM
@@ -374,7 +367,13 @@ private:
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
 	void Cosechar(int i); 
-	void CameraUpdate(float* cameraPosition, float x, float y, int Wiidth, int Heeight);
+	void Cultivar(int pos, int x, int y, int tipo);
+	void Camera();
+	void ControlesEscenaCultivos();
+	void ControlesEscenaCasa();
+	void ControlesEscenaTienda();
+	void ControlesEscenaPatioCasa();
+
 };
 extern Mochila* mochila;
 #endif // !PLAYER_H
