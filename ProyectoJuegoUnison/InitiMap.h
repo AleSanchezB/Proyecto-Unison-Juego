@@ -6,12 +6,9 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-#include <iostream>
 #include "Player.h"
-#include "DrawObjects.h"
+#include "DibujarFondo.h"
 #include "Comprador.h"
-
-
 
 class GameRun
 {
@@ -44,7 +41,6 @@ private:
 
 	//funciones
 	void initGame();
-	void DibujarGradualmente();
 	void ColocarMusica();
 
 	int w;

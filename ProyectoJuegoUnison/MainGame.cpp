@@ -80,7 +80,8 @@ void MainGame::gameRun()
             running = false;
             alDestroy();
         }
-        if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+        if (event.type == ALLEGRO_EVENT_MOUSE_AXES) 
+        {
             if (event.mouse.x >= 298 && event.mouse.x <= 502 && event.mouse.y >= 239 && event.mouse.y <= 294)
             {
                 i = 1;
@@ -179,7 +180,8 @@ void MainGame::drawRec()
                     else gain -= 0.01;
                     al_set_sample_instance_gain(songInstance, gain);
                 }
-                else {
+                else 
+                {
                     if (gain >= 0.5) gain = 0.5;
                     else gain += 0.01;
                     al_set_sample_instance_gain(songInstance, gain);

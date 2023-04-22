@@ -162,9 +162,7 @@
     <ClInclude Include="Boton.h" />
     <ClInclude Include="Comprador.h" />
     <ClInclude Include="TiempoDia.h" />
-    <ClInclude Include="DrawObjects.h" />
-    <ClInclude Include="GuardarDatos.h" />
-    <ClInclude Include="IAMobs.h" />
+    <ClInclude Include="DibujarFondo.h" />
     <ClInclude Include="InitiMap.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Mochila.h" />
@@ -176,8 +174,7 @@
   <ItemGroup>
     <ClCompile Include="Boton.cpp" />
     <ClCompile Include="Comprador.cpp" />
-    <ClCompile Include="DrawObjects.cpp" />
-    <ClCompile Include="GuardarDatos.cpp" />
+    <ClCompile Include="DibujarFondo.cpp" />
     <ClCompile Include="InitMap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />

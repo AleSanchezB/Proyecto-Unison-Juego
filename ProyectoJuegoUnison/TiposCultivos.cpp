@@ -76,21 +76,19 @@ void Cultivo::action(int escena)
 
 void Cultivo::Crecer(Cultivo* other)
 {
-	/*int resta = (int)(al_current_time() - other->T_Plantacion) % 7;
+	int resta = (int)(al_current_time() - other->T_Plantacion) % 7;
 	if (resta == 0)
 	{
 		other->estado++;
 		other->sy += 36;
-	}*/
-	float tiempo_actual = al_get_time();
-	srand(time(NULL)); // semilla para generar números aleatorios
-	float tiempo_crecimiento_aleatorio = (rand() % 61 + 180); // Entre 3 y 4 minutos en segundos
-	float tiempo_transcurrido = tiempo_actual - other->T_Plantacion;
-	/*std::cout << "tiempo_actual: " << tiempo_actual << "\n tiempo_crecimiento_aleatorio: " 
-		<< tiempo_crecimiento_aleatorio << "\n tiempo_transcurrido: " << tiempo_transcurrido << "\n ";*/
-	if (tiempo_transcurrido >= tiempo_crecimiento_aleatorio) {
-		other->estado++;
-		other->sy += 36;
-		other->T_Plantacion = tiempo_actual;
 	}
+	//float tiempo_actual = al_get_time();
+	//srand(time(NULL)); // semilla para generar números aleatorios
+	//float tiempo_crecimiento_aleatorio = (rand() % 61 + 180); // Entre 3 y 4 minutos en segundos
+	//float tiempo_transcurrido = tiempo_actual - other->T_Plantacion;
+	//if (tiempo_transcurrido >= tiempo_crecimiento_aleatorio) {
+	//	other->estado++;
+	//	other->sy += 36;
+	//	other->T_Plantacion = tiempo_actual;
+	//}
 }

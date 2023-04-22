@@ -13,31 +13,14 @@ public:
 		int cantidadPapaya = 0, int cantidadRemolacha = 0, ALLEGRO_FONT* font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0));
 	~Mochila();
 
-	int getcantidadObjetos();
-	int getcantidadTomates();
-	int getcantidadCalabaza();
-	int getcantidadZanahoria();
-	int getcantidadBerenjena();
-	int getcantidadEjotes();
-	int getcantidadMaiz();
-	int getcantidadPapa();
-	int getcantidadPapaya();
-	int getcantidadRemolacha();
-
-
+	int getCantidadTipoCultivo(int tipo);
+	int getCantidadCultivos();
+	int getEspacioMochila();
+	void setEspacioMochila(int cantidad);
 	int verificarObjectoSeleccionado();
 
-	void setcantidadObjetos(int cantidadObjetos);
-	void setcantidadTomates(int cantidadTomates);
-	void setcantidadCalabaza(int cantidadCalabaza);
-	void setcantidadZanahoria(int cantidadZanahoria);
-	void setcantidadBerenjena(int cantidadBerenjena);
-	void setcantidadEjotes(int cantidadEjotes);
-	void setcantidadMaiz(int cantidadMaiz);
-	void setcantidadPapa(int cantidadPapa);
-	void setcantidadPapaya(int cantidadPapaya);
-	void setcantidadRemolacha(int cantidadRemolacha);
-
+	void setCantidadTipoCultivos(int cantCultivo, int tipo);
+	void setCantidadCultivos(int cant);
 	void action(int escena);
 	void cambiarCasilla(int casillaSelect);
 	void quitarCultivo(int tipo);
@@ -45,7 +28,7 @@ public:
 	bool verificacionMochila();
 	bool verificarCantidadCultivos(int tipo);
 	bool verificarCantidadCultivosGuardados(int tipo, int cantidad);
-	bool verificarMochilaLlena(int cantidad);
+	bool verificarMochilaLlena(int cantidad = 0);
 
 	void setMonedas(int monedas);
 	int getMonedas();
