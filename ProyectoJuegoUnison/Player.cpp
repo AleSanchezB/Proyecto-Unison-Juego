@@ -30,7 +30,7 @@ Player::Player(std::string ruta)
 void Player::ControlesEscenaCasa()
 {
 	//tecla para dormir
-	if (al_key_down(&this->keystate, ALLEGRO_KEY_K) && getEscena() == 6 && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
+	if (al_key_down(&this->keystate, ALLEGRO_KEY_K) && maskmap[yMup][xMup] == 'b' && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
 	{
 		setEscena(getEscena());
 		IniciarDia();
@@ -40,12 +40,6 @@ void Player::ControlesEscenaCasa()
 		setEscena(0);
 		this->x = 754;
 		this->y = 224;
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMup][xMup] == 'b') //cama
-	{
-		this->x -= speedPlayer;
-		direccion = LEFTW + corriendo;
-
 	}
 }
 void Player::ControlesEscenaCultivos()
@@ -63,7 +57,7 @@ void Player::ControlesEscenaCultivos()
 			{
 				Cultivar(0, 900, 390, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '1' && cultivosPlantados[0] != NULL)
+			else if (maskmap[yMizq][xMizq] == '1' && cultivosPlantados[0] != NULL && !mochila->verificarMochilaLlena())
 			{
 				Cosechar(0);
 			}
@@ -72,7 +66,7 @@ void Player::ControlesEscenaCultivos()
 			{
 				Cultivar(1, 1060, 380, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '2' && cultivosPlantados[1] != NULL)
+			else if (maskmap[yMizq][xMizq] == '2' && cultivosPlantados[1] != NULL && !mochila->verificarMochilaLlena())
 			{
 				Cosechar(1);
 			}
@@ -81,42 +75,42 @@ void Player::ControlesEscenaCultivos()
 			{
 				Cultivar(2, 890, 440, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '3' && cultivosPlantados[2] != NULL)
+			else if (maskmap[yMizq][xMizq] == '3' && cultivosPlantados[2] != NULL && !mochila->verificarMochilaLlena())
 				Cosechar(2);
 
 			if (maskmap[yMizq][xMizq] == '4' && cultivosPlantados[3] == NULL && mochila->verificacionMochila() && mochila->verificarCantidadCultivos(tipo))
 			{
 				Cultivar(3, 1065, 438, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '4' && cultivosPlantados[3] != NULL)
+			else if (maskmap[yMizq][xMizq] == '4' && cultivosPlantados[3] != NULL && !mochila->verificarMochilaLlena())
 				Cosechar(3);
 
 			if (maskmap[yMizq][xMizq] == '5' && cultivosPlantados[4] == NULL && mochila->verificacionMochila() && mochila->verificarCantidadCultivos(tipo))
 			{
 				Cultivar(4, 900, 485, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '5' && cultivosPlantados[4] != NULL)
+			else if (maskmap[yMizq][xMizq] == '5' && cultivosPlantados[4] != NULL && !mochila->verificarMochilaLlena())
 				Cosechar(4);
 
 			if (maskmap[yMizq][xMizq] == '6' && cultivosPlantados[5] == NULL && mochila->verificacionMochila() && mochila->verificarCantidadCultivos(tipo))
 			{
 				Cultivar(5, 1055, 492, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '6' && cultivosPlantados[5] != NULL)
+			else if (maskmap[yMizq][xMizq] == '6' && cultivosPlantados[5] != NULL && !mochila->verificarMochilaLlena())
 				Cosechar(5);
 
 			if (maskmap[yMizq][xMizq] == '7' && cultivosPlantados[6] == NULL && mochila->verificacionMochila() && mochila->verificarCantidadCultivos(tipo))
 			{
 				Cultivar(6, 893, 540, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '7' && cultivosPlantados[6] != NULL)
+			else if (maskmap[yMizq][xMizq] == '7' && cultivosPlantados[6] != NULL && !mochila->verificarMochilaLlena())
 				Cosechar(6);
 
 			if (maskmap[yMizq][xMizq] == '8' && cultivosPlantados[7] == NULL && mochila->verificacionMochila() && mochila->verificarCantidadCultivos(tipo))
 			{
 				Cultivar(7, 1074, 542, tipo);
 			}
-			else if (maskmap[yMizq][xMizq] == '8' && cultivosPlantados[7] != NULL)
+			else if (maskmap[yMizq][xMizq] == '8' && cultivosPlantados[7] != NULL && !mochila->verificarMochilaLlena())
 				Cosechar(7);
 			last_f_press = al_current_time();
 		}
@@ -166,7 +160,7 @@ void Player::Camera()
 {
 	//ZOOM DISPLAY
 	al_identity_transform(&camera);
-	if (getEscena() == 6 || getEscena() == 9)
+	if (getEscena() == 6)
 	{
 		al_translate_transform(&camera, -790, -214);
 		al_scale_transform(&camera, scale, scale);
@@ -178,7 +172,6 @@ void Player::Camera()
 	}
 	al_use_transform(&camera);
 }
-
 Player::~Player()
 {
 	al_destroy_bitmap(this->sprite);
@@ -245,7 +238,7 @@ void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
 	{
 		memcpy(maskmap, maskmap4, sizeof(maskmap));
 		//ZOOM DISPLAY
-		scale = 1.2f;
+		//scale = 1.2f;
 		Camera();
 		ControlesEscenaTienda();
 
@@ -353,7 +346,6 @@ void Player::Cosechar(int i)
 			std::discrete_distribution<> dist({ 3, 1, 0.5, 0.1 });
 			cantidadCosechada = dist(gen) + 2;
 		}
-
 		if (mochila->verificarMochilaLlena(cantidadCosechada))
 		{
 			cantidadCosechada = mochila->getEspacioMochila() - mochila->getCantidadCultivos();

@@ -53,7 +53,7 @@ void Background::drawOptions(int i, int Monedas, int escena)
 	//PARA EL ZOOM que se vea la cantidad de monedas
 	int xopciones = 18, yopciones = 10, xtextomoneda = 1030, ytextomoneda = 33;
 
-	if (escena == 6 || escena == 9) {
+	if (escena == 6) {
 		xopciones = -60;
 		yopciones = 50;
 		xtextomoneda = 952;

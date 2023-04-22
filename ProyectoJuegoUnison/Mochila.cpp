@@ -22,17 +22,18 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	this->casillaSelect = 0;
 	this->font = font;
 	this->Monedas = 10;
-	barraHerramientas = al_load_bitmap("assets/fondos/Objetos/barraHerramientas.png");
-	seleccionHerramienta = al_load_bitmap("assets/fondos/Objetos/seleccionHerramienta.png");
-	tom = al_load_bitmap("assets/Plants/tomate item.png");
-	cal = al_load_bitmap("assets/Plants/calabaza item.png");
-	zana = al_load_bitmap("assets/Plants/zanahoria item.png");
-	bere = al_load_bitmap("assets/Plants/berenjena item.png");
-	ejo = al_load_bitmap("assets/Plants/ejote item.png");
-	maiz = al_load_bitmap("assets/Plants/maiz item.png");
-	papa = al_load_bitmap("assets/Plants/papa item.png");
-	papaya = al_load_bitmap("assets/Plants/papaya item.png");
-	remo = al_load_bitmap("assets/Plants/remolacha item.png");
+	this->mochila = al_load_bitmap("assets/fondos/Objetos/mochila.png");
+	this->barraHerramientas = al_load_bitmap("assets/fondos/Objetos/barraHerramientas.png");
+	this->seleccionHerramienta = al_load_bitmap("assets/fondos/Objetos/seleccionHerramienta.png");
+	this->tom = al_load_bitmap("assets/Plants/tomate item.png");
+	this->cal = al_load_bitmap("assets/Plants/calabaza item.png");
+	this->zana = al_load_bitmap("assets/Plants/zanahoria item.png");
+	this->bere = al_load_bitmap("assets/Plants/berenjena item.png");
+	this->ejo = al_load_bitmap("assets/Plants/ejote item.png");
+	this->maiz = al_load_bitmap("assets/Plants/maiz item.png");
+	this->papa = al_load_bitmap("assets/Plants/papa item.png");
+	this->papaya = al_load_bitmap("assets/Plants/papaya item.png");
+	this->remo = al_load_bitmap("assets/Plants/remolacha item.png");
 }
 Mochila::~Mochila()
 {
@@ -128,30 +129,42 @@ int Mochila::getCantidadCultivos()
 
 void Mochila::action(int escena)
 {
-	int yPosBarra = 658, selectHer = 663, bitmapver =669, textCant =690;
+	int yPosBarra = 658, selectHer = 663, bitmapver =669, textCant =690, xmochila = 30, ymochila = 660;
 	
 	//Para establecer la barra de herraminetas cada que le haga zoom
-	if (escena == 6 || escena == 9) {
+	if (escena == 6) 
+	{
+		xmochila = 200;
 		yPosBarra = 555;
 		selectHer = 560;
 		bitmapver =566; 
-		textCant = 586;}
+		textCant = 586;
+		ymochila = 560;
+	}
 
 
-
-
-	al_draw_bitmap(barraHerramientas, 530, yPosBarra, 0);
-	al_draw_bitmap(seleccionHerramienta, 538 + 42 * casillaSelect, selectHer, 0);
-	al_draw_bitmap(tom, 548, bitmapver, 0);
-	al_draw_bitmap(cal, 589, bitmapver, 0);
-	al_draw_bitmap(zana, 635, bitmapver, 0);
-	al_draw_bitmap(bere, 676, bitmapver, 0);
-	al_draw_bitmap(ejo, 717, bitmapver, 0);
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadTomates).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadCalabaza).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 2, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadZanahoria).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 3, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadBerenjena).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 572 + 42 * 4, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadEjotes).c_str());
+	al_draw_bitmap(mochila, xmochila, ymochila, 0);
+	al_draw_bitmap(barraHerramientas, 460, yPosBarra, 0);
+	al_draw_bitmap(seleccionHerramienta, 468 + 42 * casillaSelect, selectHer, 0);
+	al_draw_bitmap(tom, 478, bitmapver, 0);
+	al_draw_bitmap(cal, 519, bitmapver, 0);
+	al_draw_bitmap(zana, 565, bitmapver, 0);
+	al_draw_bitmap(bere, 606, bitmapver, 0);
+	al_draw_bitmap(ejo, 647, bitmapver, 0);
+	al_draw_bitmap(maiz, 688, bitmapver, 0);
+	al_draw_bitmap(papa, 729, bitmapver-2, 0);
+	al_draw_bitmap(papaya, 772, bitmapver, 0);
+	al_draw_bitmap(remo, 814, bitmapver, 0);
+	al_draw_text(font, al_map_rgb(255, 255, 255), xmochila + 50, ymochila + 20, ALLEGRO_ALIGN_LEFT, (std::to_string(cantidadObjetos) + " / " + std::to_string(capacidadMochila)).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadTomates).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadCalabaza).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42 * 2, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadZanahoria).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42 * 3, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadBerenjena).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42 * 4, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadEjotes).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42 * 5, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadMaiz).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42 * 6, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadPapa).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42 * 7, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadPapaya).c_str());
+	al_draw_text(font, al_map_rgb(255, 255, 255), 502 + 42 * 8, textCant, ALLEGRO_ALIGN_LEFT, std::to_string(cantidadRemolacha).c_str());
 	
 }
 void Mochila::cambiarCasilla(int casillaSelect)
@@ -299,6 +312,6 @@ bool Mochila::verificarCantidadCultivosGuardados(int tipo, int cantidad)
 
 bool Mochila::verificarMochilaLlena(int cantidadIngresar)
 {
-	if (cantidadIngresar + getCantidadCultivos() > this->capacidadMochila) return false;
-	else return true;
+	if (cantidadIngresar + getCantidadCultivos() >= this->capacidadMochila) return true;
+	else return false;
 }

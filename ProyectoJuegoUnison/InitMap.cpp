@@ -14,9 +14,11 @@ GameRun::GameRun()
 	al_init_ttf_addon();
 	running = true;
 
-	al_get_display_mode(al_get_num_display_modes() - 1, &disp_data);
-	w = disp_data.width;
-	h = disp_data.height;
+	for (int i = 0; i < 4; i++)
+	{
+		std::string ruta = "assets/fondos/Ajustes/" + std::to_string(i) + ".png";
+		Ajustes[i] = al_load_bitmap(ruta.c_str());
+	}
 	displayGame = al_create_display(width, height);
 	al_set_window_title(displayGame, "Agromania");
 	iconDisplay = al_load_bitmap("assets/fondos/Icono/Icono.png");
@@ -64,11 +66,28 @@ void GameRun::initGame()
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) break;
+		else if (al_key_down(&keystate, ALLEGRO_KEY_ESCAPE))
+		{
+			DibujarAjustes(keystate);
+		}
 		else
 		{
-			if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
-			else i = 0;
-
+			if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
+			{
+				if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
+				else i = 0;
+			}
+			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+			{
+				if (event.mouse.button == 1)
+				{
+					if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)
+					{
+						i = 0;
+						DibujarAjustes(keystate);
+					}
+				}
+			}
 			if (player->menu)
 			{
 				comprador->Menu(keystate, queue);
@@ -96,7 +115,7 @@ void GameRun::initGame()
 		}
 	}
 	delete background;
-	delete player;	
+	delete player;
 	delete comprador;
 }
 
@@ -109,4 +128,66 @@ void GameRun::ColocarMusica()
 	al_attach_sample_instance_to_mixer(ambientacion, al_get_default_mixer());
 	al_play_sample_instance(ambientacion);
 	al_set_sample_instance_gain(ambientacion, 0.4);
+}
+
+void GameRun::DibujarAjustes(ALLEGRO_KEYBOARD_STATE keystate)
+{
+	bool mostrar = true;
+	int escena = 0;
+	while (mostrar)
+	{
+		al_wait_for_event(queue, &event);
+		ALLEGRO_KEYBOARD_STATE keystate;
+		al_get_keyboard_state(&keystate);
+		background->action(player->getEscena(), player->TiempoDiaEscena);
+		player->action();
+		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+		{
+			running = false;
+			break;
+		}
+		else if (al_key_down(&keystate, ALLEGRO_KEY_ESCAPE)) break;
+		else
+		{
+			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+			{
+				if (event.mouse.button == 1)
+				{
+					if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 239 && event.mouse.y <= 294)
+					{
+						mostrar = false;
+					}
+					else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 332 && event.mouse.y <= 387)
+					{
+
+					}
+					else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 423 && event.mouse.y <= 478)
+					{
+						running = false;
+						mostrar = false;
+					}
+				}
+			}
+			if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
+			{
+				if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 239 && event.mouse.y <= 294)
+				{
+					escena = 1;
+				}
+				else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 332 && event.mouse.y <= 387)
+				{
+					escena = 2;
+				}
+				else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 423 && event.mouse.y <= 478)
+				{
+					escena = 3;
+				}
+				else escena = 0;
+			}
+		}
+		background->drawOptions(0, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
+		al_draw_bitmap(Ajustes[escena], 536, 239, 0);
+		al_flip_display();
+		al_clear_to_color(al_map_rgb_f(254, 254, 254));
+	}
 }

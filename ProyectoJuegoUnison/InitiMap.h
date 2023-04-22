@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "DibujarFondo.h"
 #include "Comprador.h"
-
+#include <string>
 class GameRun
 {
 public:
@@ -26,6 +26,7 @@ private:
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
 	ALLEGRO_BITMAP* iconDisplay;
+	ALLEGRO_BITMAP* Ajustes[4];
 	//CONSTANTES
 	const int width = 1280;
 	const int height = 720;
@@ -45,7 +46,7 @@ private:
 
 	int w;
 	int h;
-	ALLEGRO_DISPLAY_MODE disp_data;
+	void DibujarAjustes(ALLEGRO_KEYBOARD_STATE keystate);
 };
 extern Background* background;
 extern Player* player;
