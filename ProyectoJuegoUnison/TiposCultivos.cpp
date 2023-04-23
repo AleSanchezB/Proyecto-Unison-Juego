@@ -1,8 +1,9 @@
 #include "TipoCultivos.h"
+#include <iostream>
 Cultivo* cultivosPlantados[8];
-Cultivo::Cultivo(int x, int y, int tipo, int T_Creado) : Objeto(ruta)
+
+Cultivo::Cultivo(int x, int y, int tipo, int espacio, int estado, int T_Creado, int sy) : Objeto(ruta)
 {
-	this->tipo = tipo;
 	switch (tipo)
 	{
 	case 0: //tomate
@@ -37,9 +38,12 @@ Cultivo::Cultivo(int x, int y, int tipo, int T_Creado) : Objeto(ruta)
 	}
 	this->sprite = al_load_bitmap(ruta.c_str());
 	this->sx = 0;
-	this->sy = 0;
+	this->sy = sy;
 	this->sw = 45;
 	this->sh = 36;
+	this->tipo = tipo;
+	this->espacio = espacio;
+	this->estado = estado;
 	this->x = x;
 	this->y = y;
 	this->T_Plantacion = T_Creado;
@@ -74,6 +78,53 @@ void Cultivo::action(int escena)
 	}
 }
 
+int Cultivo::getTipo()
+{
+	return this->tipo;
+}
+int Cultivo::getSy()
+{
+	return this->sy;
+}
+int Cultivo::getespacio()
+{
+	return this->espacio;
+}
+int Cultivo::getEstado()
+{
+	return this->estado;
+}
+int Cultivo::getPosX()
+{
+	return this->x;
+}
+int Cultivo::getPosY()
+{
+	return this->y;
+}
+int Cultivo::getTiempoPlantacion()
+{
+	return this->T_Plantacion;
+}
+
+void Cultivo::setTipo(int tipo)
+{
+	this->tipo = tipo;
+}
+
+void Cultivo::setespacio(int espacio)
+{
+	this->espacio = espacio;
+}
+void Cultivo::setEstado(int estado)
+{
+	this->estado = estado;
+}
+void Cultivo::setTiempoPlantacion(int tiempo)
+{
+	this->T_Plantacion = tiempo;
+}
+
 void Cultivo::Crecer(Cultivo* other)
 {
 	int resta = (int)(al_current_time() - other->T_Plantacion) % 7;
@@ -91,4 +142,77 @@ void Cultivo::Crecer(Cultivo* other)
 	//	other->sy += 36;
 	//	other->T_Plantacion = tiempo_actual;
 	//}
+}
+void CargarCulivos()
+{
+	// Abrir el archivo para lectura
+	std::ifstream archivo("cultivos.txt");
+	if (!archivo.is_open())
+	{
+		inicializar_cultivos();
+	}
+	else
+	{
+		// Leer los valores del archivo
+		int x, y, tipo, espacio, estado, tiempoplantacion, sy, espacioAnt = -1;
+		int lista[8];
+
+		for (int i = 0; i < 8; i++)
+		{
+			archivo >> x >> y >> tipo >> espacio >> estado >> tiempoplantacion >> sy;
+			if (estado == 0 || estado == 1 || estado == 2)
+			{
+				std::cout << "\n x: " << x << "y: " << y << " tipo: " << tipo << " espacio: " << espacio << " estado: " << estado << " tiempo: " << tiempoplantacion << " sy: " << sy;
+				cultivosPlantados[espacio] = new Cultivo(x, y, tipo, espacio, estado, tiempoplantacion, sy);
+				if (cultivosPlantados[i] == NULL)
+				{
+					cultivosPlantados[i] = NULL;
+					std::cout << "\ni: " << i;
+				}
+			}
+			else
+			{
+					cultivosPlantados[i] = NULL;
+					std::cout << "\ni: " << i;
+
+			}
+			espacioAnt = espacio;
+		}
+		// Cerrar el archivo
+		archivo.close();
+
+		// Actualizar la mochila del jugador con los valores leídos
+	}
+	archivo.close();
+}
+void inicializar_cultivos()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		cultivosPlantados[i] = NULL;
+	}
+}
+
+void GuardarCultivos()
+{
+	std::ofstream archivo("cultivos.txt");
+	if (archivo.is_open())
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			if (cultivosPlantados[i] != NULL)
+			{
+				Cultivo* other = cultivosPlantados[i];
+				other->aux++;
+				archivo << other->getPosX() << " "
+					<< other->getPosY() << " "
+					<< other->getTipo() << " "
+					<< other->getespacio() << " "
+					<< other->getEstado() << " "
+					<< other->getTiempoPlantacion() << " "
+					<< other->getSy() << "\n";
+			}
+		}
+	}
+	archivo.close();
 }

@@ -1,5 +1,5 @@
 #include "Comprador.h"
-
+#include <iostream>
 Comprador::Comprador()
 {
 	this->TipoCultivo = 1;
@@ -9,7 +9,7 @@ Comprador::Comprador()
 	this->cantDig = std::log10(this->CantVender) + 1;
 	this->font = al_load_font("assets/fonts/Minecraft.ttf", 18, 0);
 	this->coins = al_load_bitmap("assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/coins2.png");
-
+	srand(time(NULL));
 	for (int i = 35; i > 0; i--)
 	{
 		std::string ruta = "assets/animation/Paper Content Appear Animation/Folding & Cutout/8 Shop/" + std::to_string(i) + ".png";
@@ -175,8 +175,9 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 					&& events.mouse.y >= btnVender[1]->y && events.mouse.y <= btnVender[1]->y + btnVender[1]->h)
 				{
 					btnVen = 1;
+					std::cout << vendibles[this->TipoCultivo - 1] << " TIPO" << this->TipoCultivo - 1;
 					if (mochila->verificacionMochila() &&
-						mochila->verificarCantidadCultivosGuardados(this->TipoCultivo - 1, this->CantVender))
+						mochila->verificarCantidadCultivosGuardados(vendibles[this->TipoCultivo - 1], this->CantVender))
 					{
 						animacionMonedas();
 						VerificarVenta();
@@ -203,8 +204,9 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 }
 void Comprador::DibujarPrecios()
 {
-	for (int i = 0; i < 3; i++) {
-	al_draw_text(this->font, al_map_rgb(0, 0, 0), 425.3, 251+74*i, 0, MensajeVendibles[i].c_str());
+	for (int i = 0; i < 3; i++)
+	{
+		al_draw_text(this->font, al_map_rgb(0, 0, 0), 425.3, 251 + 74 * i, 0, MensajeVendibles[i].c_str());
 	}
 }
 void Comprador::animacionMonedas()
@@ -284,15 +286,21 @@ void Comprador::action(int btnCult, int btnCant, int btnCultB, int btnCantB, int
 }
 bool Comprador::VerificarVenta()
 {
+	std::cout << vendibles[this->TipoCultivo - 1] << " TIPO" << this->TipoCultivo - 1;
 	if (mochila->verificacionMochila())
 	{
-		if (mochila->verificarCantidadCultivosGuardados(this->TipoCultivo - 1, this->CantVender))
+		if (mochila->verificarCantidadCultivosGuardados(vendibles[this->TipoCultivo - 1], this->CantVender))
 		{
-			mochila->quitarCultivo(this->TipoCultivo - 1);
+			mochila->quitarCultivo(vendibles[this->TipoCultivo - 1]);
 			int Pago = 0;
-			if (TipoCultivo == 1) Pago = this->CantVender * PRECIOTOM;
-			else if (TipoCultivo == 2) Pago = this->CantVender * PRECIOZCALA;
-			else Pago = this->CantVender * PRECIOZANA;
+			if (vendibles[this->TipoCultivo - 1] == 1) Pago = this->CantVender * PRECIOTOM;
+			else if (vendibles[this->TipoCultivo - 1] == 2) Pago = this->CantVender * PRECIOZCALA;
+			else if (vendibles[this->TipoCultivo - 1] == 3) Pago = this->CantVender * PRECIOZANA;
+			else if (vendibles[this->TipoCultivo - 1] == 4) Pago = this->CantVender * PRECIOEJOTES;
+			else if (vendibles[this->TipoCultivo - 1] == 5) Pago = this->CantVender * PRECIOMAIZ;
+			else if (vendibles[this->TipoCultivo - 1] == 6) Pago = this->CantVender * PRECIOPAPA;
+			else if (vendibles[this->TipoCultivo - 1] == 7) Pago = this->CantVender * PRECIOPAPAYA;
+			else Pago = this->CantVender * PRECIOREMO;
 			animacionDinero(Pago);
 			this->CantVender = 0;
 			return true;
@@ -312,17 +320,19 @@ void Comprador::animacionDinero(int Pago)
 	}
 }
 
-void Comprador::GenerarVendibles() {
-	srand(time(NULL));
+void Comprador::GenerarVendibles()
+{
 	int aleatorio;
 	std::string aux;
-	for (int i = 0; i < 3; i++) {
-		aleatorio = i + rand() % 10;
-		MensajeVendibles[i] = cultivos[aleatorio];
-		aux = cultivos[aleatorio];
-		cultivos[aleatorio] = cultivos[i];
-		cultivos[i] = aux;
+	for (int i = 0; i < 3; i++)
+	{
+		aleatorio = i + rand() % (9 - i);
+		this->MensajeVendibles[i] = this->cultivos[aleatorio];
+		aux = this->cultivos[aleatorio];
+		this->cultivos[aleatorio] = this->cultivos[i];
+		this->cultivos[i] = aux;
 		//Vendibles[] guarda el indice que se cre�, que (deber�a) coincidir con los valores de los cultivos para la mochila 
 		vendibles[i] = aleatorio;
+		//std::cout << vendibles[i];
 	}
 }

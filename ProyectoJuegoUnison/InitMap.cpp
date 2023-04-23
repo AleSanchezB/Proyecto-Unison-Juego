@@ -111,9 +111,12 @@ void GameRun::initGame()
 			if (player->dormir)
 			{
 				comprador->GenerarVendibles();
+				player->dormir = false;
 			}
 		}
 	}
+	player->guardar_datos_mochila_en_archivo();
+	GuardarCultivos();
 	delete background;
 	delete player;
 	delete comprador;

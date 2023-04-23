@@ -16,7 +16,8 @@ void Dia::IniciarDia() {
 void Dia::CambioTiempoDia(float T_Actual)
 {
 	int resta = (int)(T_Actual - TiempoCreacion) % 10;
-	if (resta == 0 && TiempoDiaEscena < 2) {
+	if (resta == 0 && TiempoDiaEscena < 2) 
+	{
 		TiempoDiaEscena++;
 		TiempoCreacion--;
 	}

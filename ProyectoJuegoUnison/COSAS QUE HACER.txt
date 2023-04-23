@@ -1,3 +1,0 @@
-Crear 4 rooms una de casa, otra fuera de casa donde cultive o algo asi, otra que camine y hay vendedores y compradores 
-y otra para el lab. ahora el principal donde sea el camino será recto y el personaje y las cosas serán mas pequeñas, 
-no puede ir hacia arriba o haré una fondo el cual llegue hasta la mitad de la pantalla.
