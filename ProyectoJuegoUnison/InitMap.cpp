@@ -111,6 +111,7 @@ void GameRun::initGame()
 			if (player->dormir)
 			{
 				comprador->GenerarVendibles();
+				player->dormir = false;
 			}
 		}
 	}

@@ -69,6 +69,7 @@ void Player::ControlesEscenaCasa()
 		setEscena(0);
 		this->x = 754;
 		this->y = 224;
+		dormir = true;
 	}
 }
 void Player::guardar_datos_mochila_en_archivo()
@@ -349,7 +350,7 @@ void Player::Cosechar(int i)
 	{
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		int cantidadCosechada = 0, suma;
+		int cantidadCosechada = 0;
 		if (other->tipo == 0)
 		{
 			std::discrete_distribution<> dist({ 3, 2, 1, 1 });
@@ -459,30 +460,6 @@ void Player::colisiones()
 	yMder = yMask;
 	if (yMder < 0) yMder = 0;
 	if (yMder > dimymask) yMder = dimymask;
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 10, ALLEGRO_ALIGN_LEFT, ("xjugador: " + std::to_string(this->x)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 30, ALLEGRO_ALIGN_LEFT, ("yjugador: " + std::to_string(this->y)).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 70, ALLEGRO_ALIGN_LEFT, ("xMask: " + std::to_string(xMask)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 70, ALLEGRO_ALIGN_LEFT, ("yMask: " + std::to_string(yMask)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 70, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMask][xMask])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 90, ALLEGRO_ALIGN_LEFT, ("xMup: " + std::to_string(xMup)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 90, ALLEGRO_ALIGN_LEFT, ("yMup: " + std::to_string(yMup)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 90, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMup][xMup])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 110, ALLEGRO_ALIGN_LEFT, ("xMdown: " + std::to_string(xMdown)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 110, ALLEGRO_ALIGN_LEFT, ("yMdown: " + std::to_string(yMdown)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 110, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMdown][xMdown])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 130, ALLEGRO_ALIGN_LEFT, ("xMizq: " + std::to_string(xMizq)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 130, ALLEGRO_ALIGN_LEFT, ("yMizq: " + std::to_string(yMizq)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 130, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMizq][xMizq])).c_str());
-
-	al_draw_text(font, al_map_rgb(255, 255, 255), 210, 150, ALLEGRO_ALIGN_LEFT, ("xMder: " + std::to_string(xMder)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 350, 150, ALLEGRO_ALIGN_LEFT, ("yMder: " + std::to_string(yMder)).c_str());
-	al_draw_text(font, al_map_rgb(255, 255, 255), 500, 150, ALLEGRO_ALIGN_LEFT, ("Hay: " + std::to_string(maskmap[yMder][xMder])).c_str());
-	//if (TeclaCasa) al_draw_text(font, al_map_rgb(255, 255, 255), 500, 20, ALLEGRO_ALIGN_LEFT, ("PRESIONA H PARA ENTRAR A LA CASITA "));
 }
 void  Player::Cultivar(int pos, int x, int y, int tipo)
 {

@@ -28,7 +28,7 @@ public:
 	void setEscena(int escena);
 	int getEscena();
 	void guardar_datos_mochila_en_archivo();
-	bool dormir = true;
+	bool dormir = false;
 	bool menu = false;
 private:
 	ALLEGRO_BITMAP* sprite;
