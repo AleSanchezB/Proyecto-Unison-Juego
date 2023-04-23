@@ -1,5 +1,5 @@
 #include "Comprador.h"
-
+#include <iostream>
 Comprador::Comprador()
 {
 	this->TipoCultivo = 1;
@@ -204,7 +204,7 @@ void Comprador::Menu(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue
 void Comprador::DibujarPrecios()
 {
 	for (int i = 0; i < 3; i++) {
-	al_draw_text(this->font, al_map_rgb(0, 0, 0), 425.3, 251+74*i, 0, MensajeVendibles[i].c_str());
+		al_draw_text(this->font, al_map_rgb(0, 0, 0), 425.3, 251 + 74 * i, 0, MensajeVendibles[i].c_str());
 	}
 }
 void Comprador::animacionMonedas()
@@ -284,15 +284,21 @@ void Comprador::action(int btnCult, int btnCant, int btnCultB, int btnCantB, int
 }
 bool Comprador::VerificarVenta()
 {
+	std::cout << vendibles[this->TipoCultivo - 1];
 	if (mochila->verificacionMochila())
 	{
-		if (mochila->verificarCantidadCultivosGuardados(this->TipoCultivo - 1, this->CantVender))
+		if (mochila->verificarCantidadCultivosGuardados(vendibles[this->TipoCultivo - 1], this->CantVender))
 		{
-			mochila->quitarCultivo(this->TipoCultivo - 1);
+			mochila->quitarCultivo(vendibles[this->TipoCultivo - 1]);
 			int Pago = 0;
-			if (TipoCultivo == 1) Pago = this->CantVender * PRECIOTOM;
-			else if (TipoCultivo == 2) Pago = this->CantVender * PRECIOZCALA;
-			else Pago = this->CantVender * PRECIOZANA;
+			if (vendibles[this->TipoCultivo] == 1) Pago = this->CantVender * PRECIOTOM;
+			else if (vendibles[this->TipoCultivo] == 2) Pago = this->CantVender * PRECIOZCALA;
+			else if (vendibles[this->TipoCultivo] == 3) Pago = this->CantVender * PRECIOZANA;
+			else if (vendibles[this->TipoCultivo] == 4) Pago = this->CantVender * PRECIOEJOTES;
+			else if (vendibles[this->TipoCultivo] == 5) Pago = this->CantVender * PRECIOMAIZ;
+			else if (vendibles[this->TipoCultivo] == 6) Pago = this->CantVender * PRECIOPAPA;
+			else if (vendibles[this->TipoCultivo] == 7) Pago = this->CantVender * PRECIOPAPAYA;
+			else Pago = this->CantVender * PRECIOREMO;
 			animacionDinero(Pago);
 			this->CantVender = 0;
 			return true;
@@ -324,5 +330,6 @@ void Comprador::GenerarVendibles() {
 		cultivos[i] = aux;
 		//Vendibles[] guarda el indice que se cre�, que (deber�a) coincidir con los valores de los cultivos para la mochila 
 		vendibles[i] = aleatorio;
+		std::cout << vendibles[i];
 	}
 }

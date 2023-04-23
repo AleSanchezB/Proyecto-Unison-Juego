@@ -25,10 +25,10 @@ public:
 		".- Zanahorias . . . . . . . . . . . . . . . . . . . . . . . . . . . $150",
 		"-. Berenjenas . . . . . . . . . . . . . . . . . . . . . . . . . . . $200",
 		"-. Ejotes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . $180",
-		"-. Remolacha  . . . . . . . . . . . . . . . . . . . . . . . . . . . $200",
 		"-. Maiz . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . $250",
 		"-. Papa  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .$250",
 		"-. Papaya  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .$200"
+		"-. Remolacha  . . . . . . . . . . . . . . . . . . . . . . . . . . . $200",
 	};
 	std::string MensajeVendibles[3];
 	int vendibles[3];
@@ -48,8 +48,14 @@ private:
 	int cantDig;
 	int xVenta = 604;
 	const int PRECIOTOM = 100;
-	const int PRECIOZCALA = 200;
-	const int PRECIOZANA = 300;
+	const int PRECIOZCALA = 150;
+	const int PRECIOZANA = 150;
+	const int PRECIOBERE = 200;
+	const int PRECIOEJOTES = 180;
+	const int PRECIOMAIZ = 250;
+	const int PRECIOPAPA = 250;
+	const int PRECIOPAPAYA = 200;
+	const int PRECIOREMO = 200;
 	void DibujarCantidadSelec();
 	void AnimacionReversa();
 	void action(int btnCult = 0, int btnCant = 1, int btnCultB = 0, int btnCantB = 1, int btnExit = 0, int btnVen = 0);

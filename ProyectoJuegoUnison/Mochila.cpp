@@ -3,7 +3,7 @@
 
 Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza, int cantidadZanahoria,
 	int cantidadBerenjena, int cantidadEjotes, int cantidadMaiz, int cantidadPapa,
-	int cantidadPapaya, int cantidadRemolacha, ALLEGRO_FONT* font)
+	int cantidadPapaya, int cantidadRemolacha, int capacidadMochila, int Monedas, ALLEGRO_FONT* font)
 {
 	this->cantidadObjetos = cantidadTomates + cantidadCalabaza + cantidadZanahoria + cantidadBerenjena + cantidadEjotes + cantidadMaiz + cantidadPapa
 		+ cantidadPapaya + cantidadRemolacha;

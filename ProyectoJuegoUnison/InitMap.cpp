@@ -114,6 +114,8 @@ void GameRun::initGame()
 			}
 		}
 	}
+	player->guardar_datos_mochila_en_archivo();
+	GuardarCultivos();
 	delete background;
 	delete player;
 	delete comprador;

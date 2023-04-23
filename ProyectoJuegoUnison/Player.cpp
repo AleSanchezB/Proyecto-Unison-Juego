@@ -19,13 +19,42 @@ Player::Player(std::string ruta)
 	this->AudRepeat = 0;
 	this->font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0);
 
-	//creo una mochila incial con 3 cultivos 1 de cada 1
-	mochila = new Mochila(5, 1, 1, 1, 1, 1);
-	//relleno la matriz de cultivos como NULL para verificar posteriormente si está disponible
-	for (int i = 0; i < 8; i++)
+	cargar_datos_mochila_desde_archivo();
+	
+	CargarCulivos();
+}
+void Player::cargar_datos_mochila_desde_archivo() 
+{
+	// Abrir el archivo para lectura
+	std::ifstream archivo("mochila.txt");
+	if (!archivo.is_open()) 
 	{
-		cultivosPlantados[i] = NULL;
+		inicializar_mochila();
 	}
+	else
+	{
+		// Leer los valores del archivo
+		int cantidadObjetos, cantidadTomates, cantidadCalabaza, cantidadZanahoria,
+			cantidadBerenjena, cantidadEjotes, cantidadMaiz, cantidadPapa, cantidadPapaya,
+			cantidadRemolacha, capacidadMochila, Monedas;
+
+		archivo >> cantidadObjetos >> cantidadTomates >> cantidadCalabaza >> cantidadZanahoria
+			>> cantidadBerenjena >> cantidadEjotes >> cantidadMaiz >> cantidadPapa >> cantidadPapaya
+			>> cantidadRemolacha >> capacidadMochila >> Monedas;
+
+		// Cerrar el archivo
+		archivo.close();
+
+		// Actualizar la mochila del jugador con los valores leídos
+		mochila = new Mochila(cantidadObjetos, cantidadTomates, cantidadCalabaza, cantidadZanahoria,
+			cantidadBerenjena, cantidadEjotes, cantidadMaiz, cantidadPapa, cantidadPapaya,
+			cantidadRemolacha, capacidadMochila, Monedas);
+	}
+	archivo.close();
+}
+void Player::inicializar_mochila() 
+{
+	mochila = new Mochila(5,1,1,1,1,1);
 }
 void Player::ControlesEscenaCasa()
 {
@@ -41,6 +70,27 @@ void Player::ControlesEscenaCasa()
 		this->x = 754;
 		this->y = 224;
 	}
+}
+void Player::guardar_datos_mochila_en_archivo()
+{
+	// Abrir el archivo para escritura
+	std::ofstream archivo("mochila.txt");
+
+	// Escribir los valores en el archivo
+	archivo << mochila->getCantidadCultivos() << " "
+			<< mochila->getCantidadTipoCultivo(0) << " "
+			<< mochila->getCantidadTipoCultivo(1) << " "
+			<< mochila->getCantidadTipoCultivo(2) << " "
+			<< mochila->getCantidadTipoCultivo(3) << " "
+			<< mochila->getCantidadTipoCultivo(4) << " "
+			<< mochila->getCantidadTipoCultivo(5) << " "
+			<< mochila->getCantidadTipoCultivo(6) << " "
+			<< mochila->getCantidadTipoCultivo(7) << " "
+			<< mochila->getCantidadTipoCultivo(8) << " "
+			<< mochila->getEspacioMochila() << " "
+			<< mochila->getMonedas() << std::endl;
+	// Cerrar el archivo
+	archivo.close();
 }
 void Player::ControlesEscenaCultivos()
 {
@@ -436,7 +486,7 @@ void Player::colisiones()
 }
 void  Player::Cultivar(int pos, int x, int y, int tipo)
 {
-	Cultivo* cultivo = new Cultivo(x, y, tipo, al_current_time());
+	Cultivo* cultivo = new Cultivo(x, y, tipo, pos, 0 ,al_current_time());
 	cultivosPlantados[pos] = cultivo;
 	mochila->quitarCultivo(tipo);
 }

@@ -11,6 +11,7 @@
 #include <string>
 #include <list>
 #include <random>
+#include <fstream>
 
 #include "Mochila.h"
 #include "Objeto.h"
@@ -26,7 +27,7 @@ public:
 	void action();
 	void setEscena(int escena);
 	int getEscena();
-	
+	void guardar_datos_mochila_en_archivo();
 	bool dormir = true;
 	bool menu = false;
 private:
@@ -374,6 +375,9 @@ private:
 	void ControlesEscenaTienda();
 	void ControlesEscenaPatioCasa();
 
+	void cargar_datos_mochila_desde_archivo();
+	void inicializar_mochila();
+	
 };
 extern Mochila* mochila;
 #endif // !PLAYER_H

@@ -10,7 +10,7 @@ class Mochila
 public:
 	Mochila(int cantidadObjetos = 0, int cantidadTomates = 0, int cantidadCalabaza = 0, int cantidadZanahoria = 0,
 		int cantidadBerenjenas = 0, int cantidadEjotes = 0, int cantidadMaiz = 0, int cantidadPapa = 0,
-		int cantidadPapaya = 0, int cantidadRemolacha = 0, ALLEGRO_FONT* font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0));
+		int cantidadPapaya = 0, int cantidadRemolacha = 0, int capacidadMochila = 10, int Monedas = 10,ALLEGRO_FONT* font = al_load_font("assets/fonts/Minecraft.ttf", 20, 0));
 	~Mochila();
 
 	int getCantidadTipoCultivo(int tipo);
@@ -29,7 +29,6 @@ public:
 	bool verificarCantidadCultivos(int tipo);
 	bool verificarCantidadCultivosGuardados(int tipo, int cantidad);
 	bool verificarMochilaLlena(int cantidad = 0);
-
 	void setMonedas(int monedas);
 	int getMonedas();
 private:
