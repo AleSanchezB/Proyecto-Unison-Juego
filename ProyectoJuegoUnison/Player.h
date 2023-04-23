@@ -27,7 +27,7 @@ public:
 	void setEscena(int escena);
 	int getEscena();
 	
-	bool dormir = true;
+	bool dormir = false;
 	bool menu = false;
 private:
 	ALLEGRO_BITMAP* sprite;

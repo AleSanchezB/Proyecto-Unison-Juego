@@ -317,7 +317,7 @@ void Comprador::GenerarVendibles() {
 	int aleatorio;
 	std::string aux;
 	for (int i = 0; i < 3; i++) {
-		aleatorio = i + rand() % 10;
+		aleatorio = i + rand() % (10-i);
 		MensajeVendibles[i] = cultivos[aleatorio];
 		aux = cultivos[aleatorio];
 		cultivos[aleatorio] = cultivos[i];

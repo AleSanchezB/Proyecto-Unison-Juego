@@ -40,6 +40,7 @@ void Player::ControlesEscenaCasa()
 		setEscena(0);
 		this->x = 754;
 		this->y = 224;
+		dormir = true;
 	}
 }
 void Player::ControlesEscenaCultivos()
