@@ -324,12 +324,12 @@ void Comprador::GenerarVendibles() {
 	std::string aux;
 	for (int i = 0; i < 3; i++) {
 		aleatorio = i + rand() % 10;
-		MensajeVendibles[i] = cultivos[aleatorio];
-		aux = cultivos[aleatorio];
-		cultivos[aleatorio] = cultivos[i];
-		cultivos[i] = aux;
+		this->MensajeVendibles[i] = this->cultivos[aleatorio];
+		aux = this->cultivos[aleatorio];
+		this->cultivos[aleatorio] = this->cultivos[i];
+		this->cultivos[i] = aux;
 		//Vendibles[] guarda el indice que se cre�, que (deber�a) coincidir con los valores de los cultivos para la mochila 
 		vendibles[i] = aleatorio;
-		std::cout << vendibles[i];
+		//std::cout << vendibles[i];
 	}
 }

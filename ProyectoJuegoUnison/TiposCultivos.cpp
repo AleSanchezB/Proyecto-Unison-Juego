@@ -160,7 +160,7 @@ void CargarCulivos()
 		for (int i = 0; i < 8; i++)
 		{
 			archivo >> x >> y >> tipo >> espacio >> estado >> tiempoplantacion >> sy;
-			if (espacio != espacioAnt)
+			if (estado == 0 || estado == 1 || estado == 2)
 			{
 				std::cout << "\n x: " << x << "y: " << y << " tipo: " << tipo << " espacio: " << espacio << " estado: " << estado << " tiempo: " << tiempoplantacion << " sy: " << sy;
 				cultivosPlantados[espacio] = new Cultivo(x, y, tipo, espacio, estado, tiempoplantacion, sy);
@@ -169,6 +169,12 @@ void CargarCulivos()
 					cultivosPlantados[i] = NULL;
 					std::cout << "\ni: " << i;
 				}
+			}
+			else
+			{
+					cultivosPlantados[i] = NULL;
+					std::cout << "\ni: " << i;
+
 			}
 			espacioAnt = espacio;
 		}
