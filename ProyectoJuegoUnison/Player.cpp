@@ -1,7 +1,7 @@
 #include "Player.h"
 
-//esta matriz nos permite saber cual hoyo de siembra está disponible
 Mochila* mochila;
+
 Player::Player(std::string ruta)
 {
 	//creo el personaje
@@ -23,75 +23,190 @@ Player::Player(std::string ruta)
 	
 	CargarCulivos();
 }
-void Player::cargar_datos_mochila_desde_archivo() 
+Player::~Player()
 {
-	// Abrir el archivo para lectura
-	std::ifstream archivo("mochila.txt");
-	if (!archivo.is_open()) 
+	al_destroy_bitmap(this->sprite);
+	al_destroy_font(font);
+	delete mochila;
+}
+
+void Player::action()
+{
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
+}
+void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
+{
+	//mando a mover al personaje y a animarlo
+	al_get_keyboard_state(&keystate);
+	move(keystate, queue);
+	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
+}
+void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
+{
+	ALLEGRO_EVENT events;
+	this->keystate = keystate;
+	al_get_keyboard_state(&keystate);
+	al_get_mouse_state(&estadoMouse);
+	al_wait_for_event(queue, &events);
+
+	//verifico las colisiones
+	colisiones();
+
+	//Cambiar casilla de la barra de herramientas
+	if (al_key_down(&keystate, ALLEGRO_KEY_1))
 	{
-		inicializar_mochila();
+		mochila->cambiarCasilla(0);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_2))
+	{
+		mochila->cambiarCasilla(1);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_3))
+	{
+		mochila->cambiarCasilla(2);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_4))
+	{
+		mochila->cambiarCasilla(3);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_5))
+	{
+		mochila->cambiarCasilla(4);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_6))
+	{
+		mochila->cambiarCasilla(5);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_7))
+	{
+		mochila->cambiarCasilla(6);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_8))
+	{
+		mochila->cambiarCasilla(7);
+	}
+	if (al_key_down(&keystate, ALLEGRO_KEY_9))
+	{
+		mochila->cambiarCasilla(8);
+	}
+	//ESTABLECE EL MAPA LOGICO DE COLISIONES Y EL ZOOM DE CAMARA
+	scale = 1.0f;
+	if (getEscena() == 0)
+	{
+		memcpy(maskmap, maskmap1, sizeof(maskmap));
+		Camera();
+		ControlesEscenaPatioCasa();
+	}
+	else if (getEscena() == 3)
+	{
+		memcpy(maskmap, maskmap2, sizeof(maskmap));
+		Camera();
+		ControlesEscenaCultivos();
+	}
+	else if (getEscena() == 6)
+	{
+		memcpy(maskmap, maskmap3, sizeof(maskmap));
+		//ZOOM DISPLAY
+		scale = 1.25f;
+		Camera();
+		ControlesEscenaCasa();
+	}
+	else if (getEscena() == 9)
+	{
+		memcpy(maskmap, maskmap4, sizeof(maskmap));
+		//ZOOM DISPLAY
+		//scale = 1.2f;
+		Camera();
+		ControlesEscenaTienda();
+
+	}
+
+	active = true;
+	//CHECAR SI ESTA CORRIENDO
+	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT))
+	{
+		speedPlayer = 4;
+		corriendo = 4;
 	}
 	else
 	{
-		// Leer los valores del archivo
-		int cantidadObjetos, cantidadTomates, cantidadCalabaza, cantidadZanahoria,
-			cantidadBerenjena, cantidadEjotes, cantidadMaiz, cantidadPapa, cantidadPapaya,
-			cantidadRemolacha, capacidadMochila, Monedas;
-
-		archivo >> cantidadObjetos >> cantidadTomates >> cantidadCalabaza >> cantidadZanahoria
-			>> cantidadBerenjena >> cantidadEjotes >> cantidadMaiz >> cantidadPapa >> cantidadPapaya
-			>> cantidadRemolacha >> capacidadMochila >> Monedas;
-
-		// Cerrar el archivo
-		archivo.close();
-
-		// Actualizar la mochila del jugador con los valores leídos
-		mochila = new Mochila(cantidadObjetos, cantidadTomates, cantidadCalabaza, cantidadZanahoria,
-			cantidadBerenjena, cantidadEjotes, cantidadMaiz, cantidadPapa, cantidadPapaya,
-			cantidadRemolacha, capacidadMochila, Monedas);
+		speedPlayer = 2;
+		corriendo = 0;
 	}
-	archivo.close();
+
+	if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x')
+	{
+		this->y += speedPlayer;
+		direccion = DOWNW + corriendo;
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x')
+	{
+		this->x += speedPlayer;
+		direccion = RIGHTW + corriendo;
+	}
+	else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x')
+	{
+		this->x -= speedPlayer;
+		direccion = LEFTW + corriendo;
+	}
+	else active = false;
+
+	//ANIMACION DE MOVIMIENTOS 
+	PlayRefresh++;
+	if (PlayRefresh == 10)
+	{
+		if (SpritePosX >= 200) SpritePosX = 0;
+		if (active) SpritePosX += 40;
+		else SpritePosX = 0;
+		SpritePosY = direccion;
+		PlayRefresh = 0;
+	}
+	//Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
 }
-void Player::inicializar_mochila() 
+void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)
 {
-	mochila = new Mochila(5,1,1,1,1,1);
+	al_draw_bitmap_region(this->sprite, SpritePosX, SpritePosY, movimientoX, movimientoY, xCoordsFondos, yJug, NULL);
 }
+
 void Player::ControlesEscenaCasa()
 {
 	//tecla para dormir
-	if (al_key_down(&this->keystate, ALLEGRO_KEY_K) && maskmap[yMup][xMup] == 'b' && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
+	if (al_key_down(&this->keystate, ALLEGRO_KEY_Z) && maskmap[yMup][xMup] == 'b' && (getEscena() + TiempoDiaEscena) % 3 == 2/*Checa que se esté en una escena nocturna*/)
 	{
 		setEscena(getEscena());
 		IniciarDia();
+		dormir = true;
 	}
-	if ((maskmap[yMup][xMup] == 'i' || maskmap[yMdown][xMdown] == 'i') && al_key_down(&keystate, ALLEGRO_KEY_K))
+	if ((maskmap[yMup][xMup] == 'i' || maskmap[yMdown][xMdown] == 'i') && al_key_down(&keystate, ALLEGRO_KEY_T))
 	{
 		setEscena(0);
 		this->x = 754;
-		this->y = 224;
-		dormir = true;
+		this->y = 230;
+		direccion = DOWNW + corriendo;
 	}
 }
-void Player::guardar_datos_mochila_en_archivo()
+void Player::ControlesEscenaPatioCasa()
 {
-	// Abrir el archivo para escritura
-	std::ofstream archivo("mochila.txt");
-
-	// Escribir los valores en el archivo
-	archivo << mochila->getCantidadCultivos() << " "
-			<< mochila->getCantidadTipoCultivo(0) << " "
-			<< mochila->getCantidadTipoCultivo(1) << " "
-			<< mochila->getCantidadTipoCultivo(2) << " "
-			<< mochila->getCantidadTipoCultivo(3) << " "
-			<< mochila->getCantidadTipoCultivo(4) << " "
-			<< mochila->getCantidadTipoCultivo(5) << " "
-			<< mochila->getCantidadTipoCultivo(6) << " "
-			<< mochila->getCantidadTipoCultivo(7) << " "
-			<< mochila->getCantidadTipoCultivo(8) << " "
-			<< mochila->getEspacioMochila() << " "
-			<< mochila->getMonedas() << std::endl;
-	// Cerrar el archivo
-	archivo.close();
+	//CAMBIO DE ESCENA A CASITA CUANDO PRESIONA T
+	if ((maskmap[yMup][xMup] == 'c' || maskmap[yMdown][xMdown] == 'c') && al_key_down(&keystate, ALLEGRO_KEY_T))
+	{
+		this->x = 800;
+		this->y = 200;
+		direccion = LEFTW + corriendo;
+		setEscena(6);
+	}
+	else if (maskmap[yMup][xMup] == 'o') //cambia a escena de cultivos
+	{
+		this->y -= speedPlayer;
+		direccion = UPW + corriendo;
+		this->x = 10;
+		setEscena(3);
+	}
 }
 void Player::ControlesEscenaCultivos()
 {
@@ -177,172 +292,31 @@ void Player::ControlesEscenaCultivos()
 	if ((maskmap[yMup][xMup] == 't' || maskmap[yMdown][xMdown] == 't') && al_key_down(&keystate, ALLEGRO_KEY_T))
 	{
 		setEscena(9);
-		this->x = 600;
-		this->y = 444;
-	}
-}
-void Player::ControlesEscenaPatioCasa()
-{
-	//CAMBIO DE ESCENA A CASITA CUANDO PRESIONA H
-	if ((maskmap[yMup][xMup] == 'c' || maskmap[yMdown][xMdown] == 'c') && al_key_down(&keystate, ALLEGRO_KEY_H))
-	{
-		setEscena(6);
-	}
-	else if (maskmap[yMup][xMup] == 'o') //cambia a escena de cultivos
-	{
-		this->y -= speedPlayer;
+		this->x = 595;
+		this->y = 460;
 		direccion = UPW + corriendo;
-		this->x = 10;
-		setEscena(3);
 	}
 }
 void Player::ControlesEscenaTienda()
 {
 	//SALE DE LA TIENDA
-	if (al_key_down(&keystate, ALLEGRO_KEY_O))
+	if (al_key_down(&keystate, ALLEGRO_KEY_T) && (maskmap[yMup][xMup] == 's' || maskmap[yMdown][xMdown] == 's'))
 	{
 		setEscena(3);
 		this->x = 912;
-		this->y = 218;
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_E)) menu = true;
-}
-void Player::Camera()
-{
-	//ZOOM DISPLAY
-	al_identity_transform(&camera);
-	if (getEscena() == 6)
-	{
-		al_translate_transform(&camera, -790, -214);
-		al_scale_transform(&camera, scale, scale);
-		al_translate_transform(&camera, -cameraPosition[0] + 776, -cameraPosition[1] + 216);
-	}
-	else
-	{
-		al_scale_transform(&camera, scale, scale);
-	}
-	al_use_transform(&camera);
-}
-Player::~Player()
-{
-	al_destroy_bitmap(this->sprite);
-	al_destroy_font(font);
-	delete mochila;
-}
-
-void Player::move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
-{
-	ALLEGRO_EVENT events;
-	this->keystate = keystate;
-	al_get_keyboard_state(&keystate);
-	al_get_mouse_state(&estadoMouse);
-	al_wait_for_event(queue, &events);
-
-	//verifico las colisiones
-	colisiones();
-
-	//Cambiar casilla de la barra de herramientas
-	if (al_key_down(&keystate, ALLEGRO_KEY_1))
-	{
-		mochila->cambiarCasilla(0);
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_2))
-	{
-		mochila->cambiarCasilla(1);
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_3))
-	{
-		mochila->cambiarCasilla(2);
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_4))
-	{
-		mochila->cambiarCasilla(3);
-	}
-	if (al_key_down(&keystate, ALLEGRO_KEY_5))
-	{
-		mochila->cambiarCasilla(4);
-	}
-
-	//ESTABLECE EL MAPA LOGICO DE COLISIONES Y EL ZOOM DE CAMARA
-	scale = 1.0f;
-	if (getEscena() == 0)
-	{
-		memcpy(maskmap, maskmap1, sizeof(maskmap));
-		Camera();
-		ControlesEscenaPatioCasa();
-	}
-	else if (getEscena() == 3)
-	{
-		memcpy(maskmap, maskmap2, sizeof(maskmap));
-		Camera();
-		ControlesEscenaCultivos();
-	}
-	else if (getEscena() == 6)
-	{
-		memcpy(maskmap, maskmap3, sizeof(maskmap));
-		//ZOOM DISPLAY
-		scale = 1.25f;
-		Camera();
-		ControlesEscenaCasa();
-	}
-	else if (getEscena() == 9)
-	{
-		memcpy(maskmap, maskmap4, sizeof(maskmap));
-		//ZOOM DISPLAY
-		//scale = 1.2f;
-		Camera();
-		ControlesEscenaTienda();
-
-	}
-
-	active = true;
-	//CHECAR SI ESTA CORRIENDO
-	if (al_key_down(&keystate, ALLEGRO_KEY_LSHIFT))
-	{
-		speedPlayer = 4;
-		corriendo = 4;
-	}
-	else
-	{
-		speedPlayer = 2;
-		corriendo = 0;
-	}
-
-	if (al_key_down(&keystate, ALLEGRO_KEY_W) && maskmap[yMup][xMup] != 'x')
-	{
-		this->y -= speedPlayer;
-		direccion = UPW + corriendo;
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_S) && maskmap[yMdown][xMdown] != 'x')
-	{
-		this->y += speedPlayer;
+		this->y = 230;
 		direccion = DOWNW + corriendo;
 	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_D) && maskmap[yMder][xMder] != 'x')
-	{
-		this->x += speedPlayer;
-		direccion = RIGHTW + corriendo;
-	}
-	else if (al_key_down(&keystate, ALLEGRO_KEY_A) && maskmap[yMizq][xMizq] != 'x')
-	{
-		this->x -= speedPlayer;
-		direccion = LEFTW + corriendo;
-	}
-	else active = false;
-
-	//ANIMACION DE MOVIMIENTOS 
-	PlayRefresh++;
-	if (PlayRefresh == 10)
-	{
-		if (SpritePosX >= 200) SpritePosX = 0;
-		if (active) SpritePosX += 40;
-		else SpritePosX = 0;
-		SpritePosY = direccion;
-		PlayRefresh = 0;
-	}
-	//Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
+	if (al_key_down(&keystate, ALLEGRO_KEY_E)) MenuVenderCultivos = true;
+	if (al_key_down(&keystate, ALLEGRO_KEY_Q)) MenuComprarCultivos = true;
 }
 
+void  Player::Cultivar(int pos, int x, int y, int tipo)
+{
+	Cultivo* cultivo = new Cultivo(x, y, tipo, pos, 0 ,al_current_time());
+	cultivosPlantados[pos] = cultivo;
+	mochila->quitarCultivo(tipo);
+}
 void Player::Cosechar(int i)
 {
 	Cultivo* other = cultivosPlantados[i];
@@ -406,21 +380,7 @@ void Player::Cosechar(int i)
 		cultivosPlantados[i] = NULL;
 	}
 }
-void Player::action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue)
-{
-	//mando a mover al personaje y a animarlo
-	al_get_keyboard_state(&keystate);
-	move(keystate, queue);
-	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
-}
-void Player::action()
-{
-	Animate(SpritePosX, SpritePosY * 56, 40.0f, 56.0f, this->x, this->y);
-}
-void Player::Animate(float SpritePosX, float SpritePosY, float movimientoX, float movimientoY, float xCoordsFondos, float yJug)
-{
-	al_draw_bitmap_region(this->sprite, SpritePosX, SpritePosY, movimientoX, movimientoY, xCoordsFondos, yJug, NULL);
-}
+
 void Player::colisiones()
 {
 	//verifico las colisiones con el mapa
@@ -461,12 +421,78 @@ void Player::colisiones()
 	if (yMder < 0) yMder = 0;
 	if (yMder > dimymask) yMder = dimymask;
 }
-void  Player::Cultivar(int pos, int x, int y, int tipo)
+void Player::Camera()
 {
-	Cultivo* cultivo = new Cultivo(x, y, tipo, pos, 0 ,al_current_time());
-	cultivosPlantados[pos] = cultivo;
-	mochila->quitarCultivo(tipo);
+	//ZOOM DISPLAY
+	al_identity_transform(&camera);
+	if (getEscena() == 6)
+	{
+		al_translate_transform(&camera, -790, -214);
+		al_scale_transform(&camera, scale, scale);
+		al_translate_transform(&camera, -cameraPosition[0] + 776, -cameraPosition[1] + 216);
+	}
+	else
+	{
+		al_scale_transform(&camera, scale, scale);
+	}
+	al_use_transform(&camera);
 }
+
+void Player::cargar_datos_mochila_desde_archivo() 
+{
+	// Abrir el archivo para lectura
+	std::ifstream archivo("mochila.txt");
+	if (!archivo.is_open()) 
+	{
+		inicializar_mochila();
+	}
+	else
+	{
+		// Leer los valores del archivo
+		int cantidadObjetos, cantidadTomates, cantidadCalabaza, cantidadZanahoria,
+			cantidadBerenjena, cantidadEjotes, cantidadMaiz, cantidadPapa, cantidadPapaya,
+			cantidadRemolacha, capacidadMochila, Monedas;
+
+		archivo >> cantidadObjetos >> cantidadTomates >> cantidadCalabaza >> cantidadZanahoria
+			>> cantidadBerenjena >> cantidadEjotes >> cantidadMaiz >> cantidadPapa >> cantidadPapaya
+			>> cantidadRemolacha >> capacidadMochila >> Monedas;
+
+		// Cerrar el archivo
+		archivo.close();
+
+		// Actualizar la mochila del jugador con los valores leídos
+		mochila = new Mochila(cantidadObjetos, cantidadTomates, cantidadCalabaza, cantidadZanahoria,
+			cantidadBerenjena, cantidadEjotes, cantidadMaiz, cantidadPapa, cantidadPapaya,
+			cantidadRemolacha, capacidadMochila, Monedas);
+	}
+	archivo.close();
+}
+void Player::inicializar_mochila() 
+{
+	mochila = new Mochila(5,1,1,1,1,1);
+}
+void Player::guardar_datos_mochila_en_archivo()
+{
+	// Abrir el archivo para escritura
+	std::ofstream archivo("mochila.txt");
+
+	// Escribir los valores en el archivo
+	archivo << mochila->getCantidadCultivos() << " "
+			<< mochila->getCantidadTipoCultivo(0) << " "
+			<< mochila->getCantidadTipoCultivo(1) << " "
+			<< mochila->getCantidadTipoCultivo(2) << " "
+			<< mochila->getCantidadTipoCultivo(3) << " "
+			<< mochila->getCantidadTipoCultivo(4) << " "
+			<< mochila->getCantidadTipoCultivo(5) << " "
+			<< mochila->getCantidadTipoCultivo(6) << " "
+			<< mochila->getCantidadTipoCultivo(7) << " "
+			<< mochila->getCantidadTipoCultivo(8) << " "
+			<< mochila->getEspacioMochila() << " "
+			<< mochila->getMonedas() << std::endl;
+	// Cerrar el archivo
+	archivo.close();
+}
+
 void Player::setEscena(int escena)
 {
 	this->escena = escena;

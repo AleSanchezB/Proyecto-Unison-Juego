@@ -21,7 +21,7 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	this->capacidadMochila = 10;
 	this->casillaSelect = 0;
 	this->font = font;
-	this->Monedas = 10;
+	this->Monedas = Monedas;
 	this->mochila = al_load_bitmap("assets/fondos/Objetos/mochila.png");
 	this->barraHerramientas = al_load_bitmap("assets/fondos/Objetos/barraHerramientas.png");
 	this->seleccionHerramienta = al_load_bitmap("assets/fondos/Objetos/seleccionHerramienta.png");
@@ -313,5 +313,10 @@ bool Mochila::verificarCantidadCultivosGuardados(int tipo, int cantidad)
 bool Mochila::verificarMochilaLlena(int cantidadIngresar)
 {
 	if (cantidadIngresar + getCantidadCultivos() >= this->capacidadMochila) return true;
+	else return false;
+}
+bool Mochila::verificarCapacidadMochila(int cantidadIngresar)
+{
+	if (cantidadIngresar + getCantidadCultivos() > this->capacidadMochila) return true;
 	else return false;
 }

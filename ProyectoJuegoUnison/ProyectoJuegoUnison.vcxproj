@@ -137,7 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Boton.h" />
-    <ClInclude Include="Comprador.h" />
+    <ClInclude Include="Tienda.h" />
     <ClInclude Include="TiempoDia.h" />
     <ClInclude Include="DibujarFondo.h" />
     <ClInclude Include="InitiMap.h" />
@@ -173,7 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boton.cpp" />
-    <ClCompile Include="Comprador.cpp" />
+    <ClCompile Include="Tienda.cpp" />
     <ClCompile Include="DibujarFondo.cpp" />
     <ClCompile Include="InitMap.cpp" />
     <ClCompile Include="main.cpp" />

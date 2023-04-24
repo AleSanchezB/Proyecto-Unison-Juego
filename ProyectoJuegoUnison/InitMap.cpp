@@ -3,7 +3,6 @@
 Background* background;
 Player* player;
 
-
 GameRun::GameRun()
 {
 	al_init();
@@ -38,7 +37,6 @@ GameRun::GameRun()
 	al_start_timer(timer);
 	initGame();
 }
-
 GameRun::~GameRun()
 {
 	al_destroy_display(displayGame);
@@ -55,10 +53,11 @@ void GameRun::initGame()
 {
 	player = new Player("assets/Player/Sprites Players/characters/Walk_run Player2.png");
 	background = new Background();
-	Comprador* comprador = new Comprador();
-
+	Tienda* tienda = new Tienda();
+	int muteado = 0;
 	player->IniciarDia();
-	comprador->GenerarVendibles();
+	tienda->GenerarVendibles();
+	tienda->GenerarComprables();
 	while (running)
 	{
 		player->CambioTiempoDia(al_current_time() + 1);
@@ -66,16 +65,22 @@ void GameRun::initGame()
 		ALLEGRO_KEYBOARD_STATE keystate;
 		al_get_keyboard_state(&keystate);
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) break;
-		else if (al_key_down(&keystate, ALLEGRO_KEY_ESCAPE))
-		{
-			DibujarAjustes(keystate);
-		}
 		else
 		{
 			if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
 			{
-				if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) i = 1;
-				else i = 0;
+				if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53) sonido = NORMALSELE + muteado;
+				else sonido = NORMAL + muteado;
+			}
+			if (player->MenuVenderCultivos)
+			{
+				tienda->MenuVenderCultivos(keystate, queue);
+				player->MenuVenderCultivos = false;
+			}
+			else if (player->MenuComprarCultivos)
+			{
+				tienda->MenuComprarCultivos(keystate, queue);
+				player->MenuComprarCultivos = false;
 			}
 			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
 			{
@@ -83,15 +88,18 @@ void GameRun::initGame()
 				{
 					if (event.mouse.x >= 18 && event.mouse.x <= 73 && event.mouse.y >= 0 && event.mouse.y <= 53)
 					{
-						i = 0;
-						DibujarAjustes(keystate);
+						if (sonido == NORMAL || sonido == NORMALSELE)
+						{
+							muteado = 2;
+							setVolumen(0);
+						}
+						else
+						{
+							muteado = 0;
+							setVolumen(1.5f);
+						}
 					}
 				}
-			}
-			if (player->menu)
-			{
-				comprador->Menu(keystate, queue);
-				player->menu = false;
 			}
 			background->action(player->getEscena(), player->TiempoDiaEscena);
 			if (event.type == ALLEGRO_EVENT_TIMER)
@@ -103,14 +111,15 @@ void GameRun::initGame()
 			{
 				draw = false;
 				background->dibujarEncima(player->getEscena(), player->TiempoDiaEscena);
-				background->drawOptions(i, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
+				background->drawOptions(sonido, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
 				mochila->action(player->getEscena());
 				al_flip_display();
 				al_clear_to_color(al_map_rgb_f(254, 254, 254));
 			}
 			if (player->dormir)
 			{
-				comprador->GenerarVendibles();
+				tienda->GenerarVendibles();
+				tienda->GenerarComprables();
 				player->dormir = false;
 			}
 		}
@@ -119,9 +128,8 @@ void GameRun::initGame()
 	GuardarCultivos();
 	delete background;
 	delete player;
-	delete comprador;
+	delete tienda;
 }
-
 void GameRun::ColocarMusica()
 {
 	//MUSICA DE AMBIENTE
@@ -130,67 +138,14 @@ void GameRun::ColocarMusica()
 	al_set_sample_instance_playmode(ambientacion, ALLEGRO_PLAYMODE_LOOP);
 	al_attach_sample_instance_to_mixer(ambientacion, al_get_default_mixer());
 	al_play_sample_instance(ambientacion);
-	al_set_sample_instance_gain(ambientacion, 0.4);
+	al_set_sample_instance_gain(ambientacion, 1.5f);
+}
+void GameRun::setVolumen(int volumen)
+{
+	al_set_sample_instance_gain(ambientacion, volumen);
 }
 
-void GameRun::DibujarAjustes(ALLEGRO_KEYBOARD_STATE keystate)
+int GameRun::getVolumen()
 {
-	bool mostrar = true;
-	int escena = 0;
-	while (mostrar)
-	{
-		al_wait_for_event(queue, &event);
-		ALLEGRO_KEYBOARD_STATE keystate;
-		al_get_keyboard_state(&keystate);
-		background->action(player->getEscena(), player->TiempoDiaEscena);
-		player->action();
-		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-		{
-			running = false;
-			break;
-		}
-		else if (al_key_down(&keystate, ALLEGRO_KEY_ESCAPE)) break;
-		else
-		{
-			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
-			{
-				if (event.mouse.button == 1)
-				{
-					if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 239 && event.mouse.y <= 294)
-					{
-						mostrar = false;
-					}
-					else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 332 && event.mouse.y <= 387)
-					{
-
-					}
-					else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 423 && event.mouse.y <= 478)
-					{
-						running = false;
-						mostrar = false;
-					}
-				}
-			}
-			if (event.type == ALLEGRO_EVENT_MOUSE_AXES)
-			{
-				if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 239 && event.mouse.y <= 294)
-				{
-					escena = 1;
-				}
-				else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 332 && event.mouse.y <= 387)
-				{
-					escena = 2;
-				}
-				else if (event.mouse.x >= 536 && event.mouse.x <= 744 && event.mouse.y >= 423 && event.mouse.y <= 478)
-				{
-					escena = 3;
-				}
-				else escena = 0;
-			}
-		}
-		background->drawOptions(0, mochila->getMonedas(), player->getEscena());//nuevo parametro de escena
-		al_draw_bitmap(Ajustes[escena], 536, 239, 0);
-		al_flip_display();
-		al_clear_to_color(al_map_rgb_f(254, 254, 254));
-	}
+	return this->volumen;
 }

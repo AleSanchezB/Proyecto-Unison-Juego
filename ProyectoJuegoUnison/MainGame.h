@@ -23,6 +23,7 @@ private:
     ALLEGRO_DISPLAY* firstDisplay;
     ALLEGRO_BITMAP* iconDisplay;
     ALLEGRO_BITMAP* fondos[5];
+    ALLEGRO_BITMAP* btn[3];
     ALLEGRO_EVENT_QUEUE* queue;
     ALLEGRO_FONT* fontMenu;
     ALLEGRO_EVENT event;
@@ -33,25 +34,25 @@ private:
     ALLEGRO_SAMPLE_INSTANCE* songInstance;
     ALLEGRO_SAMPLE_INSTANCE* efectClickInstance;
     ALLEGRO_SAMPLE_ID idClickEffect;
-
+    ALLEGRO_BITMAP* Instrucciones[8];
     Panel panelOptions;
     //VARIABLES
-    bool running;
     int mouseX, mouseY;
+    bool running;
 
     float gain = 0.5;
 
     //CONSTANTES
-    const int W = 800, H = 600;
+    const int W = 1280, H = 720;
 
     //FUNCIONES
     void initMenu();
-    void drawOptions(int i);
-    void initVars();
+    void dibujarMenu(int i);
+    void iniciarVariables();
     void gameRun();
     void alDestroy();
     void setVolMusic(float volumen);
-    void drawRec();
+    void dibujarInstrucciones();
     void click();
 };
 #endif // !1

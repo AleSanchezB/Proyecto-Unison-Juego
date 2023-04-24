@@ -23,20 +23,26 @@ class Player : public Dia
 public:
 	Player(std::string ruta);
 	~Player();
+
 	void action(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void action();
 	void setEscena(int escena);
-	int getEscena();
 	void guardar_datos_mochila_en_archivo();
+	
+	int getEscena();
+
 	bool dormir = false;
-	bool menu = false;
+	bool MenuVenderCultivos = false;
+	bool MenuComprarCultivos = false;
 private:
 	ALLEGRO_BITMAP* sprite;
 	ALLEGRO_FONT* font;
 	ALLEGRO_MOUSE_STATE estadoMouse;
 	ALLEGRO_TRANSFORM camera;
 	ALLEGRO_KEYBOARD_STATE keystate;
+
 	enum { DOWNW, RIGHTW, UPW, LEFTW };
+	
 	float speedPlayer, direccion, SpritePosX, SpritePosY, corriendo;
 	double last_f_press = 0.0;
 
@@ -47,7 +53,7 @@ private:
 
 	bool active = false;
 	bool f_pressed = false;
-	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
+	
 
 	//VARIABLES PARA EL ZOOM
 	float cameraPosition[2] = { 0, 0 };
@@ -58,6 +64,8 @@ private:
 	const int dimxmask = 150;
 	const int dimymask = 150;
 
+	const double f_cooldown_time = 2.0; // cooldown de 1 segundo
+	
 	//MATRIZ DEL MAPA MASCARA
 	char maskmap1[150][150] = {
 		//             10        20        30        40        50        60        70       80        90       100        110      120
@@ -81,14 +89,14 @@ private:
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxx              xx             xxxxxx     x  xx      x", //17
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxx              xx             xxxxxx     x  xx      x", //18
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxxxxxxxxx       xx            xxxxxxx     x          x", //19
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxxccccxxx       xx            xxxxxxx     x          x", //20
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 xxxxxxxxxx       xx            xxxxxxx     x          x", //20
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxxxccccxxxxxxxxxxxx            xxxxxxxxxxxxx          x", //21
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxxxccccxx        xx                     xxxx          x", //22
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxx                                      xxxxxxxxx     x", //23
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                               xxxx                                      xxxxxxxxx     x", //24
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                 x                                        xxxxxxxx     x", //25
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                             xxxxx     x", //26
-			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                xxxxx                  x", //27
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                xxxxx                  o", //27
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                  x                    o", //28
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                        xx                             o", //29
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                       xx                             o", //30
@@ -157,7 +165,7 @@ private:
 			"x                                                                                 x                        xx    x           x", //17
 			"x                                                                                 x xxxxxxxxxxx            xx    x           x", //18
 			"x                                                                                 x  xxxxxxxxxx            xxxxxxx           x", //19
-			"x                                                                                 x xxxxttttttx            xxxxxxx           x", //20
+			"x                                                                                 x xxxxxxxxxxx            xxxxxxx           x", //20
 			"x                                                                                 x xxxxttttttx            xxxxxxx           x", //21
 			"x                                                                                 xxxxxxttttttxxxxxxxxxxxxxxxxxxxxxx         x", //22
 			"x                                                                                                                   x        x", //23
@@ -234,9 +242,9 @@ private:
 			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //18
 			"x                         xx         x x    xx           xx   xx  xx      x       xxxxxxx      x      x                      x", //19
 			"x                         xx         x x    xx  xx       xx   xx  xx      x       xxxxxxx      x      x                      x", //20
-			"x                         xx   xxxxx x x    xx xxxx      xxxxxxx  xxxxxxxxx       iiiiiii      x      x                      x", //21
-			"x                         xx   xxxxx x x    xx                                    iiiiiii   xx x      x                      x", //22
-			"x                         xx    xxx  x x    xxxxxxxxx                             iiiiiii  xxxxx      x                      x", //23
+			"x                         xx   xxxxx x x    xx xxxx      xxxxxxx  xxxxxxxxx       iiixxxx      x      x                      x", //21
+			"x                         xx   xxxxx x x    xx                                    iiixxxx   xx x      x                      x", //22
+			"x                         xx    xxx  x x    xxxxxxxxx                             iiixxxx  xxxxx      x                      x", //23
 			"x                         xx         xxx    xx x   xx                             iiiixxxxx    x                             x", //24
 			"x                         xx  xxxxxx x xxxxxxx x   xx                             iiiix   x    x                             x", //25
 			"x                         xx x     xxx      xx x   xx                             iiixx   x    x                             x", //26
@@ -340,8 +348,8 @@ private:
 			"x                         xx  xx         xxxxxxxxxxxxxxxx                      xxxx      x   x                               x", //48
 			"x                         xxxxxx      xxxxxxxxxxxxxxxxxxx                      xxxx      x   x                               x", //49
 			"x                         xxxx x      xxxxxxxxxxxxxx                           xxxx      x   x                               x", //50
-			"x                         xxxx xxxxxxxxxxxxxxxxxxxxxxxxx       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //51
-			"x                         xxxx xxxxxxxxxxxxxxxxxxxxxxxxx       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //52
+			"x                         xxxx xxxxxxxxxxxxxxxxxxxxxxxxxsssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //51
+			"x                         xxxx xxxxxxxxxxxxxxxxxxxxxxxxxsssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", //52
 			"x                         xxxx      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       xxxxxx   x                      x", //53
 			"x                         xxxx      xx                                        x     xx x     xxxxxxx  x                      x", //54
 			"x                         xxxx      xx                                        xxxxxxxx x     x     x  xx                     x", //55
@@ -353,7 +361,7 @@ private:
 			"x                         xxxx      xx                                                xx              xx                     x", //61
 			"x                         xx         x                                                xx              xx                     x", //62
 			"x                         xx         x                                                xx              xx                     x", //63
-			"x                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx           x", //64
+			"x                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxssssssssssssxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx           x", //64
 			"x                                                                                                                            x", //65
 			"x                                                                                                                            x", //66
 			"x                                                                                                                            x", //67
@@ -364,6 +372,7 @@ private:
 	};
 
 	char maskmap[150][150];
+
 	void Animate(float SpritePosX, float SpritePosY, float xCoordsFondos, float yJug, float movimientoX, float movimientoY);
 	void move(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void colisiones();
@@ -374,10 +383,8 @@ private:
 	void ControlesEscenaCasa();
 	void ControlesEscenaTienda();
 	void ControlesEscenaPatioCasa();
-
 	void cargar_datos_mochila_desde_archivo();
 	void inicializar_mochila();
-	
 };
 extern Mochila* mochila;
 #endif // !PLAYER_H
