@@ -36,7 +36,7 @@
     <ClInclude Include="Mochila.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Comprador.h">
+    <ClInclude Include="Tienda.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Boton.h">
@@ -77,10 +77,7 @@
     <ClCompile Include="sonidos.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="DrawObjects.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="Comprador.cpp">
+    <ClCompile Include="Tienda.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Boton.cpp">

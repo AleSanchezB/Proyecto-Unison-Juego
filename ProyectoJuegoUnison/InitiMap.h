@@ -6,10 +6,12 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <string>
+
 #include "Player.h"
 #include "DibujarFondo.h"
-#include "Comprador.h"
-#include <string>
+#include "Tienda.h"
+
 class GameRun
 {
 public:
@@ -18,6 +20,8 @@ public:
 	ALLEGRO_TIMER* timer;
 	bool running;
 private:
+
+	enum{NORMAL, NORMALSELE};
 	//VARIABLES ALLEGRO
 	ALLEGRO_DISPLAY* displayGame;
 	ALLEGRO_EVENT_QUEUE* queue;
@@ -25,28 +29,29 @@ private:
 	ALLEGRO_EVENT event;
 	ALLEGRO_SAMPLE* A_actual;
 	ALLEGRO_SAMPLE_INSTANCE* ambientacion;
+	
 	ALLEGRO_BITMAP* iconDisplay;
 	ALLEGRO_BITMAP* Ajustes[4];
+	
 	//CONSTANTES
 	const int width = 1280;
 	const int height = 720;
 	const float FPS = 90.0;
 
 	//VARIABLES
-	
 	int mouseX, mouseY;
-	int i;
-	float alpha = 1.0;
-	float scale = 1.0;
+	int sonido;
+	int w;
+	int h;
+	int volumen;
+
 	bool draw = true;
 
 	//funciones
 	void initGame();
 	void ColocarMusica();
-
-	int w;
-	int h;
-	void DibujarAjustes(ALLEGRO_KEYBOARD_STATE keystate);
+	void setVolumen(int volumen);
+	int getVolumen();
 };
 extern Background* background;
 extern Player* player;

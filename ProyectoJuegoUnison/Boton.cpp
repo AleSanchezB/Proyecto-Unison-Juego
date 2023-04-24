@@ -8,6 +8,11 @@ Boton::Boton(std::string btnSinPresionar, float x, float y, float w, float h)
 	this->h = h;
 	this->sprite = al_load_bitmap(btnSinPresionar.c_str());
 }
+
+Boton::~Boton()
+{
+	al_destroy_bitmap(this->sprite);
+}
 void Boton::action()
 {
 	al_draw_bitmap(this->sprite, this->x, this->y, 0);

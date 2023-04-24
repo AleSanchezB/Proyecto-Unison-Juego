@@ -9,11 +9,14 @@ class Boton
 public:
 	Boton(std::string ruta, float x, float y, float w, float h);
 	~Boton();
+
 	float x;
 	float y;
 	float w;
 	float h;
+	
 	ALLEGRO_BITMAP* sprite;
+	
 	void action();
 private:
 

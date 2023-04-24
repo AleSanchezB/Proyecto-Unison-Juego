@@ -19,6 +19,8 @@ Background::Background()
 	aux = 0;
 	for (int i = 0; i < 2; i++)
 	{
+		btnSonido[i] = al_load_bitmap(("assets/fondos/Objetos/" + std::to_string(i) + ".png").c_str());
+		btnSonido[i + 2] = al_load_bitmap(("assets/fondos/Objetos/" + std::to_string(i + 2) + ".png").c_str());
 		for (int j = 0; j < 3; j++)
 		{
 			rutaFondos = "assets/fondos/Escenas/ESCENA0" + std::to_string(i) + tiempos[j] + "A.png";
@@ -27,10 +29,7 @@ Background::Background()
 			aux++;
 		}
 	}
-	rutaIconos = "assets/fondos/Objetos/OPCIONES0" + std::to_string(0) + ".png";
-	OPCIONES[0] = al_load_bitmap(rutaIconos.c_str());
-	rutaIconos = "assets/fondos/Objetos/OPCIONES0" + std::to_string(1) + ".png";
-	OPCIONES[1] = al_load_bitmap(rutaIconos.c_str());
+	OPCIONES = al_load_bitmap(("assets/fondos/Objetos/OPCIONES01.png"));
 }
 Background::~Background()
 {
@@ -39,28 +38,34 @@ Background::~Background()
 		al_destroy_bitmap(ESCENAS[i]);
 		al_destroy_bitmap(ESCENASA[i]);
 	}
-	al_destroy_bitmap(OPCIONES[0]);
-	al_destroy_bitmap(OPCIONES[1]);
+	for (int i = 0; i < 4; i++)
+	{
+		al_destroy_bitmap(btnSonido[i]);
+	}
+	al_destroy_bitmap(OPCIONES);
 	al_destroy_font(font);
 }
 void Background::action(int escena, int TiempoDiaEscena)
 {
 	al_draw_bitmap(ESCENAS[escena + TiempoDiaEscena], 0, 0, 0);
-	if (escena == 3) cultivosPlantados->action(escena);
+	cultivosPlantados->action(escena);
 }
-void Background::drawOptions(int i, int Monedas, int escena)
+void Background::drawOptions(int sonido, int Monedas, int escena)
 {
 	//PARA EL ZOOM que se vea la cantidad de monedas
-	int xopciones = 18, yopciones = 10, xtextomoneda = 1030, ytextomoneda = 33;
+	int xopciones = 18, yopciones = 10, xtextomoneda = 1030, ytextomoneda = 33, xAjustes = 18, yAjustes = 10;
 
 	if (escena == 6) {
 		xopciones = -60;
 		yopciones = 50;
 		xtextomoneda = 952;
 		ytextomoneda = 73;
+		xAjustes = 190;
+		yAjustes = 50;
 	}
 
-	al_draw_bitmap(OPCIONES[i], xopciones, yopciones, 0);
+	al_draw_bitmap(OPCIONES, xopciones, yopciones, 0);
+	al_draw_bitmap(btnSonido[sonido], xAjustes, yAjustes, 0);
 	al_draw_text(font, al_map_rgb(255, 255, 255), xtextomoneda, ytextomoneda, 0, (std::to_string(Monedas).c_str()));
 }
 

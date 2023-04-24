@@ -1,5 +1,5 @@
 #include "TipoCultivos.h"
-#include <iostream>
+
 Cultivo* cultivosPlantados[8];
 
 Cultivo::Cultivo(int x, int y, int tipo, int espacio, int estado, int T_Creado, int sy) : Objeto(ruta)
@@ -69,7 +69,8 @@ void Cultivo::action(int escena)
 					other->Crecer(other);
 					other->aux = 0;
 				}
-				al_draw_bitmap_region(other->sprite, other->sx, other->sy, other->sw, other->sh, other->x, other->y, 0);
+				if (escena == 3)
+					al_draw_bitmap_region(other->sprite, other->sx, other->sy, other->sw, other->sh, other->x, other->y, 0);
 			}
 		}
 	}
@@ -127,21 +128,21 @@ void Cultivo::setTiempoPlantacion(int tiempo)
 
 void Cultivo::Crecer(Cultivo* other)
 {
-	int resta = (int)(al_current_time() - other->T_Plantacion) % 7;
+	/*int resta = (int)(al_current_time() - other->T_Plantacion) % 7;
 	if (resta == 0)
 	{
 		other->estado++;
 		other->sy += 36;
+	}*/
+	float tiempo_actual = al_get_time();
+	srand(time(NULL)); // semilla para generar números aleatorios
+	float tiempo_crecimiento_aleatorio = (rand() % 61 + 60); // Entre 3 y 4 minutos en segundos
+	float tiempo_transcurrido = tiempo_actual - other->T_Plantacion;
+	if (tiempo_transcurrido >= tiempo_crecimiento_aleatorio) {
+		other->estado++;
+		other->sy += 36;
+		other->T_Plantacion = tiempo_actual;
 	}
-	//float tiempo_actual = al_get_time();
-	//srand(time(NULL)); // semilla para generar números aleatorios
-	//float tiempo_crecimiento_aleatorio = (rand() % 61 + 180); // Entre 3 y 4 minutos en segundos
-	//float tiempo_transcurrido = tiempo_actual - other->T_Plantacion;
-	//if (tiempo_transcurrido >= tiempo_crecimiento_aleatorio) {
-	//	other->estado++;
-	//	other->sy += 36;
-	//	other->T_Plantacion = tiempo_actual;
-	//}
 }
 void CargarCulivos()
 {
@@ -162,18 +163,15 @@ void CargarCulivos()
 			archivo >> x >> y >> tipo >> espacio >> estado >> tiempoplantacion >> sy;
 			if (estado == 0 || estado == 1 || estado == 2)
 			{
-				std::cout << "\n x: " << x << "y: " << y << " tipo: " << tipo << " espacio: " << espacio << " estado: " << estado << " tiempo: " << tiempoplantacion << " sy: " << sy;
 				cultivosPlantados[espacio] = new Cultivo(x, y, tipo, espacio, estado, tiempoplantacion, sy);
 				if (cultivosPlantados[i] == NULL)
 				{
 					cultivosPlantados[i] = NULL;
-					std::cout << "\ni: " << i;
 				}
 			}
 			else
 			{
-					cultivosPlantados[i] = NULL;
-					std::cout << "\ni: " << i;
+				cultivosPlantados[i] = NULL;
 
 			}
 			espacioAnt = espacio;

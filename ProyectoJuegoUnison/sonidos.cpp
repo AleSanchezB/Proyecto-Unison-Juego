@@ -1,6 +1,7 @@
 #include "sonidos.h"
 
-void SonidoUnico(const char archivo[], float volumen) {
+void SonidoUnico(const char archivo[], float volumen) 
+{
 	ALLEGRO_SAMPLE* SonidoActual = al_load_sample(archivo);
 	ALLEGRO_SAMPLE_INSTANCE* sonido = al_create_sample_instance(SonidoActual);
 	al_set_sample_instance_playmode(sonido, ALLEGRO_PLAYMODE_ONCE);
@@ -9,7 +10,8 @@ void SonidoUnico(const char archivo[], float volumen) {
 	al_set_sample_instance_gain(sonido, 0.4);
 }
 /*******************************************************************************/
-void SonidoLoop(const char archivo[], float volumen) {
+void SonidoLoop(const char archivo[], float volumen) 
+{
 	ALLEGRO_SAMPLE* SonidoActual = al_load_sample(archivo);
 	ALLEGRO_SAMPLE_INSTANCE* sonido = al_create_sample_instance(SonidoActual);
 	al_set_sample_instance_playmode(sonido, ALLEGRO_PLAYMODE_LOOP);
@@ -18,7 +20,8 @@ void SonidoLoop(const char archivo[], float volumen) {
 	al_set_sample_instance_gain(sonido, 0.4);
 }
 /*******************************************************************************/
-void DestruirSonido(ALLEGRO_SAMPLE* S,ALLEGRO_SAMPLE_INSTANCE* SA) {
+void DestruirSonido(ALLEGRO_SAMPLE* S,ALLEGRO_SAMPLE_INSTANCE* SA) 
+{
 	al_destroy_sample(S);
 	al_destroy_sample_instance(SA);
 }

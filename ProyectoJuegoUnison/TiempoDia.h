@@ -6,8 +6,10 @@ class Dia
 public:
 	Dia();
 	~Dia();
+
 	void IniciarDia();
 	void CambioTiempoDia(float T_Actual);
+
 	int TiempoCreacion;
 	int TiempoDiaEscena;
 private:
