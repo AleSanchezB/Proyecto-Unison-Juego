@@ -68,6 +68,7 @@ void Tienda::MenuVenderCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_Q
 	bool salir = true;
 	this->CantVender = 0;
 	this->MenuImg = 0;
+	this->TipoCultivo = 1;
 	while (!al_key_down(&keystate, ALLEGRO_KEY_ESCAPE) && salir)
 	{
 		al_get_keyboard_state(&keystate);
@@ -479,6 +480,7 @@ bool Tienda::VerificarVenta()
 		if (mochila->verificarCantidadCultivosGuardados(vendibles[this->TipoCultivo - 1], this->CantVender))
 		{
 			mochila->quitarCultivo(vendibles[this->TipoCultivo - 1]);
+			mochila->setCantidadCultivos(mochila->getCantidadCultivos() - this->CantVender);
 			int Pago = 0;
 
 			switch (vendibles[this->TipoCultivo - 1])

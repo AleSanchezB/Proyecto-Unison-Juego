@@ -316,6 +316,7 @@ void  Player::Cultivar(int pos, int x, int y, int tipo)
 	Cultivo* cultivo = new Cultivo(x, y, tipo, pos, 0 ,al_current_time());
 	cultivosPlantados[pos] = cultivo;
 	mochila->quitarCultivo(tipo);
+	mochila->setCantidadCultivos(mochila->getCantidadCultivos() - 1);
 }
 void Player::Cosechar(int i)
 {

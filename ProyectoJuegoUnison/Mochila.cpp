@@ -213,7 +213,6 @@ void Mochila::quitarCultivo(int tipo)
 	default:
 		break;
 	}
-	setCantidadCultivos(getCantidadCultivos() - 1);
 }
 int Mochila::getEspacioMochila()
 {
