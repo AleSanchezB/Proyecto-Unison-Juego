@@ -152,7 +152,7 @@ void MainGame::initMenu()
 void MainGame::dibujarMenu(int i)
 {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_draw_bitmap(fondos[i], 0, 0, NULL);
+	al_draw_bitmap(fondos[i], 0, 0, 0);
 	al_flip_display();
 }
 void MainGame::alDestroy()
@@ -181,7 +181,7 @@ void MainGame::dibujarInstrucciones()
 	while (run)
 	{
 		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_bitmap(Instrucciones[i], 0, 0, NULL);
+		al_draw_bitmap(Instrucciones[i], 0, 0, 0);
 		al_draw_bitmap(btn[j], 1037, 666, 0);
 		al_flip_display();
 		al_wait_for_event(queue, &event);

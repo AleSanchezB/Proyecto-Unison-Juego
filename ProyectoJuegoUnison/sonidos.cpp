@@ -1,6 +1,6 @@
 #include "sonidos.h"
 
-void SonidoUnico(const char archivo[], float volumen) 
+void SonidoUnico(const char archivo[]) 
 {
 	ALLEGRO_SAMPLE* SonidoActual = al_load_sample(archivo);
 	ALLEGRO_SAMPLE_INSTANCE* sonido = al_create_sample_instance(SonidoActual);
@@ -10,7 +10,7 @@ void SonidoUnico(const char archivo[], float volumen)
 	al_set_sample_instance_gain(sonido, 0.4);
 }
 /*******************************************************************************/
-void SonidoLoop(const char archivo[], float volumen) 
+void SonidoLoop(const char archivo[]) 
 {
 	ALLEGRO_SAMPLE* SonidoActual = al_load_sample(archivo);
 	ALLEGRO_SAMPLE_INSTANCE* sonido = al_create_sample_instance(SonidoActual);

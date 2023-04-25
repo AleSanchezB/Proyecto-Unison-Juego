@@ -56,7 +56,7 @@ void Tienda::MenuVenderCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_Q
 {
 	ALLEGRO_EVENT events;
 	al_get_keyboard_state(&keystate);
-	animacionMenu(1);
+	animacionMenu();
 	int btnCult = 0;
 	int btnCant = 0;
 
@@ -143,9 +143,13 @@ void Tienda::MenuVenderCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_Q
 				{
 					btnCultB = 2;
 					if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+					{
 						if (events.mouse.button == 1)
+						{
 							if (this->TipoCultivo == 1) this->TipoCultivo = 1;
 							else this->TipoCultivo--;
+						}
+					}
 				}
 				else btnCultB = 0;
 
@@ -204,7 +208,7 @@ void Tienda::MenuComprarCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_
 {
 	ALLEGRO_EVENT events;
 	al_get_keyboard_state(&keystate);
-	animacionMenu(1);
+	animacionMenu();
 	int btnCult = 0;
 	int btnCant = 0;
 
@@ -293,9 +297,13 @@ void Tienda::MenuComprarCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_
 				{
 					btnCultB = 2;
 					if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+					{
 						if (events.mouse.button == 1)
+						{
 							if (this->TipoCultivo == 1) this->TipoCultivo = 1;
 							else this->TipoCultivo--;
+						}
+					}
 				}
 				else btnCultB = 0;
 
@@ -305,8 +313,10 @@ void Tienda::MenuComprarCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_
 				{
 					btnCant = 3;
 					if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+					{
 						if (events.mouse.button == 1)
 							this->CantComprar++;
+					}
 				}
 				else btnCant = 1;
 
@@ -349,7 +359,7 @@ void Tienda::MenuComprarCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_
 	}
 	AnimacionReversa();
 }
-void Tienda::animacionMenu(int tipo)
+void Tienda::animacionMenu()
 {
 	for (int i = 35; i >= 0; i--)
 	{
@@ -397,7 +407,6 @@ void Tienda::DibujarPrecios()
 }
 void Tienda::DibujarCantidadSelec()
 {
-	int aux = xVenta;
 	if (this->CantVender == 0)
 	{
 		xVenta = 604;
@@ -544,7 +553,7 @@ void Tienda::GenerarVendibles()
 		do {
 			aleatorio = rand() % 9;
 			indices[i] = aleatorio;
-		} while (std::find(indices, indices + i, aleatorio) != indices + i);
+		} while (std::find((int*)indices, indices + i, aleatorio) != indices + i);
 		this->MensajeVendibles[i] = cultivos[aleatorio];
 		vendibles[i] = aleatorio;
 	}

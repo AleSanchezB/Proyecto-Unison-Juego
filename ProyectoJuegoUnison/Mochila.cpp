@@ -5,6 +5,7 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	int cantidadBerenjena, int cantidadEjotes, int cantidadMaiz, int cantidadPapa,
 	int cantidadPapaya, int cantidadRemolacha, int capacidadMochila, int Monedas, ALLEGRO_FONT* font)
 {
+	this->cantidadObjetos = cantidadObjetos;
 	this->cantidadObjetos = cantidadTomates + cantidadCalabaza + cantidadZanahoria + cantidadBerenjena + cantidadEjotes + cantidadMaiz + cantidadPapa
 		+ cantidadPapaya + cantidadRemolacha;
 	this->cantidadTomates = cantidadTomates;
@@ -18,7 +19,7 @@ Mochila::Mochila(int cantidadObjetos, int cantidadTomates, int cantidadCalabaza,
 	this->cantidadPapaya = cantidadPapaya;
 	this->cantidadRemolacha = cantidadRemolacha;
 
-	this->capacidadMochila = 10;
+	this->capacidadMochila = capacidadMochila;
 	this->casillaSelect = 0;
 	this->font = font;
 	this->Monedas = Monedas;

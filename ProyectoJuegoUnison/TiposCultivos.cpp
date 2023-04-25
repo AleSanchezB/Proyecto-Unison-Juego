@@ -155,8 +155,7 @@ void CargarCulivos()
 	else
 	{
 		// Leer los valores del archivo
-		int x, y, tipo, espacio, estado, tiempoplantacion, sy, espacioAnt = -1;
-		int lista[8];
+		int x, y, tipo, espacio, estado, tiempoplantacion, sy;
 
 		for (int i = 0; i < 8; i++)
 		{
@@ -174,7 +173,6 @@ void CargarCulivos()
 				cultivosPlantados[i] = NULL;
 
 			}
-			espacioAnt = espacio;
 		}
 		// Cerrar el archivo
 		archivo.close();

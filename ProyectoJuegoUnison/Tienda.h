@@ -6,7 +6,7 @@
 #include <string>
 #include <cmath>
 #include <ctime>
-#include <random>
+#include <algorithm>
 #define DX 4
 #include "Boton.h"
 #include "InitiMap.h"
@@ -19,7 +19,7 @@ public:
 
 	void MenuVenderCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
 	void MenuComprarCultivos(ALLEGRO_KEYBOARD_STATE keystate, ALLEGRO_EVENT_QUEUE* queue);
-	void animacionMenu(int tipo);
+	void animacionMenu();
 	void animacionMonedas();
 	void animacionDinero(int Pago);
 	void GenerarVendibles();
