@@ -1,12 +1,3 @@
-# Proyecto-Unison-Juego
+# Proyecto de presentacion en semana nacional en docencia e investigación en matemáticas
 
-Para clonar el repositorio ve a code, despues en abrir en visual studio, y clonas el repositorio, en ese caso no es necesario poner el comando init
-creas un branch en la parte de abajo de visual.
-
-Comandos para subir al repositorio git:
-git init (para iniciar el repositorio en la computadora solo se hace la primera vez)
-git add . (agrega todos los cambios hechos por ti)
-git commit -m "AQUI VA EL COMENTARIO" (pones los cambios que hiciste)
-git push --set-upstream origin BRANCH (pones el nombre de tu branch)
-
-## Cambios de prueba de colisiones 
+Este un videojuego desarrollado por alumnos de la licenciatura en ciencias de la computacion como presentacion para dar inciativa de estudio en la licenciatura a alumnos de bachiller.
